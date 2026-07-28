@@ -1,0 +1,296 @@
+/* ==========================================
+   BRAINLYHUB - GLOBAL STYLES & LIQUID THEME
+   ========================================== */
+
+:root {
+  /* Paleta kolorów */
+  --bg-primary: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --bg-sidebar: #f1f5f9;
+  
+  /* Ciemnoniebieskie akcenty pasujące do ikonek PNG */
+  --primary: #1e3a8a;       /* Deep Navy Blue */
+  --primary-hover: #1e40af;
+  --primary-light: #eff6ff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  
+  /* Efekty i wymiary */
+  --sidebar-width-expanded: 260px;
+  --sidebar-width-collapsed: 72px;
+  --header-height: 64px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition-speed: 0.3s;
+  --shadow-subtle: 0 4px 20px -2px rgba(30, 58, 138, 0.05);
+  --blur-glass: blur(12px);
+}
+
+/* Reset i ogólne reguły */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ==========================================
+   UKŁAD STRONY (APP LAYOUT)
+   ========================================== */
+
+#app {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ==========================================
+   BOČNY PASEK NAWIGACYJNY (GEMINI-STYLE)
+   ========================================== */
+
+.sidebar {
+  width: var(--sidebar-width-expanded);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 100;
+  user-select: none;
+}
+
+/* Zwijanie panelu (stan .collapsed) */
+.sidebar.collapsed {
+  width: var(--sidebar-width-collapsed);
+}
+
+/* Nagłówek Sidebaru (Logo + Toggle) */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 16px 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+  transition: opacity var(--transition-speed);
+}
+
+.sidebar.collapsed .brand-title {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn-toggle-sidebar {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-toggle-sidebar:hover {
+  background-color: var(--border-color);
+}
+
+/* Elementy menu (Nav Items) */
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.nav-item.active {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.nav-label {
+  transition: opacity var(--transition-speed);
+}
+
+.sidebar.collapsed .nav-label {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Dolna sekcja nawigacji (Profil, Ustawienia) */
+.sidebar-footer {
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ==========================================
+   MAIN CONTENT AREA (PŁYNNY LIQUID CONTAINER)
+   ========================================== */
+
+.main-wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  background: radial-gradient(circle at top left, rgba(239, 246, 255, 0.8), transparent 40%);
+}
+
+.top-bar {
+  height: var(--header-height);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.top-bar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-icon-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-subtle);
+}
+
+.action-icon-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary);
+}
+
+/* Główna przestrzeń widoków */
+.content-body {
+  padding: 32px;
+  flex-grow: 1;
+}
+
+/* ==========================================
+   UNIWERSALNE KARTY I ELEMENTY INTERFEJSU
+   ========================================== */
+
+.liquid-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-subtle);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.liquid-card:hover {
+  box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.08);
+}
+
+/* Własne paski przewijania (Scrollbar) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
