@@ -68,15 +68,16 @@ body {
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
-  transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1), padding var(--transition-speed) ease;
   position: relative;
   z-index: 100;
   user-select: none;
 }
 
-/* Zwijanie panelu (stan .collapsed) */
+/* Zwijanie panelu (stan .collapsed) - Idealne wycentrowanie ikon */
 .sidebar.collapsed {
   width: var(--sidebar-width-collapsed);
+  padding: 16px 8px;
 }
 
 /* Nagłówek Sidebaru (Logo + Toggle) */
@@ -89,11 +90,20 @@ body {
   border-bottom: 1px solid var(--border-color);
 }
 
+.sidebar.collapsed .sidebar-header {
+  justify-content: center;
+  padding: 0 0 16px 0;
+}
+
 .brand-container {
   display: flex;
   align-items: center;
   gap: 12px;
   overflow: hidden;
+}
+
+.sidebar.collapsed .brand-container {
+  display: none; /* Ukryj logo w wersji zwiniętej, zostaw sam przycisk toggle */
 }
 
 .brand-logo {
@@ -109,11 +119,6 @@ body {
   color: var(--primary);
   white-space: nowrap;
   transition: opacity var(--transition-speed);
-}
-
-.sidebar.collapsed .brand-title {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .btn-toggle-sidebar {
@@ -132,7 +137,7 @@ body {
   background-color: var(--border-color);
 }
 
-/* Elementy menu (Nav Items) - ZWIĘKSZONA CZCIONKA & MIĘKKA POŚWIATA */
+/* Elementy menu (Nav Items) - BEZ SUWAKÓW I UCIĘĆ */
 .nav-list {
   list-style: none;
   display: flex;
@@ -142,6 +147,11 @@ body {
   overflow-y: auto;
   overflow-x: visible;
   padding: 4px;
+}
+
+/* Wyłączenie skrolowania przy zwiniętym menu, aby nic nie wykraczało */
+.sidebar.collapsed .nav-list {
+  overflow-y: visible;
 }
 
 .nav-item {
@@ -157,7 +167,13 @@ body {
   white-space: nowrap;
   cursor: pointer;
   position: relative;
-  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease, padding 0.2s ease;
+}
+
+/* Stan zwinięty - wyśrodkowanie ikon i wyeliminowanie problemu ze zbyt szerokim elementem */
+.sidebar.collapsed .nav-item {
+  justify-content: center;
+  padding: 9px 0;
 }
 
 /* Hover - leciutka, miękka poświata */
@@ -187,8 +203,7 @@ body {
 }
 
 .sidebar.collapsed .nav-label {
-  opacity: 0;
-  pointer-events: none;
+  display: none; /* Całkowite ukrycie tekstu zapobiega rozciąganiu kafelków */
 }
 
 /* Dolna sekcja nawigacji (Profil, Ustawienia) */
