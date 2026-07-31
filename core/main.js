@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Obsługa bocznego paska nawigacyjnego (Gemini-style Toggle)
+ * Handles sidebar behavior (Gemini-style Toggle)
  */
 function initSidebar() {
   const sidebar = document.getElementById('sidebar');
@@ -16,13 +16,13 @@ function initSidebar() {
 
   if (!sidebar || !toggleBtn) return;
 
-  // Odczytanie zapisanego stanu paska z localStorage
+  // Retrieve saved sidebar state from localStorage
   const isCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
   if (isCollapsed) {
     sidebar.classList.add('collapsed');
   }
 
-  // Przełączanie stanu zwinięcia/rozwinięcia
+  // Toggle collapsed state on click
   toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
     const collapsedState = sidebar.classList.contains('collapsed');
@@ -31,20 +31,20 @@ function initSidebar() {
 }
 
 /**
- * Obsługa aktywnego podświetlenia elementów nawigacji i płynnego przełączania
+ * Handles active navigation item highlights and routing transitions
  */
 function initNavigation() {
   const navItems = document.querySelectorAll('.nav-item');
 
   navItems.forEach(item => {
     item.addEventListener('click', (e) => {
-      // Usuń klasę active ze wszystkich elementów
+      // Remove active class from all items
       navItems.forEach(el => el.classList.remove('active'));
 
-      // Dodaj klasę active do klikniętego elementu
+      // Add active class to the clicked item
       item.classList.add('active');
 
-      // Jeśli link prowadzi do podstrony/sekcji
+      // If the item points to a specific view/target
       const pageTarget = item.getAttribute('data-target');
       if (pageTarget) {
         loadPage(pageTarget);
@@ -54,8 +54,8 @@ function initNavigation() {
 }
 
 /**
- * Dynamiczne ładowanie podstron/komponentów w obszarze roboczym
- * @param {string} pageName Nazwa podstrony do załadowania
+ * Dynamically loads page contents inside the main content area
+ * @param {string} pageName Name of the page target to load
  */
 function loadPage(pageName) {
   const contentBody = document.getElementById('content-body');
@@ -63,19 +63,36 @@ function loadPage(pageName) {
 
   if (!contentBody) return;
 
-  // Aktualizacja nagłówka górnego
+  // Update top bar title
   if (topBarTitle) {
     topBarTitle.textContent = formatPageTitle(pageName);
   }
 
-  // Wyemitowanie zdarzenia o zmianie strony (przydatne dla komponentów)
+  // Dispatch custom event for page view change
   window.dispatchEvent(new CustomEvent('pageChanged', { detail: { page: pageName } }));
 }
 
 /**
- * Pomocnicza funkcja formatująca tytuł podstrony
+ * Helper function to format page titles in English
  */
 function formatPageTitle(str) {
-  if (!str) return 'Główna';
-  return str.charAt(0).toUpperCase() + str.slice(1).replace('-', ' ');
+  if (!str) return 'Home';
+
+  // Map exact data-target keys to readable titles
+  const titleMap = {
+    'home': 'Home',
+    'tasks': 'Task Search',
+    'past-exams': 'Past Exams',
+    'topics': 'Categories & Topics',
+    'math': 'Mathematics',
+    'chemistry': 'Chemistry',
+    'physics': 'Physics',
+    'informatics': 'Computer Science',
+    'biology': 'Biology',
+    'history': 'History',
+    'ask': 'Ask a Question',
+    'settings': 'Settings'
+  };
+
+  return titleMap[str] || (str.charAt(0).toUpperCase() + str.slice(1).replace('-', ' '));
 }
