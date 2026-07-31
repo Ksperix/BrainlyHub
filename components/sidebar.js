@@ -5,94 +5,94 @@
 export function renderSidebar() {
   return `
     <aside class="sidebar" id="sidebar">
-      <!-- Nagłówek Sidebaru (Logo + Przycisk zwijania) -->
+      <!-- Sidebar Header (Logo + Toggle Button) -->
       <div class="sidebar-header">
         <div class="brand-container">
           <img src="assets/Brainly Hub.png" alt="Brainly Hub" class="brand-logo" />
           <span class="brand-title">BrainlyHub</span>
         </div>
-        <button class="btn-toggle-sidebar" id="btn-toggle-sidebar" title="Zwiń / Rozwiń nawigację">
+        <button class="btn-toggle-sidebar" id="btn-toggle-sidebar" title="Collapse / Expand Navigation">
           <img src="assets/Folder.png" alt="Toggle Menu" class="nav-icon" />
         </button>
       </div>
 
-      <!-- Główna lista nawigacyjna -->
+      <!-- Main Navigation List -->
       <ul class="nav-list">
         <li>
           <a class="nav-item active" data-target="home">
-            <img src="assets/Home star.png" alt="Strona Główna" class="nav-icon" />
-            <span class="nav-label">Strona Główna</span>
+            <img src="assets/Home star.png" alt="Home" class="nav-icon" />
+            <span class="nav-label">Home</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="tasks">
-            <img src="assets/Tasks.png" alt="Zadania" class="nav-icon" />
-            <span class="nav-label">Wyszukiwarka Zadań</span>
+            <img src="assets/Tasks.png" alt="Tasks" class="nav-icon" />
+            <span class="nav-label">Task Search</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="past-exams">
-            <img src="assets/Past exams.png" alt="Arkusz Egzaminacyjny" class="nav-icon" />
-            <span class="nav-label">Arkusze / Egzaminy</span>
+            <img src="assets/Past exams.png" alt="Past Exams" class="nav-icon" />
+            <span class="nav-label">Past Exams</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="topics">
-            <img src="assets/Topic.png" alt="Tematy" class="nav-icon" />
-            <span class="nav-label">Kategorie / Tematy</span>
+            <img src="assets/Topic.png" alt="Topics" class="nav-icon" />
+            <span class="nav-label">Categories / Topics</span>
           </a>
         </li>
 
-        <!-- Separator dla przedmiotów -->
+        <!-- Separator for Subjects -->
         <li style="margin: 8px 0; border-top: 1px solid var(--border-color);"></li>
 
         <li>
           <a class="nav-item" data-target="math">
-            <img src="assets/Mathematics.png" alt="Matematyka" class="nav-icon" />
-            <span class="nav-label">Matematyka</span>
+            <img src="assets/Mathematics.png" alt="Mathematics" class="nav-icon" />
+            <span class="nav-label">Mathematics</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="chemistry">
-            <img src="assets/Chemistry.png" alt="Chemia" class="nav-icon" />
-            <span class="nav-label">Chemia</span>
+            <img src="assets/Chemistry.png" alt="Chemistry" class="nav-icon" />
+            <span class="nav-label">Chemistry</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="physics">
-            <img src="assets/Physics.png" alt="Fizyka" class="nav-icon" />
-            <span class="nav-label">Fizyka</span>
+            <img src="assets/Physics.png" alt="Physics" class="nav-icon" />
+            <span class="nav-label">Physics</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="informatics">
-            <img src="assets/Computer science.png" alt="Informatyka" class="nav-icon" />
-            <span class="nav-label">Informatyka</span>
+            <img src="assets/Computer science.png" alt="Computer Science" class="nav-icon" />
+            <span class="nav-label">Computer Science</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="biology">
-            <img src="assets/Biology.png" alt="Biologia" class="nav-icon" />
-            <span class="nav-label">Biologia</span>
+            <img src="assets/Biology.png" alt="Biology" class="nav-icon" />
+            <span class="nav-label">Biology</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="history">
-            <img src="assets/History.png" alt="Historia" class="nav-icon" />
-            <span class="nav-label">Historia</span>
+            <img src="assets/History.png" alt="History" class="nav-icon" />
+            <span class="nav-label">History</span>
           </a>
         </li>
       </ul>
 
-      <!-- Sekcja Dolna (Footer w Sidebarze) -->
+      <!-- Bottom Section (Sidebar Footer) -->
       <div class="sidebar-footer">
         <a class="nav-item" data-target="ask">
-          <img src="assets/Ask.png" alt="Pomoc" class="nav-icon" />
-          <span class="nav-label">Zadaj Pytanie</span>
+          <img src="assets/Ask.png" alt="Help" class="nav-icon" />
+          <span class="nav-label">Ask a Question</span>
         </a>
         <a class="nav-item" data-target="settings">
-          <img src="assets/Settings.png" alt="Ustawienia" class="nav-icon" />
-          <span class="nav-label">Ustawienia</span>
+          <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
+          <span class="nav-label">Settings</span>
         </a>
       </div>
     </aside>
