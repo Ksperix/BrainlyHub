@@ -57,7 +57,7 @@ body {
 }
 
 /* ==========================================
-   BOČNY PASEK NAWIGACYJNY (GEMINI-STYLE)
+   BOCZNY PASEK NAWIGACYJNY (GEMINI-STYLE)
    ========================================== */
 
 .sidebar {
@@ -132,41 +132,48 @@ body {
   background-color: var(--border-color);
 }
 
-/* Elementy menu (Nav Items) */
+/* Elementy menu (Nav Items) - EFEKT HOVER & ACTIVE */
 .nav-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   flex-grow: 1;
   overflow-y: auto;
   overflow-x: hidden;
+  padding: 4px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 10px 12px;
+  padding: 10px 14px;
   border-radius: var(--radius-md);
   color: var(--text-muted);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
-  transition: background-color 0.2s, color 0.2s;
   white-space: nowrap;
   cursor: pointer;
+  position: relative;
+  border-left: 3px solid transparent;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-item:hover {
-  background-color: var(--primary-light);
+  background-color: #dbeafe;
   color: var(--primary);
+  transform: translateX(4px);
+  border-left-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.08);
 }
 
 .nav-item.active {
   background-color: var(--primary-light);
   color: var(--primary);
-  font-weight: 600;
+  font-weight: 700;
+  border-left-color: var(--primary);
 }
 
 .nav-icon {
@@ -174,6 +181,11 @@ body {
   height: 24px;
   object-fit: contain;
   flex-shrink: 0;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.nav-item:hover .nav-icon {
+  transform: scale(1.12);
 }
 
 .nav-label {
