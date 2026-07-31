@@ -132,7 +132,7 @@ body {
   background-color: var(--border-color);
 }
 
-/* Elementy menu (Nav Items) - EFEKT HOVER & ACTIVE */
+/* Elementy menu (Nav Items) - CZYSTY HOVER & ACTIVE */
 .nav-list {
   list-style: none;
   display: flex;
@@ -157,23 +157,23 @@ body {
   white-space: nowrap;
   cursor: pointer;
   position: relative;
-  border-left: 3px solid transparent;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Najechany kafelek - wysunięcie, podświetlenie i delikatna poświata (bez kresek) */
 .nav-item:hover {
   background-color: #dbeafe;
   color: var(--primary);
   transform: translateX(4px);
-  border-left-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.08);
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.1);
 }
 
+/* Aktywny kafelek */
 .nav-item.active {
   background-color: var(--primary-light);
   color: var(--primary);
   font-weight: 700;
-  border-left-color: var(--primary);
+  box-shadow: inset 0 0 0 1px rgba(30, 58, 138, 0.15);
 }
 
 .nav-icon {
@@ -181,11 +181,11 @@ body {
   height: 24px;
   object-fit: contain;
   flex-shrink: 0;
-  transition: transform 0.25s ease, filter 0.25s ease;
+  transition: transform 0.25s ease;
 }
 
 .nav-item:hover .nav-icon {
-  transform: scale(1.12);
+  transform: scale(1.1);
 }
 
 .nav-label {
