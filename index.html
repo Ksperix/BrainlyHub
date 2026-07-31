@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrainlyHub — Baza Zadań i Materiałów</title>
+  <title>BrainlyHub — Academic Task & Resource Repository</title>
   
-  <!-- Favicona -->
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" />
   
-  <!-- Style CSS -->
+  <!-- CSS Styles -->
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
 
   <div id="app">
-    <!-- Boczy Pasek Nawigacyjny (Renderowany dynamicznie lub wbudowany) -->
+    <!-- Sidebar Navigation -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="brand-container">
           <img src="assets/Brainly Hub.png" alt="BrainlyHub Logo" class="brand-logo" />
           <span class="brand-title">BrainlyHub</span>
         </div>
-        <button class="btn-toggle-sidebar" id="btn-toggle-sidebar" title="Zwiń / Rozwiń menu">
+        <button class="btn-toggle-sidebar" id="btn-toggle-sidebar" title="Collapse / Expand Navigation">
           <img src="assets/Folder.png" alt="Toggle" class="nav-icon" />
         </button>
       </div>
@@ -29,117 +29,117 @@
       <ul class="nav-list">
         <li>
           <a class="nav-item active" data-target="home">
-            <img src="assets/Home star.png" alt="Główna" class="nav-icon" />
-            <span class="nav-label">Strona Główna</span>
+            <img src="assets/Home star.png" alt="Home" class="nav-icon" />
+            <span class="nav-label">Home</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="tasks">
-            <img src="assets/Tasks.png" alt="Zadania" class="nav-icon" />
-            <span class="nav-label">Wyszukiwarka Zadań</span>
+            <img src="assets/Tasks.png" alt="Tasks" class="nav-icon" />
+            <span class="nav-label">Task Search</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="past-exams">
-            <img src="assets/Past exams.png" alt="Arkusze" class="nav-icon" />
-            <span class="nav-label">Arkusze / Egzaminy</span>
+            <img src="assets/Past exams.png" alt="Past Exams" class="nav-icon" />
+            <span class="nav-label">Past Exams</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-target="topics">
-            <img src="assets/Topic.png" alt="Kategorie" class="nav-icon" />
-            <span class="nav-label">Kategorie i Tematy</span>
+            <img src="assets/Topic.png" alt="Categories" class="nav-icon" />
+            <span class="nav-label">Categories & Topics</span>
           </a>
         </li>
 
         <li style="margin: 8px 0; border-top: 1px solid var(--border-color);"></li>
 
-        <!-- Przedmioty -->
+        <!-- Subjects -->
         <li>
-          <a class="nav-item" data-target="matematyka">
-            <img src="assets/Mathematics.png" alt="Matematyka" class="nav-icon" />
-            <span class="nav-label">Matematyka</span>
+          <a class="nav-item" data-target="math">
+            <img src="assets/Mathematics.png" alt="Mathematics" class="nav-icon" />
+            <span class="nav-label">Mathematics</span>
           </a>
         </li>
         <li>
-          <a class="nav-item" data-target="chemia">
-            <img src="assets/Chemistry.png" alt="Chemia" class="nav-icon" />
-            <span class="nav-label">Chemia</span>
+          <a class="nav-item" data-target="chemistry">
+            <img src="assets/Chemistry.png" alt="Chemistry" class="nav-icon" />
+            <span class="nav-label">Chemistry</span>
           </a>
         </li>
         <li>
-          <a class="nav-item" data-target="fizyka">
-            <img src="assets/Physics.png" alt="Fizyka" class="nav-icon" />
-            <span class="nav-label">Fizyka</span>
+          <a class="nav-item" data-target="physics">
+            <img src="assets/Physics.png" alt="Physics" class="nav-icon" />
+            <span class="nav-label">Physics</span>
           </a>
         </li>
         <li>
-          <a class="nav-item" data-target="informatyka">
-            <img src="assets/Computer science.png" alt="Informatyka" class="nav-icon" />
-            <span class="nav-label">Informatyka</span>
+          <a class="nav-item" data-target="informatics">
+            <img src="assets/Computer science.png" alt="Computer Science" class="nav-icon" />
+            <span class="nav-label">Computer Science</span>
           </a>
         </li>
         <li>
-          <a class="nav-item" data-target="biologia">
-            <img src="assets/Biology.png" alt="Biologia" class="nav-icon" />
-            <span class="nav-label">Biologia</span>
+          <a class="nav-item" data-target="biology">
+            <img src="assets/Biology.png" alt="Biology" class="nav-icon" />
+            <span class="nav-label">Biology</span>
           </a>
         </li>
         <li>
-          <a class="nav-item" data-target="historia">
-            <img src="assets/History.png" alt="Historia" class="nav-icon" />
-            <span class="nav-label">Historia</span>
+          <a class="nav-item" data-target="history">
+            <img src="assets/History.png" alt="History" class="nav-icon" />
+            <span class="nav-label">History</span>
           </a>
         </li>
       </ul>
 
       <div class="sidebar-footer">
         <a class="nav-item" data-target="ask">
-          <img src="assets/Ask.png" alt="Zadaj pytanie" class="nav-icon" />
-          <span class="nav-label">Zadaj Pytanie</span>
+          <img src="assets/Ask.png" alt="Ask a Question" class="nav-icon" />
+          <span class="nav-label">Ask a Question</span>
         </a>
         <a class="nav-item" data-target="settings">
-          <img src="assets/Settings.png" alt="Ustawienia" class="nav-icon" />
-          <span class="nav-label">Ustawienia</span>
+          <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
+          <span class="nav-label">Settings</span>
         </a>
       </div>
     </aside>
 
-    <!-- Główny Obszar Roboczy -->
+    <!-- Main Content Wrapper -->
     <div class="main-wrapper">
-      <!-- Nagłówek Górny -->
+      <!-- Top Bar / Header -->
       <header class="top-bar">
-        <h2 class="top-bar-title" id="top-bar-title">Strona Główna</h2>
+        <h2 class="top-bar-title" id="top-bar-title">Home</h2>
 
         <div class="top-bar-actions">
-          <button class="action-icon-btn" title="Powiadomienia">
-            <img src="assets/Notifications.png" alt="Powiadomienia" class="nav-icon" />
+          <button class="action-icon-btn" title="Notifications">
+            <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
           </button>
-          <button class="action-icon-btn" title="Ustawienia">
-            <img src="assets/Settings.png" alt="Ustawienia" class="nav-icon" />
+          <button class="action-icon-btn" title="Settings">
+            <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
           </button>
-          <button class="action-icon-btn" title="Profil Użytkownika">
-            <img src="assets/User profile.png" alt="Profil" class="nav-icon" />
+          <button class="action-icon-btn" title="User Profile">
+            <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
           </button>
         </div>
       </header>
 
-      <!-- Treść Podstron -->
+      <!-- Main Body View -->
       <main class="content-body" id="content-body">
         <div class="liquid-card">
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
             <img src="assets/Home star.png" alt="Star" style="width: 32px; height: 32px;" />
-            <h1 style="color: var(--primary); font-size: 1.5rem; margin: 0;">Witaj w BrainlyHub!</h1>
+            <h1 style="color: var(--primary); font-size: 1.5rem; margin: 0;">Welcome to BrainlyHub!</h1>
           </div>
           <p style="color: var(--text-muted); line-height: 1.6;">
-            Wybierz interesujący Cię przedmiot lub kategorię z bocznego menu, aby filtrować zadania po klasie, temacie oraz poziomie trudności.
+            Select a subject or category from the sidebar menu to filter tasks by grade, topic, and difficulty level.
           </p>
         </div>
       </main>
     </div>
   </div>
 
-  <!-- Skrypt Aplikacji -->
+  <!-- Main Application Script -->
   <script src="core/main.js"></script>
 </body>
 </html>
