@@ -2,7 +2,7 @@
    BRAINLYHUB - COMPONENT: HEADER
    ========================================== */
 
-export function renderHeader(title = 'Główna') {
+export function renderHeader(title = 'Home') {
   return `
     <header class="top-bar">
       <div class="top-bar-left">
@@ -10,19 +10,19 @@ export function renderHeader(title = 'Główna') {
       </div>
 
       <div class="top-bar-actions">
-        <!-- Przycisk powiadomień -->
-        <button class="action-icon-btn" title="Powiadomienia" id="btn-notifications">
-          <img src="assets/Notifications.png" alt="Powiadomienia" class="nav-icon" />
+        <!-- Notifications Button -->
+        <button class="action-icon-btn" title="Notifications" id="btn-notifications">
+          <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
         </button>
 
-        <!-- Przycisk ustawień -->
-        <button class="action-icon-btn" title="Ustawienia" id="btn-settings">
-          <img src="assets/Settings.png" alt="Ustawienia" class="nav-icon" />
+        <!-- Settings Button -->
+        <button class="action-icon-btn" title="Settings" id="btn-settings">
+          <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
         </button>
 
-        <!-- Profil użytkownika -->
-        <button class="action-icon-btn" title="Profil" id="btn-user-profile">
-          <img src="assets/User profile.png" alt="Profil" class="nav-icon" />
+        <!-- User Profile Button -->
+        <button class="action-icon-btn" title="Profile" id="btn-user-profile">
+          <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
         </button>
       </div>
     </header>
