@@ -132,7 +132,7 @@ body {
   background-color: var(--border-color);
 }
 
-/* Elementy menu (Nav Items) - NATURALNY, CLEAN HOVER */
+/* Elementy menu (Nav Items) - ZWIĘKSZONA CZCIONKA & MIĘKKA POŚWIATA */
 .nav-list {
   list-style: none;
   display: flex;
@@ -140,8 +140,8 @@ body {
   gap: 4px;
   flex-grow: 1;
   overflow-y: auto;
-  overflow-x: visible; /* Usunięto ucinanie cienia */
-  padding: 4px 2px;
+  overflow-x: visible;
+  padding: 4px;
 }
 
 .nav-item {
@@ -153,24 +153,26 @@ body {
   color: var(--text-muted);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   white-space: nowrap;
   cursor: pointer;
   position: relative;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
 }
 
-/* Subtelne podświetlenie bez sztucznych ruchów i bez obcinania cieni */
+/* Hover - leciutka, miękka poświata */
 .nav-item:hover {
   background-color: rgba(30, 58, 138, 0.06);
   color: var(--primary);
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.08);
 }
 
-/* Aktywny kafelek - czytelny, płaski i elegancki */
+/* Aktywny kafelek - lekko głębsza poświata */
 .nav-item.active {
   background-color: var(--primary-light);
   color: var(--primary);
   font-weight: 600;
+  box-shadow: 0 2px 10px rgba(30, 58, 138, 0.12);
 }
 
 .nav-icon {
