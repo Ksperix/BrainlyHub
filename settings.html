@@ -108,7 +108,7 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
-      <!-- Clean Top Bar Header (Identical across all pages) -->
+      <!-- Clean Top Bar Header -->
       <header class="top-bar">
         <div class="top-bar-actions">
           <!-- Notifications Dropdown -->
@@ -189,20 +189,14 @@
         </div>
       </header>
 
-      <!-- Content Body: Panel Ustawień -->
-      <main class="content-body" style="display: flex; flex-direction: column; gap: 24px; max-width: 900px;">
+      <!-- Content Body: Panel Ustawień (Pełna szerokość bez zbędnego nagłówka) -->
+      <main class="content-body settings-page-body">
         
-        <!-- Główny tytuł podstrony (wewnątrz obszaru roboczego) -->
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-          <img src="assets/Settings.png" alt="Settings" style="width: 28px; height: 28px;" />
-          <h1 style="font-size: 1.6rem; color: var(--text-main); font-weight: 700;">Settings</h1>
-        </div>
-
         <!-- Sekcja 1: Profile Settings -->
         <section class="liquid-card" id="profile">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+          <div class="settings-card-header">
             <img src="assets/User profile.png" alt="Profile" style="width: 24px; height: 24px;" />
-            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Profile Settings</h2>
+            <h2>Profile Settings</h2>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -229,9 +223,9 @@
 
         <!-- Sekcja 2: Appearance & Theme -->
         <section class="liquid-card" id="appearance">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+          <div class="settings-card-header">
             <img src="assets/Home star.png" alt="Theme" style="width: 24px; height: 24px;" />
-            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Appearance & Themes</h2>
+            <h2>Appearance & Themes</h2>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 20px;">
@@ -263,9 +257,9 @@
 
         <!-- Sekcja 3: Notifications Personalization -->
         <section class="liquid-card" id="notifications">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+          <div class="settings-card-header">
             <img src="assets/Notifications.png" alt="Notifications" style="width: 24px; height: 24px;" />
-            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Notifications Personalization</h2>
+            <h2>Notifications Personalization</h2>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -299,9 +293,9 @@
 
         <!-- Sekcja 4: Data & Reset -->
         <section class="liquid-card" id="preferences">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+          <div class="settings-card-header">
             <img src="assets/Padlock.png" alt="Data" style="width: 24px; height: 24px;" />
-            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Data & System Reset</h2>
+            <h2>Data & System Reset</h2>
           </div>
 
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
