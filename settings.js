@@ -108,7 +108,7 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
-      <!-- Top Bar / Header bez nazwy strony -->
+      <!-- Standardized Top Bar Header -->
       <header class="top-bar">
         <div class="top-bar-actions">
           <!-- Notifications Dropdown -->
@@ -192,7 +192,7 @@
       <!-- Content Body: Panel Ustawień -->
       <main class="content-body" style="display: flex; flex-direction: column; gap: 24px; max-width: 900px;">
         
-        <!-- Main Title inside Content -->
+        <!-- Główny tytuł wewnątrz obszaru roboczego -->
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
           <img src="assets/Settings.png" alt="Settings" style="width: 28px; height: 28px;" />
           <h1 style="font-size: 1.6rem; color: var(--text-main); font-weight: 700;">Settings</h1>
