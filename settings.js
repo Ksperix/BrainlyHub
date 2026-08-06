@@ -108,10 +108,8 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
-      <!-- Standardized Top Bar / Header -->
+      <!-- Top Bar / Header bez nazwy strony -->
       <header class="top-bar">
-        <h2 class="top-bar-title">Settings</h2>
-
         <div class="top-bar-actions">
           <!-- Notifications Dropdown -->
           <div class="dropdown-container">
@@ -134,14 +132,14 @@
             </div>
           </div>
 
-          <!-- User Profile Dropdown (Standardized layout with avatar on top) -->
+          <!-- User Profile Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="User Profile" id="btn-user-profile">
               <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
             </button>
 
             <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
-              <!-- Header Profilu (Wizytówka na samej górze) -->
+              <!-- Header Profilu -->
               <div class="user-profile-header">
                 <div class="profile-avatar" id="header-avatar">S</div>
                 <div class="profile-info">
@@ -150,7 +148,7 @@
                 </div>
               </div>
 
-              <!-- Główny przycisk: Account Settings -->
+              <!-- Przycisk Account Settings -->
               <a href="settings.html" class="profile-btn-card primary-card">
                 <div class="profile-btn-icon">
                   <img src="assets/Settings.png" alt="Settings" style="width: 22px; height: 22px;" />
@@ -162,7 +160,7 @@
 
               <div style="border-top: 1px solid var(--border-color); margin: 2px 0;"></div>
 
-              <!-- Sekcja narzędzi społecznościowych na dole -->
+              <!-- Bloczki społecznościowe -->
               <div class="profile-tools-section">
                 <span class="profile-tools-title">Community & Extensions</span>
 
@@ -194,6 +192,12 @@
       <!-- Content Body: Panel Ustawień -->
       <main class="content-body" style="display: flex; flex-direction: column; gap: 24px; max-width: 900px;">
         
+        <!-- Main Title inside Content -->
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+          <img src="assets/Settings.png" alt="Settings" style="width: 28px; height: 28px;" />
+          <h1 style="font-size: 1.6rem; color: var(--text-main); font-weight: 700;">Settings</h1>
+        </div>
+
         <!-- Sekcja 1: Profile Settings -->
         <section class="liquid-card" id="profile">
           <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
