@@ -54,7 +54,7 @@
 
         <li style="margin: 8px 0; border-top: 1px solid var(--border-color);"></li>
 
-        <!-- Subjects (Osobne podstrony) -->
+        <!-- Subjects -->
         <li>
           <a href="math.html" class="nav-item">
             <img src="assets/Mathematics.png" alt="Mathematics" class="nav-icon" />
@@ -108,11 +108,12 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
-      <!-- Top Bar / Header (Usunięto przycisk zębatki) -->
+      <!-- Top Bar / Header -->
       <header class="top-bar">
         <h2 class="top-bar-title">Home</h2>
 
         <div class="top-bar-actions">
+          <!-- Notifications Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="Notifications" id="btn-notifications">
               <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
@@ -121,22 +122,45 @@
             <div class="header-dropdown" id="dropdown-notifications">
               <div class="dropdown-header">
                 <span>Notifications</span>
-                <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear</small>
+                <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear All</small>
               </div>
-              <div id="notif-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto;">
-                <div style="font-size: 0.8rem; color: var(--text-muted); padding: 4px;">Welcome to BrainlyHub!</div>
+              <div id="notif-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto;">
+                <div class="notification-card">
+                  <div class="notif-icon-wrapper">
+                    <img src="assets/Home star.png" style="width: 16px; height: 16px;" alt="Notice" />
+                  </div>
+                  <div class="notif-content">
+                    <span class="notif-title">Welcome to BrainlyHub!</span>
+                    <span class="notif-desc">Your academic task platform is ready. Filter tasks by grade and difficulty.</span>
+                    <span class="notif-time">Just now</span>
+                  </div>
+                </div>
               </div>
+              <a href="settings.html#notifications" class="dropdown-footer-link">
+                <img src="assets/Settings.png" style="width: 14px; height: 14px;" alt="Settings" />
+                Notification Settings
+              </a>
             </div>
           </div>
 
+          <!-- User Profile Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="User Profile" id="btn-user-profile">
               <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
             </button>
             <div class="header-dropdown" id="dropdown-profile">
-              <div class="dropdown-header"><span>Student Account</span></div>
-              <a href="settings.html" class="dropdown-item">
-                <img src="assets/Settings.png" style="width: 16px; height: 16px;" /> Settings
+              <div class="user-profile-header">
+                <div class="profile-avatar" id="header-avatar">S</div>
+                <div class="profile-info">
+                  <span class="profile-name" id="header-user-name">Student Account</span>
+                  <span class="profile-role">High School Member</span>
+                </div>
+              </div>
+              <a href="settings.html#profile" class="dropdown-item">
+                <img src="assets/User profile.png" style="width: 16px; height: 16px;" alt="Profile" /> Edit Profile
+              </a>
+              <a href="settings.html#preferences" class="dropdown-item">
+                <img src="assets/Settings.png" style="width: 16px; height: 16px;" alt="Settings" /> Account Settings
               </a>
             </div>
           </div>
