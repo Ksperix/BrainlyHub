@@ -6,7 +6,7 @@
   <title>BrainlyHub — Academic Task & Resource Repository</title>
   
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/Brainly Hub.png" />
+  <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
   
   <!-- CSS Styles -->
   <link rel="stylesheet" href="styles/style.css" />
@@ -125,7 +125,6 @@
                 <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear All</small>
               </div>
               
-              <!-- Dedykowana wewnętrzna scrollowana lista na powiadomienia -->
               <div id="notif-list" class="notif-scroll-container"></div>
 
               <a href="settings.html#notifications" class="dropdown-footer-link">
@@ -148,11 +147,12 @@
                   <span class="profile-role">High School Member</span>
                 </div>
               </div>
+              <!-- Rozdzielone odnośniki z kotwicami sekcji -->
               <a href="settings.html#profile" class="dropdown-item">
                 <img src="assets/User profile.png" style="width: 16px; height: 16px;" alt="Profile" /> Edit Profile
               </a>
               <a href="settings.html#preferences" class="dropdown-item">
-                <img src="assets/Settings.png" style="width: 16px; height: 16px;" alt="Settings" /> Account Settings
+                <img src="assets/Settings.png" style="width: 16px; height: 16px;" alt="Settings" /> Account Preferences
               </a>
             </div>
           </div>
@@ -160,15 +160,45 @@
       </header>
 
       <!-- Main Body Content -->
-      <main class="content-body">
+      <main class="content-body" style="display: flex; flex-direction: column; gap: 24px;">
+        <!-- Card 1: Power Welcome Banner -->
         <div class="liquid-card">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
             <img src="assets/Home star.png" alt="Star" style="width: 32px; height: 32px;" />
             <h1 style="color: var(--primary); font-size: 1.5rem; margin: 0;">Welcome to BrainlyHub!</h1>
           </div>
           <p style="color: var(--text-muted); line-height: 1.6;">
             Select a subject or category from the sidebar menu to filter tasks by grade, topic, and difficulty level.
           </p>
+        </div>
+
+        <!-- Card Section 2: Community & Extension Tools (Bloczki) -->
+        <div>
+          <h3 style="color: var(--text-main); font-size: 1.1rem; margin-bottom: 14px; font-weight: 600;">Community & Tools</h3>
+          
+          <div class="tools-grid">
+            <!-- Blok 1: Discord -->
+            <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="tool-card">
+              <div class="tool-icon-box">
+                <img src="assets/Brainly.png" alt="Discord Community" style="width: 24px; height: 24px;" />
+              </div>
+              <div class="tool-info">
+                <span class="tool-title">Discord Community</span>
+                <span class="tool-desc">Join our official BrainlyHQ server to study together and get help.</span>
+              </div>
+            </a>
+
+            <!-- Blok 2: Brainly Creatives Extension -->
+            <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="tool-card">
+              <div class="tool-icon-box">
+                <img src="assets/Code.png" alt="Brainly Creatives" style="width: 24px; height: 24px;" />
+              </div>
+              <div class="tool-info">
+                <span class="tool-title">Brainly Creatives</span>
+                <span class="tool-desc">Install the official Chrome Web Store extension for customized learning.</span>
+              </div>
+            </a>
+          </div>
         </div>
       </main>
     </div>
