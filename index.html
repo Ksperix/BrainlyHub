@@ -117,25 +117,17 @@
           <div class="dropdown-container">
             <button class="action-icon-btn" title="Notifications" id="btn-notifications">
               <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
-              <span class="notification-badge" id="notif-badge"></span>
+              <span class="notification-badge" id="notif-badge" style="display: none;"></span>
             </button>
             <div class="header-dropdown" id="dropdown-notifications">
               <div class="dropdown-header">
                 <span>Notifications</span>
                 <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear All</small>
               </div>
-              <div id="notif-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto;">
-                <div class="notification-card">
-                  <div class="notif-icon-wrapper">
-                    <img src="assets/Home star.png" style="width: 16px; height: 16px;" alt="Notice" />
-                  </div>
-                  <div class="notif-content">
-                    <span class="notif-title">Welcome to BrainlyHub!</span>
-                    <span class="notif-desc">Your academic task platform is ready. Filter tasks by grade and difficulty.</span>
-                    <span class="notif-time">Just now</span>
-                  </div>
-                </div>
-              </div>
+              
+              <!-- Dedykowana wewnętrzna scrollowana lista na powiadomienia -->
+              <div id="notif-list" class="notif-scroll-container"></div>
+
               <a href="settings.html#notifications" class="dropdown-footer-link">
                 <img src="assets/Settings.png" style="width: 14px; height: 14px;" alt="Settings" />
                 Notification Settings
