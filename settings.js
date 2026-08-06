@@ -1,325 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrainlyHub — Settings</title>
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
-  
-  <!-- CSS Styles -->
-  <link rel="stylesheet" href="styles/style.css" />
-</head>
-<body>
+/* ==========================================
+   BRAINLYHUB - SETTINGS CONTROLLER
+   ========================================== */
 
-  <div id="app">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <div class="brand-container">
-          <img src="assets/Brainly Hub.png" alt="BrainlyHub Logo" class="brand-logo" />
-          <span class="brand-title">BrainlyHub</span>
-        </div>
-        <button class="btn-toggle-sidebar" id="btn-toggle-sidebar" title="Collapse / Expand Navigation">
-          <img src="assets/Folder.png" alt="Toggle" class="nav-icon" />
-        </button>
-      </div>
+document.addEventListener('DOMContentLoaded', () => {
+  initProfileSettings();
+  initNotificationSettings();
+  initSystemReset();
+});
 
-      <ul class="nav-list">
-        <li>
-          <a href="index.html" class="nav-item">
-            <img src="assets/Home star.png" alt="Home" class="nav-icon" />
-            <span class="nav-label">Home</span>
-          </a>
-        </li>
-        <li>
-          <a href="tasks.html" class="nav-item">
-            <img src="assets/Tasks.png" alt="Tasks" class="nav-icon" />
-            <span class="nav-label">Task Search</span>
-          </a>
-        </li>
-        <li>
-          <a href="past-exams.html" class="nav-item">
-            <img src="assets/Past exams.png" alt="Past Exams" class="nav-icon" />
-            <span class="nav-label">Past Exams</span>
-          </a>
-        </li>
-        <li>
-          <a href="topics.html" class="nav-item">
-            <img src="assets/Topic.png" alt="Categories" class="nav-icon" />
-            <span class="nav-label">Categories & Topics</span>
-          </a>
-        </li>
+function initProfileSettings() {
+  const nameInput = document.getElementById('input-user-name');
+  const roleSelect = document.getElementById('select-user-role');
+  const saveBtn = document.getElementById('btn-save-profile');
 
-        <li style="margin: 8px 0; border-top: 1px solid var(--border-color);"></li>
+  // Wczytywanie zapisanych danych
+  if (nameInput) {
+    nameInput.value = localStorage.getItem('user_name') || 'Student Account';
+  }
+  if (roleSelect) {
+    roleSelect.value = localStorage.getItem('user_role') || 'High School Member';
+  }
 
-        <!-- Subjects -->
-        <li>
-          <a href="math.html" class="nav-item">
-            <img src="assets/Mathematics.png" alt="Mathematics" class="nav-icon" />
-            <span class="nav-label">Mathematics</span>
-          </a>
-        </li>
-        <li>
-          <a href="chemistry.html" class="nav-item">
-            <img src="assets/Chemistry.png" alt="Chemistry" class="nav-icon" />
-            <span class="nav-label">Chemistry</span>
-          </a>
-        </li>
-        <li>
-          <a href="physics.html" class="nav-item">
-            <img src="assets/Physics.png" alt="Physics" class="nav-icon" />
-            <span class="nav-label">Physics</span>
-          </a>
-        </li>
-        <li>
-          <a href="informatics.html" class="nav-item">
-            <img src="assets/Computer science.png" alt="Computer Science" class="nav-icon" />
-            <span class="nav-label">Computer Science</span>
-          </a>
-        </li>
-        <li>
-          <a href="biology.html" class="nav-item">
-            <img src="assets/Biology.png" alt="Biology" class="nav-icon" />
-            <span class="nav-label">Biology</span>
-          </a>
-        </li>
-        <li>
-          <a href="history.html" class="nav-item">
-            <img src="assets/History.png" alt="History" class="nav-icon" />
-            <span class="nav-label">History</span>
-          </a>
-        </li>
-      </ul>
+  // Zapis zmian
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      const newName = nameInput.value.trim() || 'Student Account';
+      const newRole = roleSelect.value;
 
-      <!-- Sidebar Footer -->
-      <div class="sidebar-footer">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSene6zRah8jUBrBNIwbSdTEdr0Wa-9xSyEbInpBYptGAwmu3Q/viewform" target="_blank" rel="noopener" class="nav-item">
-          <img src="assets/Bug.png" alt="Report a bug" class="nav-icon" />
-          <span class="nav-label">Report a bug</span>
-        </a>
-        <a href="settings.html" class="nav-item active">
-          <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
-          <span class="nav-label">Settings</span>
-        </a>
-      </div>
-    </aside>
+      localStorage.setItem('user_name', newName);
+      localStorage.setItem('user_role', newRole);
 
-    <!-- Main Content Area -->
-    <div class="main-wrapper">
-      <!-- Standardized Top Bar Header -->
-      <header class="top-bar">
-        <div class="top-bar-actions">
-          <!-- Notifications Dropdown -->
-          <div class="dropdown-container">
-            <button class="action-icon-btn" title="Notifications" id="btn-notifications">
-              <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
-              <span class="notification-badge" id="notif-badge" style="display: none;"></span>
-            </button>
-            <div class="header-dropdown" id="dropdown-notifications">
-              <div class="dropdown-header">
-                <span>Notifications</span>
-                <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear All</small>
-              </div>
-              
-              <div id="notif-list" class="notif-scroll-container"></div>
+      // Odświeżenie nazwy w rozwijanym profilu w nagłówku
+      const nameElement = document.getElementById('header-user-name');
+      const avatarElement = document.getElementById('header-avatar');
+      if (nameElement) nameElement.textContent = newName;
+      if (avatarElement) avatarElement.textContent = newName.charAt(0).toUpperCase();
 
-              <a href="settings.html#notifications" class="dropdown-footer-link">
-                <img src="assets/Settings.png" style="width: 14px; height: 14px;" alt="Settings" />
-                Notification Settings
-              </a>
-            </div>
-          </div>
+      alert('Profile settings saved successfully!');
+    });
+  }
+}
 
-          <!-- User Profile Dropdown -->
-          <div class="dropdown-container">
-            <button class="action-icon-btn" title="User Profile" id="btn-user-profile">
-              <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
-            </button>
+function initNotificationSettings() {
+  const resetNotifBtn = document.getElementById('btn-reset-notifications');
 
-            <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
-              <!-- Header Profilu -->
-              <div class="user-profile-header">
-                <div class="profile-avatar" id="header-avatar">S</div>
-                <div class="profile-info">
-                  <span class="profile-name" id="header-user-name">Student Account</span>
-                  <span class="profile-role">High School Member</span>
-                </div>
-              </div>
+  if (resetNotifBtn) {
+    resetNotifBtn.addEventListener('click', () => {
+      localStorage.removeItem('notif_welcome_read');
+      localStorage.removeItem('has_visited_before');
+      alert('Notification history reset successfully!');
+    });
+  }
+}
 
-              <!-- Przycisk Account Settings -->
-              <a href="settings.html" class="profile-btn-card primary-card">
-                <div class="profile-btn-icon">
-                  <img src="assets/Settings.png" alt="Settings" style="width: 22px; height: 22px;" />
-                </div>
-                <div class="profile-btn-info">
-                  <span class="profile-btn-title">Account Settings</span>
-                </div>
-              </a>
+function initSystemReset() {
+  const clearDataBtn = document.getElementById('btn-clear-all-data');
 
-              <div style="border-top: 1px solid var(--border-color); margin: 2px 0;"></div>
-
-              <!-- Bloczki społecznościowe -->
-              <div class="profile-tools-section">
-                <span class="profile-tools-title">Community & Extensions</span>
-
-                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
-                  <div class="profile-btn-icon">
-                    <img src="assets/Brainly.png" alt="Discord" style="width: 22px; height: 22px;" />
-                  </div>
-                  <div class="profile-btn-info">
-                    <span class="profile-btn-title">Discord Server</span>
-                    <span class="profile-btn-desc">Join BrainlyHQ</span>
-                  </div>
-                </a>
-
-                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
-                  <div class="profile-btn-icon">
-                    <img src="assets/Code.png" alt="Extension" style="width: 22px; height: 22px;" />
-                  </div>
-                  <div class="profile-btn-info">
-                    <span class="profile-btn-title">Brainly Creatives</span>
-                    <span class="profile-btn-desc">Chrome Extension</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- Content Body: Panel Ustawień -->
-      <main class="content-body" style="display: flex; flex-direction: column; gap: 24px; max-width: 900px;">
-        
-        <!-- Główny tytuł wewnątrz obszaru roboczego -->
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-          <img src="assets/Settings.png" alt="Settings" style="width: 28px; height: 28px;" />
-          <h1 style="font-size: 1.6rem; color: var(--text-main); font-weight: 700;">Settings</h1>
-        </div>
-
-        <!-- Sekcja 1: Profile Settings -->
-        <section class="liquid-card" id="profile">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
-            <img src="assets/User profile.png" alt="Profile" style="width: 24px; height: 24px;" />
-            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Profile Settings</h2>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-            <div class="settings-form-group">
-              <label for="input-user-name" class="settings-label">Display Name</label>
-              <input type="text" id="input-user-name" class="settings-input" placeholder="Enter your display name" />
-            </div>
-
-            <div class="settings-form-group">
-              <label for="select-user-role" class="settings-label">Academic Status / Role</label>
-              <select id="select-user-role" class="settings-select">
-                <option value="High School Member">High School Member (Matura Prep)</option>
-                <option value="Primary School Student">Primary School Student</option>
-                <option value="University Student">University Student</option>
-                <option value="Educator / Tutor">Educator / Tutor</option>
-              </select>
-            </div>
-
-            <button id="btn-save-profile" class="settings-btn-primary" style="align-self: flex-start;">
-              Save Profile Changes
-            </button>
-          </div>
-        </section>
-
-        <!-- Sekcja 2: Appearance & Theme -->
-        <section class="liquid-card" id="appearance">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
-            <img src="assets/Home star.png" alt="Theme" style="width: 24px; height: 24px;" />
-            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Appearance & Themes</h2>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Color Mode</span>
-                <span class="settings-row-desc">Switch between light mode and dark liquid UI.</span>
-              </div>
-              <div class="theme-toggle-group">
-                <button class="theme-option-btn active" data-theme="light">Light</button>
-                <button class="theme-option-btn" data-theme="dark">Dark</button>
-              </div>
-            </div>
-
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Accent Color</span>
-                <span class="settings-row-desc">Customize primary UI highlights and active states.</span>
-              </div>
-              <div style="display: flex; gap: 10px;" id="accent-picker">
-                <span class="accent-circle active" data-color="#1e3a8a" style="background: #1e3a8a;" title="Navy Blue"></span>
-                <span class="accent-circle" data-color="#2563eb" style="background: #2563eb;" title="Royal Blue"></span>
-                <span class="accent-circle" data-color="#0d9488" style="background: #0d9488;" title="Teal"></span>
-                <span class="accent-circle" data-color="#7c3aed" style="background: #7c3aed;" title="Purple"></span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Sekcja 3: Notifications Personalization -->
-        <section class="liquid-card" id="notifications">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
-            <img src="assets/Notifications.png" alt="Notifications" style="width: 24px; height: 24px;" />
-            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Notifications Personalization</h2>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Welcome Notifications</span>
-                <span class="settings-row-desc">Show welcome badge and orientation tip for first-time visits.</span>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="toggle-notif-welcome" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
-
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Exam & Task Alerts</span>
-                <span class="settings-row-desc">Display indicators when new past exam sheets or task categories are published.</span>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="toggle-notif-exams" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
-
-            <button id="btn-reset-notifications" class="settings-btn-secondary" style="align-self: flex-start; margin-top: 8px;">
-              Reset Notification History
-            </button>
-          </div>
-        </section>
-
-        <!-- Sekcja 4: Data & Reset -->
-        <section class="liquid-card" id="preferences">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
-            <img src="assets/Padlock.png" alt="Data" style="width: 24px; height: 24px;" />
-            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Data & System Reset</h2>
-          </div>
-
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-            <div>
-              <span class="settings-row-title">Clear Local Storage</span>
-              <span class="settings-row-desc">Resets sidebar state, custom names, theme preferences, and notifications.</span>
-            </div>
-            <button id="btn-clear-all-data" class="settings-btn-danger">
-              Reset Application Data
-            </button>
-          </div>
-        </section>
-
-      </main>
-    </div>
-  </div>
-
-  <script src="core/main.js"></script>
-  <script src="core/settings.js"></script>
-</body>
-</html>
+  if (clearDataBtn) {
+    clearDataBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to reset all application settings and local storage?')) {
+        localStorage.clear();
+        window.location.reload();
+      }
+    });
+  }
+}
