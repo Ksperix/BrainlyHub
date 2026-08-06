@@ -3,14 +3,42 @@
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 1. Inicjalizacja motywu, koloru akcentu i danych użytkownika
+  loadGlobalPreferences();
+
+  // 2. Inicjalizacja modułów interfejsu
   initSidebar();
   initHeaderDropdowns();
-  loadUserProfile();
   initFaviconSwitcher();
 });
 
 /**
- * Handles sidebar collapse logic
+ * Wczytuje i nakłada motyw, kolor akcentu oraz dane profilu z localStorage na KAŻDEJ podstronie
+ */
+function loadGlobalPreferences() {
+  const savedTheme = localStorage.getItem('app_theme') || 'light';
+  const savedAccent = localStorage.getItem('app_accent') || '#1e3a8a';
+  const savedName = localStorage.getItem('user_name') || 'Student Account';
+
+  // Nakładanie motywu Ciemny/Jasny
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+  } else {
+    document.body.classList.remove('dark-theme');
+  }
+
+  // Nakładanie koloru akcentu
+  document.documentElement.style.setProperty('--primary', savedAccent);
+
+  // Aktualizacja danych użytkownika w nagłówku
+  const nameElement = document.getElementById('header-user-name');
+  const avatarElement = document.getElementById('header-avatar');
+  if (nameElement) nameElement.textContent = savedName;
+  if (avatarElement) avatarElement.textContent = savedName.charAt(0).toUpperCase();
+}
+
+/**
+ * Obsługa zwijania/rozwijania paska bocznego (Sidebar)
  */
 function initSidebar() {
   const sidebar = document.getElementById('sidebar');
@@ -37,7 +65,7 @@ function initSidebar() {
 }
 
 /**
- * Handles header dropdown menus (Notifications & Profile)
+ * Obsługa menu rozwijanych w nagłówku (Powiadomienia i Profil)
  */
 function initHeaderDropdowns() {
   const btnNotif = document.getElementById('btn-notifications');
@@ -127,17 +155,8 @@ function hideWelcomeNotification(container, badge) {
   }
 }
 
-function loadUserProfile() {
-  const nameElement = document.getElementById('header-user-name');
-  const avatarElement = document.getElementById('header-avatar');
-  
-  const savedName = localStorage.getItem('user_name') || 'Student Account';
-  if (nameElement) nameElement.textContent = savedName;
-  if (avatarElement) avatarElement.textContent = savedName.charAt(0).toUpperCase();
-}
-
 /**
- * Zmienia faviconę na odcienie szarości (szarawą) po opuszczeniu karty
+ * Zmienia ikonę favicon na odcienie szarości przy zmianie aktywnej karty przeglądarki
  */
 function initFaviconSwitcher() {
   const favicon = document.getElementById('favicon');
@@ -146,7 +165,6 @@ function initFaviconSwitcher() {
   const originalSrc = favicon.href;
   let grayscaleSrc = null;
 
-  // Tworzenie wersji w odcieniach szarości przy użyciu HTML Canvas
   const img = new Image();
   img.crossOrigin = 'Anonymous';
   img.src = originalSrc;
@@ -160,7 +178,6 @@ function initFaviconSwitcher() {
     const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imgData.data;
 
-    // Przekształcanie pikseli na odcienie szarości
     for (let i = 0; i < data.length; i += 4) {
       const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
       data[i] = avg;     // Red
@@ -172,7 +189,6 @@ function initFaviconSwitcher() {
     grayscaleSrc = canvas.toDataURL('image/png');
   };
 
-  // Reakcja na zmianę aktywnej karty przeglądarki
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       if (grayscaleSrc) favicon.href = grayscaleSrc;
