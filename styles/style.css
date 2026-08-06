@@ -280,7 +280,7 @@ body {
   border-radius: 50%;
 }
 
-/* Popover / Dropdown Menu - Poprawione pointer-events oraz wyświetlanie */
+/* Popover / Dropdown Menu */
 .header-dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -335,6 +335,16 @@ body {
 .dropdown-item:hover {
   background-color: var(--primary-light);
   color: var(--primary);
+}
+
+/* Wewnętrzna lista przewijana powiadomień */
+.notif-scroll-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 2px;
 }
 
 /* Notification Cards */
