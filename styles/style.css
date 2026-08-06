@@ -727,3 +727,43 @@ input:checked + .slider:before {
   background: #cbd5e1;
   border-radius: 3px;
 }
+
+/* ==========================================
+   STANDARDIZED CLEAN TOP BAR (ALL PAGES)
+   ========================================== */
+
+.top-bar {
+  height: 64px !important;
+  min-height: 64px !important;
+  max-height: 64px !important;
+  padding: 0 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  box-sizing: border-box !important;
+}
+
+/* Resetujemy wszelkie niewidoczne tytuły, które rozciągały wysokość paska */
+.top-bar h1,
+.top-bar h2,
+.top-bar h3,
+.top-bar-title,
+.top-bar-left {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.top-bar-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  height: 100% !important;
+}
