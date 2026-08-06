@@ -4,6 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initProfileSettings();
+  initThemeAndAppearance();
   initNotificationSettings();
   initSystemReset();
 });
@@ -13,7 +14,6 @@ function initProfileSettings() {
   const roleSelect = document.getElementById('select-user-role');
   const saveBtn = document.getElementById('btn-save-profile');
 
-  // Wczytywanie zapisanych danych
   if (nameInput) {
     nameInput.value = localStorage.getItem('user_name') || 'Student Account';
   }
@@ -21,7 +21,6 @@ function initProfileSettings() {
     roleSelect.value = localStorage.getItem('user_role') || 'High School Member';
   }
 
-  // Zapis zmian
   if (saveBtn) {
     saveBtn.addEventListener('click', () => {
       const newName = nameInput.value.trim() || 'Student Account';
@@ -30,7 +29,6 @@ function initProfileSettings() {
       localStorage.setItem('user_name', newName);
       localStorage.setItem('user_role', newRole);
 
-      // Odświeżenie nazwy w rozwijanym profilu w nagłówku
       const nameElement = document.getElementById('header-user-name');
       const avatarElement = document.getElementById('header-avatar');
       if (nameElement) nameElement.textContent = newName;
@@ -39,6 +37,62 @@ function initProfileSettings() {
       alert('Profile settings saved successfully!');
     });
   }
+}
+
+function initThemeAndAppearance() {
+  // --- 1. Obsługa Motywu (Light / Dark) ---
+  const savedTheme = localStorage.getItem('app_theme') || 'light';
+  applyTheme(savedTheme);
+
+  const themeBtns = document.querySelectorAll('.theme-option-btn');
+  themeBtns.forEach(btn => {
+    if (btn.dataset.theme === savedTheme) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+
+    btn.addEventListener('click', () => {
+      themeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const chosenTheme = btn.dataset.theme;
+      localStorage.setItem('app_theme', chosenTheme);
+      applyTheme(chosenTheme);
+    });
+  });
+
+  // --- 2. Obsługa Koloru Akcentu ---
+  const savedAccent = localStorage.getItem('app_accent') || '#1e3a8a';
+  applyAccent(savedAccent);
+
+  const accentCircles = document.querySelectorAll('.accent-circle');
+  accentCircles.forEach(circle => {
+    if (circle.dataset.color === savedAccent) {
+      circle.classList.add('active');
+    } else {
+      circle.classList.remove('active');
+    }
+
+    circle.addEventListener('click', () => {
+      accentCircles.forEach(c => c.classList.remove('active'));
+      circle.classList.add('active');
+      const chosenAccent = circle.dataset.color;
+      localStorage.setItem('app_accent', chosenAccent);
+      applyAccent(chosenAccent);
+    });
+  });
+}
+
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    document.body.classList.add('dark-theme');
+  } else {
+    document.body.classList.remove('dark-theme');
+  }
+}
+
+function applyAccent(color) {
+  document.documentElement.style.setProperty('--primary', color);
 }
 
 function initNotificationSettings() {
