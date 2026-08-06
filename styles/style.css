@@ -9,7 +9,7 @@
   --bg-glass: rgba(255, 255, 255, 0.75);
   --bg-sidebar: #f1f5f9;
   
-  /* Ciemnoniebieskie akcenty pasujące do ikonek PNG */
+  /* Ciemnoniebieskie akcenty */
   --primary: #1e3a8a;       /* Deep Navy Blue */
   --primary-hover: #1e40af;
   --primary-light: #eff6ff;
@@ -283,7 +283,7 @@ body {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 320px;
+  width: 300px;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -335,82 +335,21 @@ body {
   color: var(--primary);
 }
 
-.notif-scroll-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 260px;
-  overflow-y: auto;
-  padding-right: 2px;
-}
-
-.notification-card {
-  display: flex;
-  gap: 10px;
+/* Duża ikona i odnośnik Account Settings w rozwijanym profilu */
+.profile-large-item {
   padding: 10px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  background-color: var(--bg-primary);
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.notification-card:hover {
-  border-color: #cbd5e1;
-  background-color: var(--primary-light);
-}
-
-.notif-icon-wrapper {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(30, 58, 138, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.notif-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.notif-title {
-  font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-main);
+  font-size: 0.95rem;
 }
 
-.notif-desc {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  line-height: 1.3;
+.profile-dropdown-icon {
+  width: 22px !important;
+  height: 22px !important;
 }
 
-.notif-time {
-  font-size: 0.7rem;
-  color: #94a3b8;
-  margin-top: 4px;
-}
-
-.dropdown-footer-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--primary);
-  text-decoration: none;
-  padding-top: 8px;
-  border-top: 1px solid var(--border-color);
-  transition: opacity 0.2s ease;
-}
-
-.dropdown-footer-link:hover {
-  opacity: 0.8;
-}
+/* ==========================================
+   WIZYTÓWKA PROFILU I BLOCZKI W DROPDOWNIE
+   ========================================== */
 
 .user-profile-header {
   display: flex;
@@ -421,8 +360,8 @@ body {
 }
 
 .profile-avatar {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: var(--primary);
   color: #ffffff;
@@ -430,7 +369,7 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .profile-info {
@@ -440,73 +379,75 @@ body {
 
 .profile-name {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-main);
 }
 
 .profile-role {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
 }
 
-/* ==========================================
-   COMMUNITY & TOOLS BLOCKS (BLOCZKI)
-   ========================================== */
-
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+.profile-tools-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
 }
 
-.tool-card {
+.profile-tools-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-tool-block {
   display: flex;
   align-items: center;
-  gap: 14px;
-  background: var(--bg-surface);
+  gap: 10px;
+  background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 18px 20px;
-  text-decoration: none;
-  box-shadow: var(--shadow-subtle);
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tool-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--primary);
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.08);
-}
-
-.tool-icon-box {
-  width: 44px;
-  height: 44px;
   border-radius: var(--radius-md);
-  background: var(--primary-light);
+  padding: 8px 10px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.profile-tool-block:hover {
+  background-color: var(--primary-light);
+  border-color: #cbd5e1;
+}
+
+.tool-icon-box-small {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: rgba(30, 58, 138, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.tool-info {
+.tool-info-small {
   display: flex;
   flex-direction: column;
-  gap: 2px;
 }
 
-.tool-title {
+.tool-title-small {
+  font-size: 0.85rem;
   font-weight: 600;
-  font-size: 0.95rem;
   color: var(--text-main);
 }
 
-.tool-desc {
-  font-size: 0.8rem;
+.tool-desc-small {
+  font-size: 0.72rem;
   color: var(--text-muted);
-  line-height: 1.35;
 }
 
+/* Layout & Content Body */
 .content-body {
   padding: 32px;
   flex-grow: 1;
