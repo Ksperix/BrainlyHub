@@ -23,16 +23,16 @@ export function renderFooter() {
         flex-wrap: wrap;
         gap: 16px;
       ">
-        <!-- Lewa strona - Sygnatura -->
+        <!-- Left Side -->
         <div style="display: flex; align-items: center; gap: 8px;">
           <img src="assets/Brainly Hub.png" alt="BrainlyHub" style="width: 20px; height: 20px;" />
           <span style="font-weight: 600; color: var(--primary);">BrainlyHub</span>
-          <span>&copy; ${currentYear} — Wszelkie prawa zastrzeżone.</span>
+          <span>&copy; ${currentYear} — All rights reserved.</span>
         </div>
 
-        <!-- Prawa strona - Szybkie akcje / Linki -->
+        <!-- Right Side -->
         <div style="display: flex; align-items: center; gap: 16px;">
-          <a href="#bug" class="footer-link" style="
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSene6zRah8jUBrBNIwbSdTEdr0Wa-9xSyEbInpBYptGAwmu3Q/viewform" target="_blank" rel="noopener" class="footer-link" style="
             display: flex; 
             align-items: center; 
             gap: 6px; 
@@ -40,8 +40,8 @@ export function renderFooter() {
             text-decoration: none;
             transition: color 0.2s;
           ">
-            <img src="assets/Bug.png" alt="Zgłoś błąd" style="width: 16px; height: 16px;" />
-            <span>Zgłoś błąd</span>
+            <img src="assets/Bug.png" alt="Report Bug" style="width: 16px; height: 16px;" />
+            <span>Report Bug</span>
           </a>
 
           <a href="#help" class="footer-link" style="
@@ -52,27 +52,14 @@ export function renderFooter() {
             text-decoration: none;
             transition: color 0.2s;
           ">
-            <img src="assets/Question mark.png" alt="Pomoc" style="width: 16px; height: 16px;" />
-            <span>Pomoc</span>
-          </a>
-
-          <a href="#code" class="footer-link" style="
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            color: var(--text-muted); 
-            text-decoration: none;
-            transition: color 0.2s;
-          ">
-            <img src="assets/Code.png" alt="Open Source" style="width: 16px; height: 16px;" />
-            <span>Open Source</span>
+            <img src="assets/Question mark.png" alt="Help" style="width: 16px; height: 16px;" />
+            <span>Help</span>
           </a>
         </div>
       </div>
 
-      <!-- Dolny mały tekst z zastrzeżeniem -->
       <div style="text-align: center; font-size: 0.75rem; opacity: 0.7; margin-top: 8px;">
-        BrainlyHub jest niezależną platformą edukacyjną ułatwiającą wyszukiwanie materiałów pomocniczych.
+        BrainlyHub is an independent educational platform for easy task navigation and academic resource access.
       </div>
     </footer>
   `;
