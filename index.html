@@ -139,7 +139,8 @@
             <button class="action-icon-btn" title="User Profile" id="btn-user-profile">
               <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
             </button>
-            <div class="header-dropdown" id="dropdown-profile">
+            <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
+              <!-- Header Profilu -->
               <div class="user-profile-header">
                 <div class="profile-avatar" id="header-avatar">S</div>
                 <div class="profile-info">
@@ -147,58 +148,54 @@
                   <span class="profile-role">High School Member</span>
                 </div>
               </div>
-              <!-- Rozdzielone odnośniki z kotwicami sekcji -->
-              <a href="settings.html#profile" class="dropdown-item">
-                <img src="assets/User profile.png" style="width: 16px; height: 16px;" alt="Profile" /> Edit Profile
+
+              <!-- TYLKO Account Settings -->
+              <a href="settings.html" class="dropdown-item profile-large-item">
+                <img src="assets/Settings.png" class="profile-dropdown-icon" alt="Settings" /> 
+                <span>Account Settings</span>
               </a>
-              <a href="settings.html#preferences" class="dropdown-item">
-                <img src="assets/Settings.png" style="width: 16px; height: 16px;" alt="Settings" /> Account Preferences
-              </a>
+
+              <div style="border-top: 1px solid var(--border-color); margin: 4px 0;"></div>
+
+              <!-- Bloczki społecznościowe i narzędzi wewnątrz profilu -->
+              <div class="profile-tools-section">
+                <span class="profile-tools-title">Community & Extensions</span>
+                
+                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-tool-block">
+                  <div class="tool-icon-box-small">
+                    <img src="assets/Brainly.png" alt="Discord" style="width: 22px; height: 22px;" />
+                  </div>
+                  <div class="tool-info-small">
+                    <span class="tool-title-small">Discord Server</span>
+                    <span class="tool-desc-small">Join BrainlyHQ</span>
+                  </div>
+                </a>
+
+                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-tool-block">
+                  <div class="tool-icon-box-small">
+                    <img src="assets/Code.png" alt="Extension" style="width: 22px; height: 22px;" />
+                  </div>
+                  <div class="tool-info-small">
+                    <span class="tool-title-small">Brainly Creatives</span>
+                    <span class="tool-desc-small">Chrome Extension</span>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
       <!-- Main Body Content -->
-      <main class="content-body" style="display: flex; flex-direction: column; gap: 24px;">
-        <!-- Card 1: Power Welcome Banner -->
+      <main class="content-body">
         <div class="liquid-card">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
             <img src="assets/Home star.png" alt="Star" style="width: 32px; height: 32px;" />
             <h1 style="color: var(--primary); font-size: 1.5rem; margin: 0;">Welcome to BrainlyHub!</h1>
           </div>
           <p style="color: var(--text-muted); line-height: 1.6;">
             Select a subject or category from the sidebar menu to filter tasks by grade, topic, and difficulty level.
           </p>
-        </div>
-
-        <!-- Card Section 2: Community & Extension Tools (Bloczki) -->
-        <div>
-          <h3 style="color: var(--text-main); font-size: 1.1rem; margin-bottom: 14px; font-weight: 600;">Community & Tools</h3>
-          
-          <div class="tools-grid">
-            <!-- Blok 1: Discord -->
-            <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="tool-card">
-              <div class="tool-icon-box">
-                <img src="assets/Brainly.png" alt="Discord Community" style="width: 24px; height: 24px;" />
-              </div>
-              <div class="tool-info">
-                <span class="tool-title">Discord Community</span>
-                <span class="tool-desc">Join our official BrainlyHQ server to study together and get help.</span>
-              </div>
-            </a>
-
-            <!-- Blok 2: Brainly Creatives Extension -->
-            <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="tool-card">
-              <div class="tool-icon-box">
-                <img src="assets/Code.png" alt="Brainly Creatives" style="width: 24px; height: 24px;" />
-              </div>
-              <div class="tool-info">
-                <span class="tool-title">Brainly Creatives</span>
-                <span class="tool-desc">Install the official Chrome Web Store extension for customized learning.</span>
-              </div>
-            </a>
-          </div>
         </div>
       </main>
     </div>
