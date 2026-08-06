@@ -6,10 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initSidebar();
   initHeaderDropdowns();
   loadUserProfile();
+  initFaviconSwitcher();
 });
 
 /**
- * Obsługa zwijania paska bocznego (Sidebar)
+ * Handles sidebar collapse logic
  */
 function initSidebar() {
   const sidebar = document.getElementById('sidebar');
@@ -36,7 +37,7 @@ function initSidebar() {
 }
 
 /**
- * Obsługa powiadomień (Welcome logic) oraz menu rozwijanych
+ * Handles header dropdown menus (Notifications & Profile)
  */
 function initHeaderDropdowns() {
   const btnNotif = document.getElementById('btn-notifications');
@@ -47,23 +48,18 @@ function initHeaderDropdowns() {
   const btnClearNotifs = document.getElementById('btn-clear-notifs');
   const notifList = document.getElementById('notif-list');
 
-  // Sprawdzenie, czy to pierwsza wizyta użytkownika w historii
   const hasVisitedBefore = localStorage.getItem('has_visited_before');
   const isWelcomeRead = localStorage.getItem('notif_welcome_read') === 'true';
 
   if (!hasVisitedBefore) {
-    // Pierwsza wizyta w historii - dodajemy flagę pierwszej wizyty
     localStorage.setItem('has_visited_before', 'true');
     renderWelcomeNotification(notifList, notifBadge);
   } else if (!isWelcomeRead) {
-    // Kolejne przejście między podstronami, ale użytkownik jeszcze nie wyczyścił powitania
     renderWelcomeNotification(notifList, notifBadge);
   } else {
-    // Użytkownik jest powracający i wyczyścił powiadomienie - ukrywamy kropkę i powiadomienia
     hideWelcomeNotification(notifList, notifBadge);
   }
 
-  // Otwieranie / zamykanie powiadomień
   if (btnNotif && dropdownNotif) {
     btnNotif.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -76,7 +72,6 @@ function initHeaderDropdowns() {
     });
   }
 
-  // Otwieranie / zamykanie profilu
   if (btnProfile && dropdownProfile) {
     btnProfile.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -89,7 +84,6 @@ function initHeaderDropdowns() {
     });
   }
 
-  // Czyszczenie powiadomień przez przycisk Clear All
   if (btnClearNotifs) {
     btnClearNotifs.addEventListener('click', (e) => {
       e.preventDefault();
@@ -98,16 +92,12 @@ function initHeaderDropdowns() {
     });
   }
 
-  // Zamykanie menu rozwijanych po kliknięciu poza nimi
   document.addEventListener('click', () => {
     dropdownNotif?.classList.remove('show');
     dropdownProfile?.classList.remove('show');
   });
 }
 
-/**
- * Renderuje kartę powitalną oraz czerwoną kropkę
- */
 function renderWelcomeNotification(container, badge) {
   if (badge) badge.style.display = 'block';
   if (container) {
@@ -126,9 +116,6 @@ function renderWelcomeNotification(container, badge) {
   }
 }
 
-/**
- * Ukrywa czerwoną kropkę i czyści listę
- */
 function hideWelcomeNotification(container, badge) {
   if (badge) badge.style.display = 'none';
   if (container) {
@@ -140,9 +127,6 @@ function hideWelcomeNotification(container, badge) {
   }
 }
 
-/**
- * Wczytywanie profilu użytkownika
- */
 function loadUserProfile() {
   const nameElement = document.getElementById('header-user-name');
   const avatarElement = document.getElementById('header-avatar');
@@ -150,4 +134,50 @@ function loadUserProfile() {
   const savedName = localStorage.getItem('user_name') || 'Student Account';
   if (nameElement) nameElement.textContent = savedName;
   if (avatarElement) avatarElement.textContent = savedName.charAt(0).toUpperCase();
+}
+
+/**
+ * Zmienia faviconę na odcienie szarości (szarawą) po opuszczeniu karty
+ */
+function initFaviconSwitcher() {
+  const favicon = document.getElementById('favicon');
+  if (!favicon) return;
+
+  const originalSrc = favicon.href;
+  let grayscaleSrc = null;
+
+  // Tworzenie wersji w odcieniach szarości przy użyciu HTML Canvas
+  const img = new Image();
+  img.crossOrigin = 'Anonymous';
+  img.src = originalSrc;
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    
+    ctx.drawImage(img, 0, 0);
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imgData.data;
+
+    // Przekształcanie pikseli na odcienie szarości
+    for (let i = 0; i < data.length; i += 4) {
+      const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+      data[i] = avg;     // Red
+      data[i + 1] = avg; // Green
+      data[i + 2] = avg; // Blue
+    }
+
+    ctx.putImageData(imgData, 0, 0);
+    grayscaleSrc = canvas.toDataURL('image/png');
+  };
+
+  // Reakcja na zmianę aktywnej karty przeglądarki
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (grayscaleSrc) favicon.href = grayscaleSrc;
+    } else {
+      favicon.href = originalSrc;
+    }
+  });
 }
