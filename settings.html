@@ -4,7 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrainlyHub — Settings</title>
+  
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
+  
+  <!-- CSS Styles -->
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
@@ -50,6 +54,7 @@
 
         <li style="margin: 8px 0; border-top: 1px solid var(--border-color);"></li>
 
+        <!-- Subjects -->
         <li>
           <a href="math.html" class="nav-item">
             <img src="assets/Mathematics.png" alt="Mathematics" class="nav-icon" />
@@ -88,6 +93,7 @@
         </li>
       </ul>
 
+      <!-- Sidebar Footer -->
       <div class="sidebar-footer">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSene6zRah8jUBrBNIwbSdTEdr0Wa-9xSyEbInpBYptGAwmu3Q/viewform" target="_blank" rel="noopener" class="nav-item">
           <img src="assets/Bug.png" alt="Report a bug" class="nav-icon" />
@@ -102,10 +108,8 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
-      <!-- Top Bar Header -->
+      <!-- Clean Top Bar Header (Identical across all pages) -->
       <header class="top-bar">
-        <h2 class="top-bar-title">Settings</h2>
-
         <div class="top-bar-actions">
           <!-- Notifications Dropdown -->
           <div class="dropdown-container">
@@ -135,6 +139,7 @@
             </button>
 
             <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
+              <!-- Header Profilu -->
               <div class="user-profile-header">
                 <div class="profile-avatar" id="header-avatar">S</div>
                 <div class="profile-info">
@@ -143,6 +148,7 @@
                 </div>
               </div>
 
+              <!-- Przycisk Account Settings -->
               <a href="settings.html" class="profile-btn-card primary-card">
                 <div class="profile-btn-icon">
                   <img src="assets/Settings.png" alt="Settings" style="width: 22px; height: 22px;" />
@@ -154,6 +160,7 @@
 
               <div style="border-top: 1px solid var(--border-color); margin: 2px 0;"></div>
 
+              <!-- Bloczki społecznościowe -->
               <div class="profile-tools-section">
                 <span class="profile-tools-title">Community & Extensions</span>
 
@@ -185,6 +192,12 @@
       <!-- Content Body: Panel Ustawień -->
       <main class="content-body" style="display: flex; flex-direction: column; gap: 24px; max-width: 900px;">
         
+        <!-- Główny tytuł podstrony (wewnątrz obszaru roboczego) -->
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+          <img src="assets/Settings.png" alt="Settings" style="width: 28px; height: 28px;" />
+          <h1 style="font-size: 1.6rem; color: var(--text-main); font-weight: 700;">Settings</h1>
+        </div>
+
         <!-- Sekcja 1: Profile Settings -->
         <section class="liquid-card" id="profile">
           <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
@@ -222,7 +235,6 @@
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 20px;">
-            <!-- Tryb Ciemny / Jasny -->
             <div class="settings-row">
               <div>
                 <span class="settings-row-title">Color Mode</span>
@@ -234,7 +246,6 @@
               </div>
             </div>
 
-            <!-- Wybór koloru akcentu -->
             <div class="settings-row">
               <div>
                 <span class="settings-row-title">Accent Color</span>
