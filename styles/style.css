@@ -26,6 +26,7 @@
   --radius-lg: 16px;
   --transition-speed: 0.25s;
   --shadow-subtle: 0 4px 20px -2px rgba(30, 58, 138, 0.05);
+  --shadow-dropdown: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
   --blur-glass: blur(12px);
 }
 
@@ -44,10 +45,6 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
-
-/* ==========================================
-   UKŁAD STRONY (APP LAYOUT)
-   ========================================== */
 
 #app {
   display: flex;
@@ -74,13 +71,11 @@ body {
   user-select: none;
 }
 
-/* Zwijanie panelu (stan .collapsed) - Idealne wycentrowanie ikon */
 .sidebar.collapsed {
   width: var(--sidebar-width-collapsed);
   padding: 16px 8px;
 }
 
-/* Nagłówek Sidebaru (Logo + Toggle) */
 .sidebar-header {
   display: flex;
   align-items: center;
@@ -103,7 +98,7 @@ body {
 }
 
 .sidebar.collapsed .brand-container {
-  display: none; /* Ukryj logo w wersji zwiniętej, zostaw sam przycisk toggle */
+  display: none;
 }
 
 .brand-logo {
@@ -118,7 +113,6 @@ body {
   font-weight: 700;
   color: var(--primary);
   white-space: nowrap;
-  transition: opacity var(--transition-speed);
 }
 
 .btn-toggle-sidebar {
@@ -137,7 +131,7 @@ body {
   background-color: var(--border-color);
 }
 
-/* Elementy menu (Nav Items) - BEZ SUWAKÓW I UCIĘĆ */
+/* Ukrycie linii suwaka podczas animacji i w zwinięciu */
 .nav-list {
   list-style: none;
   display: flex;
@@ -147,11 +141,16 @@ body {
   overflow-y: auto;
   overflow-x: visible;
   padding: 4px;
+  scrollbar-width: none; /* Ukrywa scrollbar w Firefox */
 }
 
-/* Wyłączenie skrolowania przy zwiniętym menu, aby nic nie wykraczało */
+.nav-list::-webkit-scrollbar {
+  display: none; /* Ukrywa scrollbar w Chrome/Safari/Edge */
+}
+
+.sidebar.is-animating .nav-list,
 .sidebar.collapsed .nav-list {
-  overflow-y: visible;
+  overflow-y: hidden;
 }
 
 .nav-item {
@@ -167,23 +166,20 @@ body {
   white-space: nowrap;
   cursor: pointer;
   position: relative;
-  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease, padding 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
 }
 
-/* Stan zwinięty - wyśrodkowanie ikon i wyeliminowanie problemu ze zbyt szerokim elementem */
 .sidebar.collapsed .nav-item {
   justify-content: center;
   padding: 9px 0;
 }
 
-/* Hover - leciutka, miękka poświata */
 .nav-item:hover {
   background-color: rgba(30, 58, 138, 0.06);
   color: var(--primary);
   box-shadow: 0 2px 8px rgba(30, 58, 138, 0.08);
 }
 
-/* Aktywny kafelek - lekko głębsza poświata */
 .nav-item.active {
   background-color: var(--primary-light);
   color: var(--primary);
@@ -198,15 +194,10 @@ body {
   flex-shrink: 0;
 }
 
-.nav-label {
-  transition: opacity var(--transition-speed);
-}
-
 .sidebar.collapsed .nav-label {
-  display: none; /* Całkowite ukrycie tekstu zapobiega rozciąganiu kafelków */
+  display: none;
 }
 
-/* Dolna sekcja nawigacji (Profil, Ustawienia) */
 .sidebar-footer {
   padding-top: 12px;
   border-top: 1px solid var(--border-color);
@@ -216,7 +207,7 @@ body {
 }
 
 /* ==========================================
-   MAIN CONTENT AREA (PŁYNNY LIQUID CONTAINER)
+   MAIN CONTENT AREA & HEADER DROPDOWNS
    ========================================== */
 
 .main-wrapper {
@@ -255,6 +246,10 @@ body {
   gap: 12px;
 }
 
+.dropdown-container {
+  position: relative;
+}
+
 .action-icon-btn {
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
@@ -266,6 +261,7 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: border-color 0.2s ease, background-color 0.2s ease;
+  position: relative;
 }
 
 .action-icon-btn:hover {
@@ -273,15 +269,78 @@ body {
   background-color: var(--primary-light);
 }
 
-/* Główna przestrzeń widoków */
+/* Plamka powiadomień */
+.notification-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  background-color: #ef4444;
+  border: 2px solid var(--bg-surface);
+  border-radius: 50%;
+}
+
+/* Popover / Dropdown Menu */
+.header-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 280px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-dropdown);
+  padding: 12px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 200;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.header-dropdown.show {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-header {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
 .content-body {
   padding: 32px;
   flex-grow: 1;
 }
-
-/* ==========================================
-   UNIWERSALNE KARTY I ELEMENTY INTERFEJSU
-   ========================================== */
 
 .liquid-card {
   background: var(--bg-surface);
@@ -289,28 +348,16 @@ body {
   border-radius: var(--radius-lg);
   padding: 24px;
   box-shadow: var(--shadow-subtle);
-  transition: border-color 0.2s ease;
 }
 
-.liquid-card:hover {
-  border-color: #cbd5e1;
-}
-
-/* Własne paski przewijania (Scrollbar) */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
 }
