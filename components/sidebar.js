@@ -5,7 +5,7 @@
 export function renderSidebar() {
   return `
     <aside class="sidebar" id="sidebar">
-      <!-- Sidebar Header (Logo + Toggle Button) -->
+      <!-- Sidebar Header -->
       <div class="sidebar-header">
         <div class="brand-container">
           <img src="assets/Brainly Hub.png" alt="Brainly Hub" class="brand-logo" />
@@ -16,7 +16,7 @@ export function renderSidebar() {
         </button>
       </div>
 
-      <!-- Main Navigation List -->
+      <!-- Navigation List -->
       <ul class="nav-list">
         <li>
           <a class="nav-item active" data-target="home">
@@ -43,7 +43,6 @@ export function renderSidebar() {
           </a>
         </li>
 
-        <!-- Separator for Subjects -->
         <li style="margin: 8px 0; border-top: 1px solid var(--border-color);"></li>
 
         <li>
@@ -84,11 +83,11 @@ export function renderSidebar() {
         </li>
       </ul>
 
-      <!-- Bottom Section (Sidebar Footer) -->
+      <!-- Sidebar Footer -->
       <div class="sidebar-footer">
-        <a class="nav-item" data-target="ask">
-          <img src="assets/Ask.png" alt="Help" class="nav-icon" />
-          <span class="nav-label">Ask a Question</span>
+        <a class="nav-item" href="https://docs.google.com/forms/d/e/1FAIpQLSene6zRah8jUBrBNIwbSdTEdr0Wa-9xSyEbInpBYptGAwmu3Q/viewform" target="_blank" rel="noopener">
+          <img src="assets/Bug.png" alt="Report Bugs" class="nav-icon" />
+          <span class="nav-label">Report Bugs</span>
         </a>
         <a class="nav-item" data-target="settings">
           <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
