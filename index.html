@@ -139,6 +139,7 @@
             <button class="action-icon-btn" title="User Profile" id="btn-user-profile">
               <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
             </button>
+
             <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
               <!-- Header Profilu -->
               <div class="user-profile-header">
@@ -149,35 +150,39 @@
                 </div>
               </div>
 
-              <!-- TYLKO Account Settings -->
-              <a href="settings.html" class="dropdown-item profile-large-item">
-                <img src="assets/Settings.png" class="profile-dropdown-icon" alt="Settings" /> 
-                <span>Account Settings</span>
+              <!-- Górny główny przycisk: Account Settings -->
+              <a href="settings.html" class="profile-btn-card primary-card">
+                <div class="profile-btn-icon">
+                  <img src="assets/Settings.png" alt="Settings" style="width: 22px; height: 22px;" />
+                </div>
+                <div class="profile-btn-info">
+                  <span class="profile-btn-title">Account Settings</span>
+                </div>
               </a>
 
-              <div style="border-top: 1px solid var(--border-color); margin: 4px 0;"></div>
+              <div style="border-top: 1px solid var(--border-color); margin: 2px 0;"></div>
 
-              <!-- Bloczki społecznościowe i narzędzi wewnątrz profilu -->
+              <!-- Sekcja narzędzi społecznościowych (jednolite kafelki) -->
               <div class="profile-tools-section">
                 <span class="profile-tools-title">Community & Extensions</span>
-                
-                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-tool-block">
-                  <div class="tool-icon-box-small">
+
+                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
+                  <div class="profile-btn-icon">
                     <img src="assets/Brainly.png" alt="Discord" style="width: 22px; height: 22px;" />
                   </div>
-                  <div class="tool-info-small">
-                    <span class="tool-title-small">Discord Server</span>
-                    <span class="tool-desc-small">Join BrainlyHQ</span>
+                  <div class="profile-btn-info">
+                    <span class="profile-btn-title">Discord Server</span>
+                    <span class="profile-btn-desc">Join BrainlyHQ</span>
                   </div>
                 </a>
 
-                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-tool-block">
-                  <div class="tool-icon-box-small">
+                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
+                  <div class="profile-btn-icon">
                     <img src="assets/Code.png" alt="Extension" style="width: 22px; height: 22px;" />
                   </div>
-                  <div class="tool-info-small">
-                    <span class="tool-title-small">Brainly Creatives</span>
-                    <span class="tool-desc-small">Chrome Extension</span>
+                  <div class="profile-btn-info">
+                    <span class="profile-btn-title">Brainly Creatives</span>
+                    <span class="profile-btn-desc">Chrome Extension</span>
                   </div>
                 </a>
               </div>
