@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrainlyHub — Settings</title>
-  <link rel="icon" type="image/png" href="assets/Brainly Hub.png" />
+  <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
 
   <div id="app">
-    <!-- Sidebar -->
+    <!-- Sidebar Navigation -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="brand-container">
@@ -102,49 +102,213 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
+      <!-- Top Bar Header -->
       <header class="top-bar">
         <h2 class="top-bar-title">Settings</h2>
 
         <div class="top-bar-actions">
+          <!-- Notifications Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="Notifications" id="btn-notifications">
               <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
-              <span class="notification-badge" id="notif-badge"></span>
+              <span class="notification-badge" id="notif-badge" style="display: none;"></span>
             </button>
             <div class="header-dropdown" id="dropdown-notifications">
               <div class="dropdown-header">
                 <span>Notifications</span>
-                <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear</small>
+                <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear All</small>
               </div>
-              <div id="notif-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto;">
-                <div style="font-size: 0.8rem; color: var(--text-muted); padding: 4px;">No new notifications.</div>
-              </div>
+              
+              <div id="notif-list" class="notif-scroll-container"></div>
+
+              <a href="settings.html#notifications" class="dropdown-footer-link">
+                <img src="assets/Settings.png" style="width: 14px; height: 14px;" alt="Settings" />
+                Notification Settings
+              </a>
             </div>
           </div>
 
+          <!-- User Profile Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="User Profile" id="btn-user-profile">
               <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
             </button>
-            <div class="header-dropdown" id="dropdown-profile">
-              <div class="dropdown-header"><span>Student Account</span></div>
-              <a href="settings.html" class="dropdown-item">
-                <img src="assets/Settings.png" style="width: 16px; height: 16px;" /> Settings
+
+            <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
+              <div class="user-profile-header">
+                <div class="profile-avatar" id="header-avatar">S</div>
+                <div class="profile-info">
+                  <span class="profile-name" id="header-user-name">Student Account</span>
+                  <span class="profile-role">High School Member</span>
+                </div>
+              </div>
+
+              <a href="settings.html" class="profile-btn-card primary-card">
+                <div class="profile-btn-icon">
+                  <img src="assets/Settings.png" alt="Settings" style="width: 22px; height: 22px;" />
+                </div>
+                <div class="profile-btn-info">
+                  <span class="profile-btn-title">Account Settings</span>
+                </div>
               </a>
+
+              <div style="border-top: 1px solid var(--border-color); margin: 2px 0;"></div>
+
+              <div class="profile-tools-section">
+                <span class="profile-tools-title">Community & Extensions</span>
+
+                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
+                  <div class="profile-btn-icon">
+                    <img src="assets/Brainly.png" alt="Discord" style="width: 22px; height: 22px;" />
+                  </div>
+                  <div class="profile-btn-info">
+                    <span class="profile-btn-title">Discord Server</span>
+                    <span class="profile-btn-desc">Join BrainlyHQ</span>
+                  </div>
+                </a>
+
+                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
+                  <div class="profile-btn-icon">
+                    <img src="assets/Code.png" alt="Extension" style="width: 22px; height: 22px;" />
+                  </div>
+                  <div class="profile-btn-info">
+                    <span class="profile-btn-title">Brainly Creatives</span>
+                    <span class="profile-btn-desc">Chrome Extension</span>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      <main class="content-body">
-        <div class="liquid-card">
-          <h1 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 12px;">Settings</h1>
-          <p style="color: var(--text-muted);">Configure your application preferences here.</p>
-        </div>
+      <!-- Content Body: Panel Ustawień -->
+      <main class="content-body" style="display: flex; flex-direction: column; gap: 24px; max-width: 900px;">
+        
+        <!-- Sekcja 1: Profile Settings -->
+        <section class="liquid-card" id="profile">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+            <img src="assets/User profile.png" alt="Profile" style="width: 24px; height: 24px;" />
+            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Profile Settings</h2>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="settings-form-group">
+              <label for="input-user-name" class="settings-label">Display Name</label>
+              <input type="text" id="input-user-name" class="settings-input" placeholder="Enter your display name" />
+            </div>
+
+            <div class="settings-form-group">
+              <label for="select-user-role" class="settings-label">Academic Status / Role</label>
+              <select id="select-user-role" class="settings-select">
+                <option value="High School Member">High School Member (Matura Prep)</option>
+                <option value="Primary School Student">Primary School Student</option>
+                <option value="University Student">University Student</option>
+                <option value="Educator / Tutor">Educator / Tutor</option>
+              </select>
+            </div>
+
+            <button id="btn-save-profile" class="settings-btn-primary" style="align-self: flex-start;">
+              Save Profile Changes
+            </button>
+          </div>
+        </section>
+
+        <!-- Sekcja 2: Appearance & Theme -->
+        <section class="liquid-card" id="appearance">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+            <img src="assets/Home star.png" alt="Theme" style="width: 24px; height: 24px;" />
+            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Appearance & Themes</h2>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Tryb Ciemny / Jasny -->
+            <div class="settings-row">
+              <div>
+                <span class="settings-row-title">Color Mode</span>
+                <span class="settings-row-desc">Switch between light mode and dark liquid UI.</span>
+              </div>
+              <div class="theme-toggle-group">
+                <button class="theme-option-btn active" data-theme="light">Light</button>
+                <button class="theme-option-btn" data-theme="dark">Dark</button>
+              </div>
+            </div>
+
+            <!-- Wybór koloru akcentu -->
+            <div class="settings-row">
+              <div>
+                <span class="settings-row-title">Accent Color</span>
+                <span class="settings-row-desc">Customize primary UI highlights and active states.</span>
+              </div>
+              <div style="display: flex; gap: 10px;" id="accent-picker">
+                <span class="accent-circle active" data-color="#1e3a8a" style="background: #1e3a8a;" title="Navy Blue"></span>
+                <span class="accent-circle" data-color="#2563eb" style="background: #2563eb;" title="Royal Blue"></span>
+                <span class="accent-circle" data-color="#0d9488" style="background: #0d9488;" title="Teal"></span>
+                <span class="accent-circle" data-color="#7c3aed" style="background: #7c3aed;" title="Purple"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sekcja 3: Notifications Personalization -->
+        <section class="liquid-card" id="notifications">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+            <img src="assets/Notifications.png" alt="Notifications" style="width: 24px; height: 24px;" />
+            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Notifications Personalization</h2>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="settings-row">
+              <div>
+                <span class="settings-row-title">Welcome Notifications</span>
+                <span class="settings-row-desc">Show welcome badge and orientation tip for first-time visits.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggle-notif-welcome" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-row">
+              <div>
+                <span class="settings-row-title">Exam & Task Alerts</span>
+                <span class="settings-row-desc">Display indicators when new past exam sheets or task categories are published.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggle-notif-exams" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <button id="btn-reset-notifications" class="settings-btn-secondary" style="align-self: flex-start; margin-top: 8px;">
+              Reset Notification History
+            </button>
+          </div>
+        </section>
+
+        <!-- Sekcja 4: Data & Reset -->
+        <section class="liquid-card" id="preferences">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+            <img src="assets/Padlock.png" alt="Data" style="width: 24px; height: 24px;" />
+            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">Data & System Reset</h2>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <span class="settings-row-title">Clear Local Storage</span>
+              <span class="settings-row-desc">Resets sidebar state, custom names, theme preferences, and notifications.</span>
+            </div>
+            <button id="btn-clear-all-data" class="settings-btn-danger">
+              Reset Application Data
+            </button>
+          </div>
+        </section>
+
       </main>
     </div>
   </div>
 
   <script src="core/main.js"></script>
+  <script src="core/settings.js"></script>
 </body>
 </html>
