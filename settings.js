@@ -40,10 +40,10 @@ function initProfileSettings() {
 }
 
 function initThemeAndAppearance() {
-  // --- 1. Obsługa Motywu (Light / Dark) ---
   const savedTheme = localStorage.getItem('app_theme') || 'light';
-  applyTheme(savedTheme);
+  const savedAccent = localStorage.getItem('app_accent') || '#1e3a8a';
 
+  // --- Przełącznik Motywu (Light / Dark) ---
   const themeBtns = document.querySelectorAll('.theme-option-btn');
   themeBtns.forEach(btn => {
     if (btn.dataset.theme === savedTheme) {
@@ -55,16 +55,19 @@ function initThemeAndAppearance() {
     btn.addEventListener('click', () => {
       themeBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+
       const chosenTheme = btn.dataset.theme;
       localStorage.setItem('app_theme', chosenTheme);
-      applyTheme(chosenTheme);
+
+      if (chosenTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+      } else {
+        document.body.classList.remove('dark-theme');
+      }
     });
   });
 
-  // --- 2. Obsługa Koloru Akcentu ---
-  const savedAccent = localStorage.getItem('app_accent') || '#1e3a8a';
-  applyAccent(savedAccent);
-
+  // --- Wybór Koloru Akcentu ---
   const accentCircles = document.querySelectorAll('.accent-circle');
   accentCircles.forEach(circle => {
     if (circle.dataset.color === savedAccent) {
@@ -76,28 +79,17 @@ function initThemeAndAppearance() {
     circle.addEventListener('click', () => {
       accentCircles.forEach(c => c.classList.remove('active'));
       circle.classList.add('active');
+
       const chosenAccent = circle.dataset.color;
       localStorage.setItem('app_accent', chosenAccent);
-      applyAccent(chosenAccent);
+
+      document.documentElement.style.setProperty('--primary', chosenAccent);
     });
   });
 }
 
-function applyTheme(theme) {
-  if (theme === 'dark') {
-    document.body.classList.add('dark-theme');
-  } else {
-    document.body.classList.remove('dark-theme');
-  }
-}
-
-function applyAccent(color) {
-  document.documentElement.style.setProperty('--primary', color);
-}
-
 function initNotificationSettings() {
   const resetNotifBtn = document.getElementById('btn-reset-notifications');
-
   if (resetNotifBtn) {
     resetNotifBtn.addEventListener('click', () => {
       localStorage.removeItem('notif_welcome_read');
@@ -109,10 +101,9 @@ function initNotificationSettings() {
 
 function initSystemReset() {
   const clearDataBtn = document.getElementById('btn-clear-all-data');
-
   if (clearDataBtn) {
     clearDataBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to reset all application settings and local storage?')) {
+      if (confirm('Are you sure you want to reset all application settings?')) {
         localStorage.clear();
         window.location.reload();
       }
