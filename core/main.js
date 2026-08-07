@@ -8,16 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeaderDropdowns();
   initContactRedirectModal();
 
-  // Usunięcie klas blokujących przejścia CSS po wyrenderowaniu widoku
   requestAnimationFrame(() => {
     document.documentElement.classList.remove('preload-collapsed');
     document.body.classList.remove('preload-no-transition');
   });
 });
 
-/**
- * Wczytywanie ustawień z localStorage i aplikowanie na stronę
- */
 function initThemeAndLayoutState() {
   const savedTheme = localStorage.getItem('app_theme');
   const savedAccent = localStorage.getItem('app_accent');
@@ -59,11 +55,10 @@ function initThemeAndLayoutState() {
     const roleEl = document.getElementById('header-user-role');
     if (roleEl) roleEl.textContent = savedRole;
   }
+  
+  renderNotificationsUI();
 }
 
-/**
- * Zwijanie i rozwijanie Sidebara bez zakleszczania stanu
- */
 function initSidebarToggle() {
   const toggleBtn = document.getElementById('btn-toggle-sidebar');
   const sidebar = document.getElementById('sidebar');
@@ -78,9 +73,15 @@ function initSidebarToggle() {
   }
 }
 
-/**
- * Rozwijane menu w nagłówku (Powiadomienia i Profil)
- */
+function renderNotificationsUI() {
+  const notifList = document.getElementById('notif-list');
+  if (!notifList) return;
+
+  if (notifList.children.length === 0) {
+    notifList.innerHTML = `<div class="notif-empty-state">No recent notifications</div>`;
+  }
+}
+
 function initHeaderDropdowns() {
   const notifBtn = document.getElementById('btn-notifications');
   const notifDropdown = document.getElementById('dropdown-notifications');
@@ -119,14 +120,13 @@ function initHeaderDropdowns() {
   if (clearNotifsBtn) {
     clearNotifsBtn.addEventListener('click', () => {
       const notifList = document.getElementById('notif-list');
-      if (notifList) notifList.innerHTML = '';
+      if (notifList) {
+        notifList.innerHTML = `<div class="notif-empty-state">No recent notifications</div>`;
+      }
     });
   }
 }
 
-/**
- * Uniwersalny skrypt popupu przekierowującego do Formularza Kontaktowego
- */
 function initContactRedirectModal() {
   const contactLinks = document.querySelectorAll('a[href*="forms.gle"]');
   const modal = document.getElementById('modal-contact-redirect');
@@ -153,8 +153,7 @@ function initContactRedirectModal() {
 
         if (seconds <= 0) {
           clearInterval(countdownInterval);
-          window.open(targetUrl, '_blank');
-          modal.style.display = 'none';
+          window.location.href = targetUrl;
         }
       }, 1000);
     });
@@ -167,9 +166,10 @@ function initContactRedirectModal() {
 
   if (cancelBtn) cancelBtn.addEventListener('click', stopRedirect);
   if (proceedLink) {
-    proceedLink.addEventListener('click', () => {
+    proceedLink.addEventListener('click', (e) => {
+      e.preventDefault();
       clearInterval(countdownInterval);
-      modal.style.display = 'none';
+      window.location.href = targetUrl;
     });
   }
 
