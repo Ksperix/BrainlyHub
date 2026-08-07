@@ -8,10 +8,19 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
   
+  <!-- Pre-render layout script to prevent sidebar transition glitch on reload -->
+  <script>
+    (function() {
+      if (localStorage.getItem('sidebar_collapsed') === 'true') {
+        document.documentElement.classList.add('preload-collapsed');
+      }
+    })();
+  </script>
+
   <!-- CSS Styles -->
   <link rel="stylesheet" href="styles/style.css" />
 </head>
-<body>
+<body class="preload-no-transition">
 
   <div id="app">
     <!-- Sidebar Navigation -->
@@ -290,9 +299,9 @@
             <div class="settings-form-group">
               <label for="select-sound-tone" class="settings-label">Sound Tone Style</label>
               <select id="select-sound-tone" class="settings-select">
-                <option value="chime">Soft Chime (Default)</option>
-                <option value="double">Double Beep</option>
-                <option value="pop">Subtle Pop</option>
+                <option value="chime">Bright Chime (Default)</option>
+                <option value="double">Digital Double Beep</option>
+                <option value="pop">Subtle Pop Sound</option>
               </select>
             </div>
 
