@@ -139,7 +139,6 @@
             </button>
 
             <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
-              <!-- Header Profilu -->
               <div class="user-profile-header">
                 <div class="profile-avatar" id="header-avatar">S</div>
                 <div class="profile-info">
@@ -148,7 +147,6 @@
                 </div>
               </div>
 
-              <!-- Przycisk Account Settings -->
               <a href="settings.html" class="profile-btn-card primary-card">
                 <div class="profile-btn-icon">
                   <img src="assets/Settings.png" alt="Settings" style="width: 22px; height: 22px;" />
@@ -160,7 +158,6 @@
 
               <div style="border-top: 1px solid var(--border-color); margin: 2px 0;"></div>
 
-              <!-- Bloczki społecznościowe -->
               <div class="profile-tools-section">
                 <span class="profile-tools-title">Community & Extensions</span>
 
@@ -233,7 +230,7 @@
                 <span class="settings-row-desc">Switch between light mode and dark liquid UI.</span>
               </div>
               <div class="theme-toggle-group">
-                <button class="theme-option-btn active" data-theme="light">Light</button>
+                <button class="theme-option-btn" data-theme="light">Light</button>
                 <button class="theme-option-btn" data-theme="dark">Dark</button>
               </div>
             </div>
@@ -244,7 +241,7 @@
                 <span class="settings-row-desc">Customize primary UI highlights and active states.</span>
               </div>
               <div style="display: flex; gap: 10px;" id="accent-picker">
-                <span class="accent-circle active" data-color="#1e3a8a" style="background: #1e3a8a;" title="Navy Blue"></span>
+                <span class="accent-circle" data-color="#1e3a8a" style="background: #1e3a8a;" title="Navy Blue"></span>
                 <span class="accent-circle" data-color="#2563eb" style="background: #2563eb;" title="Royal Blue"></span>
                 <span class="accent-circle" data-color="#0d9488" style="background: #0d9488;" title="Teal"></span>
                 <span class="accent-circle" data-color="#7c3aed" style="background: #7c3aed;" title="Purple"></span>
@@ -310,6 +307,7 @@
   </div>
 
   <script src="core/main.js"></script>
-  <script src="core/settings.js"></script>
+  <!-- ZMIENIONO ŚCIEŻKĘ: z core/settings.js na settings.js -->
+  <script src="settings.js"></script>
 </body>
 </html>
