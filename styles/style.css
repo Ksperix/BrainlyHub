@@ -30,22 +30,22 @@
   --blur-glass: blur(12px);
 }
 
-/* Wyłączenie przejazdu animacji podczas ponownego ładowania strony */
+/* Wyłączenie skoku animacji podczas ponownego ładowania strony */
 html.preload-collapsed .sidebar {
-  width: var(--sidebar-width-collapsed) !important;
-  padding: 0 8px 16px 8px !important;
+  width: var(--sidebar-width-collapsed);
+  padding: 0 8px 16px 8px;
 }
 html.preload-collapsed .sidebar .brand-container,
 html.preload-collapsed .sidebar .nav-label {
-  display: none !important;
+  display: none;
 }
 html.preload-collapsed .sidebar .sidebar-header {
-  justify-content: center !important;
-  padding: 0 !important;
+  justify-content: center;
+  padding: 0;
 }
 html.preload-collapsed .sidebar .nav-item {
-  justify-content: center !important;
-  padding: 9px 0 !important;
+  justify-content: center;
+  padding: 9px 0;
 }
 
 body.preload-no-transition *,
@@ -62,14 +62,10 @@ body.dark-theme {
   --bg-surface: #1e293b;
   --bg-glass: rgba(30, 41, 59, 0.85);
   --bg-sidebar: #0f172a;
-  --text-main: #ffffff !important;
-  --text-muted: #ffffff !important;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
   --border-color: #334155;
   --primary-light: rgba(255, 255, 255, 0.12);
-}
-
-body.dark-theme * {
-  color: #ffffff;
 }
 
 /* Tryb kompaktowy (Density) */
@@ -763,4 +759,140 @@ input:checked + .slider:before {
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 3px;
+}
+
+/* ==========================================
+   BRAINLYHUB - MODALS & BLUR OVERLAY
+   ========================================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(11, 12, 15, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 36px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-dropdown);
+  box-sizing: border-box;
+  animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.redirect-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  background: var(--primary-light);
+  border: 1px solid var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px auto;
+  color: var(--primary);
+}
+
+.redirect-icon-wrapper.danger-icon {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+}
+
+.redirect-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+.redirect-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.redirect-desc strong {
+  color: var(--primary);
+}
+
+.actions-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-proceed {
+  background-color: var(--primary);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-proceed:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-proceed:not(:disabled):hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-proceed.danger-btn {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.btn-cancel:hover {
+  color: var(--text-main);
 }
