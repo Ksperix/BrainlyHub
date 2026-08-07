@@ -6,15 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeAndLayoutState();
   initSidebarToggle();
   initHeaderDropdowns();
-  
-  // Włączenie płynnych animacji dopiero po wyrenderowaniu stanu początkowego (brak spływającej animacji przy Ctrl+Shift+R)
-  setTimeout(() => {
+  initContactRedirectModal();
+
+  // Usunięcie klas blokujących przejścia CSS po wyrenderowaniu widoku
+  requestAnimationFrame(() => {
+    document.documentElement.classList.remove('preload-collapsed');
     document.body.classList.remove('preload-no-transition');
-  }, 100);
+  });
 });
 
 /**
- * Wczytywanie ustawień z localStorage i natychmiastowe aplikowanie
+ * Wczytywanie ustawień z localStorage i aplikowanie na stronę
  */
 function initThemeAndLayoutState() {
   const savedTheme = localStorage.getItem('app_theme');
@@ -22,30 +24,29 @@ function initThemeAndLayoutState() {
   const isCompact = localStorage.getItem('compact_ui') === 'true';
   const isSidebarCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
 
-  // Motyw
   if (savedTheme === 'dark') {
     document.body.classList.add('dark-theme');
   } else {
     document.body.classList.remove('dark-theme');
   }
 
-  // Kolor akcentu
   if (savedAccent) {
     document.documentElement.style.setProperty('--primary', savedAccent);
   }
 
-  // Kompaktowy układ
   if (isCompact) {
     document.body.classList.add('compact-density');
   }
 
-  // Stan sidebara
   const sidebar = document.getElementById('sidebar');
-  if (sidebar && isSidebarCollapsed) {
-    sidebar.classList.add('collapsed');
+  if (sidebar) {
+    if (isSidebarCollapsed) {
+      sidebar.classList.add('collapsed');
+    } else {
+      sidebar.classList.remove('collapsed');
+    }
   }
 
-  // Nagłówek profilu
   const savedName = localStorage.getItem('user_name');
   const savedRole = localStorage.getItem('user_role');
   if (savedName) {
@@ -61,14 +62,15 @@ function initThemeAndLayoutState() {
 }
 
 /**
- * Przełącznik zwijania sidebara
+ * Zwijanie i rozwijanie Sidebara bez zakleszczania stanu
  */
 function initSidebarToggle() {
   const toggleBtn = document.getElementById('btn-toggle-sidebar');
   const sidebar = document.getElementById('sidebar');
 
   if (toggleBtn && sidebar) {
-    toggleBtn.addEventListener('click', () => {
+    toggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       sidebar.classList.toggle('collapsed');
       const isCollapsed = sidebar.classList.contains('collapsed');
       localStorage.setItem('sidebar_collapsed', isCollapsed);
@@ -77,12 +79,11 @@ function initSidebarToggle() {
 }
 
 /**
- * Obsługa menu rozwijanych (Profile, Powiadomienia)
+ * Rozwijane menu w nagłówku (Powiadomienia i Profil)
  */
 function initHeaderDropdowns() {
   const notifBtn = document.getElementById('btn-notifications');
   const notifDropdown = document.getElementById('dropdown-notifications');
-  
   const profileBtn = document.getElementById('btn-user-profile');
   const profileDropdown = document.getElementById('dropdown-profile');
 
@@ -105,7 +106,6 @@ function initHeaderDropdowns() {
     });
   }
 
-  // Zamknij przy kliknięciu poza obszar
   document.addEventListener('click', (e) => {
     if (notifDropdown && !notifDropdown.contains(e.target) && e.target !== notifBtn) {
       notifDropdown.classList.remove('show');
@@ -122,4 +122,58 @@ function initHeaderDropdowns() {
       if (notifList) notifList.innerHTML = '';
     });
   }
+}
+
+/**
+ * Uniwersalny skrypt popupu przekierowującego do Formularza Kontaktowego
+ */
+function initContactRedirectModal() {
+  const contactLinks = document.querySelectorAll('a[href*="forms.gle"]');
+  const modal = document.getElementById('modal-contact-redirect');
+  const cancelBtn = document.getElementById('btn-cancel-contact-redirect');
+  const timerElement = document.getElementById('contact-countdown-timer');
+  const proceedLink = document.getElementById('contact-redirect-link');
+
+  if (!modal) return;
+
+  let countdownInterval = null;
+  const targetUrl = 'https://forms.gle/o1daXvtw4zim5kDd7';
+
+  contactLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'flex';
+      let seconds = 5;
+      if (timerElement) timerElement.textContent = seconds;
+
+      clearInterval(countdownInterval);
+      countdownInterval = setInterval(() => {
+        seconds--;
+        if (timerElement) timerElement.textContent = seconds;
+
+        if (seconds <= 0) {
+          clearInterval(countdownInterval);
+          window.open(targetUrl, '_blank');
+          modal.style.display = 'none';
+        }
+      }, 1000);
+    });
+  });
+
+  const stopRedirect = () => {
+    clearInterval(countdownInterval);
+    modal.style.display = 'none';
+  };
+
+  if (cancelBtn) cancelBtn.addEventListener('click', stopRedirect);
+  if (proceedLink) {
+    proceedLink.addEventListener('click', () => {
+      clearInterval(countdownInterval);
+      modal.style.display = 'none';
+    });
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) stopRedirect();
+  });
 }
