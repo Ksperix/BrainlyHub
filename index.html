@@ -3,15 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrainlyHub — Academic Task & Resource Repository</title>
+  <title>BrainlyHub — Home</title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
   
+  <!-- Pre-render layout script to prevent sidebar transition glitch on reload -->
+  <script>
+    (function() {
+      if (localStorage.getItem('sidebar_collapsed') === 'true') {
+        document.documentElement.classList.add('preload-collapsed');
+      }
+    })();
+  </script>
+
   <!-- CSS Styles -->
   <link rel="stylesheet" href="styles/style.css" />
 </head>
-<body>
+<body class="preload-no-transition">
 
   <div id="app">
     <!-- Sidebar Navigation -->
@@ -95,9 +104,9 @@
 
       <!-- Sidebar Footer -->
       <div class="sidebar-footer">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSene6zRah8jUBrBNIwbSdTEdr0Wa-9xSyEbInpBYptGAwmu3Q/viewform" target="_blank" rel="noopener" class="nav-item">
-          <img src="assets/Bug.png" alt="Report a bug" class="nav-icon" />
-          <span class="nav-label">Report a bug</span>
+        <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="nav-item">
+          <img src="assets/Bug.png" alt="Contact" class="nav-icon" />
+          <span class="nav-label">Contact with us</span>
         </a>
         <a href="settings.html" class="nav-item">
           <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
@@ -108,9 +117,16 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
-      <!-- Top Bar / Header bez nazwy strony -->
+      <!-- Clean Top Bar Header -->
       <header class="top-bar">
         <div class="top-bar-actions">
+          <!-- Favorite Tasks Button -->
+          <div class="dropdown-container">
+            <button class="action-icon-btn" title="Favorites (Coming Soon)" id="btn-favorites">
+              <img src="assets/Heart.png" alt="Favorites" class="nav-icon" />
+            </button>
+          </div>
+
           <!-- Notifications Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="Notifications" id="btn-notifications">
@@ -139,19 +155,17 @@
             </button>
 
             <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
-              <!-- Header Profilu -->
               <div class="user-profile-header">
                 <div class="profile-avatar" id="header-avatar">S</div>
                 <div class="profile-info">
                   <span class="profile-name" id="header-user-name">Student Account</span>
-                  <span class="profile-role">High School Member</span>
+                  <span class="profile-role" id="header-user-role">High School Member</span>
                 </div>
               </div>
 
-              <!-- Przycisk Account Settings -->
               <a href="settings.html" class="profile-btn-card primary-card">
                 <div class="profile-btn-icon">
-                  <img src="assets/Settings.png" alt="Settings" style="width: 22px; height: 22px;" />
+                  <img src="assets/Settings.png" alt="Settings" />
                 </div>
                 <div class="profile-btn-info">
                   <span class="profile-btn-title">Account Settings</span>
@@ -160,13 +174,12 @@
 
               <div style="border-top: 1px solid var(--border-color); margin: 2px 0;"></div>
 
-              <!-- Bloczki społecznościowe -->
               <div class="profile-tools-section">
                 <span class="profile-tools-title">Community & Extensions</span>
 
                 <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
                   <div class="profile-btn-icon">
-                    <img src="assets/Brainly.png" alt="Discord" style="width: 22px; height: 22px;" />
+                    <img src="assets/Brainly.png" alt="Discord" />
                   </div>
                   <div class="profile-btn-info">
                     <span class="profile-btn-title">Discord Server</span>
@@ -176,7 +189,7 @@
 
                 <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
                   <div class="profile-btn-icon">
-                    <img src="assets/Code.png" alt="Extension" style="width: 22px; height: 22px;" />
+                    <img src="assets/Code.png" alt="Extension" />
                   </div>
                   <div class="profile-btn-info">
                     <span class="profile-btn-title">Brainly Creatives</span>
@@ -189,21 +202,51 @@
         </div>
       </header>
 
-      <!-- Main Body Content -->
+      <!-- Main Home Content -->
       <main class="content-body">
-        <div class="liquid-card">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="assets/Home star.png" alt="Star" style="width: 32px; height: 32px;" />
-            <h1 style="color: var(--primary); font-size: 1.5rem; margin: 0;">Welcome to BrainlyHub!</h1>
+        <section class="liquid-card">
+          <div class="settings-card-header">
+            <h2>Welcome to BrainlyHub</h2>
           </div>
           <p style="color: var(--text-muted); line-height: 1.6;">
-            Select a subject or category from the sidebar menu to filter tasks by grade, topic, and difficulty level.
+            Select a category from the sidebar or search for past examination tasks to begin learning.
           </p>
-        </div>
+        </section>
       </main>
     </div>
   </div>
 
+  <!-- Shared Core Scripts -->
   <script src="core/main.js"></script>
+
+  <!-- Modal: Contact Redirect Popup (Dostępne również ze strony głównej) -->
+  <div class="modal-overlay" id="modal-contact-redirect" style="display: none;">
+    <div class="redirect-card modal-card">
+      <div class="redirect-icon-wrapper">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+      </div>
+
+      <h2 class="redirect-title">External Contact Form</h2>
+      <p class="redirect-desc">
+        You are being redirected to our official contact support form in <strong id="contact-countdown-timer">5</strong> seconds.
+      </p>
+
+      <div class="actions-row">
+        <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="btn-proceed" id="contact-redirect-link">
+          <span>Go to Form Now</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <button id="btn-cancel-contact-redirect" class="btn-cancel">Cancel and Stay Here</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
