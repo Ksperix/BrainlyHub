@@ -7,7 +7,37 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeAndAppearance();
   initNotificationSettings();
   initSystemReset();
+  initToggles();
 });
+
+/**
+  Funkcja pomocnicza generująca wewnętrzne powiadomienie do listy
+ */
+function pushNotification(title, desc) {
+  const notifList = document.getElementById('notif-list');
+  const badge = document.getElementById('notif-badge');
+
+  if (badge) {
+    badge.style.display = 'block';
+  }
+
+  if (notifList) {
+    const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const card = document.createElement('div');
+    card.className = 'notification-card';
+    card.innerHTML = `
+      <div class="notif-icon-wrapper">
+        <img src="assets/Settings.png" class="nav-icon" style="width: 16px; height: 16px;" alt="Settings" />
+      </div>
+      <div class="notif-content">
+        <span class="notif-title">${title}</span>
+        <span class="notif-desc">${desc}</span>
+        <span class="notif-time">${timeStr}</span>
+      </div>
+    `;
+    notifList.prepend(card);
+  }
+}
 
 function initProfileSettings() {
   const nameInput = document.getElementById('input-user-name');
@@ -29,12 +59,16 @@ function initProfileSettings() {
       localStorage.setItem('user_name', newName);
       localStorage.setItem('user_role', newRole);
 
+      // Aktualizacja nagłówka
       const nameElement = document.getElementById('header-user-name');
+      const roleElement = document.getElementById('header-user-role');
       const avatarElement = document.getElementById('header-avatar');
+      
       if (nameElement) nameElement.textContent = newName;
+      if (roleElement) roleElement.textContent = newRole;
       if (avatarElement) avatarElement.textContent = newName.charAt(0).toUpperCase();
 
-      alert('Profile settings saved successfully!');
+      pushNotification('Profile Updated', `Name set to "${newName}" and role updated to "${newRole}".`);
     });
   }
 }
@@ -43,7 +77,7 @@ function initThemeAndAppearance() {
   const savedTheme = localStorage.getItem('app_theme') || 'light';
   const savedAccent = localStorage.getItem('app_accent') || '#1e3a8a';
 
-  // --- Przełącznik Motywu (Light / Dark) ---
+  // --- Przełącznik Motywu ---
   const themeBtns = document.querySelectorAll('.theme-option-btn');
   themeBtns.forEach(btn => {
     if (btn.dataset.theme === savedTheme) {
@@ -64,10 +98,12 @@ function initThemeAndAppearance() {
       } else {
         document.body.classList.remove('dark-theme');
       }
+
+      pushNotification('Theme Changed', `Applied ${chosenTheme.toUpperCase()} color mode across the interface.`);
     });
   });
 
-  // --- Wybór Koloru Akcentu ---
+  // --- Wybór Akcentu ---
   const accentCircles = document.querySelectorAll('.accent-circle');
   accentCircles.forEach(circle => {
     if (circle.dataset.color === savedAccent) {
@@ -84,7 +120,37 @@ function initThemeAndAppearance() {
       localStorage.setItem('app_accent', chosenAccent);
 
       document.documentElement.style.setProperty('--primary', chosenAccent);
+      pushNotification('Accent Updated', `Primary highlight color adjusted.`);
     });
+  });
+}
+
+function initToggles() {
+  const compactToggle = document.getElementById('toggle-compact-ui');
+  if (compactToggle) {
+    compactToggle.checked = localStorage.getItem('compact_ui') === 'true';
+    compactToggle.addEventListener('change', (e) => {
+      localStorage.setItem('compact_ui', e.target.checked);
+      if (e.target.checked) {
+        document.body.classList.add('compact-density');
+      } else {
+        document.body.classList.remove('compact-density');
+      }
+      pushNotification('Layout Updated', `Compact density ${e.target.checked ? 'enabled' : 'disabled'}.`);
+    });
+  }
+
+  const notifToggles = ['toggle-notif-welcome', 'toggle-notif-exams', 'toggle-notif-solutions', 'toggle-notif-system'];
+  notifToggles.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      const saved = localStorage.getItem(id);
+      if (saved !== null) el.checked = saved === 'true';
+      el.addEventListener('change', (e) => {
+        localStorage.setItem(id, e.target.checked);
+        pushNotification('Preference Saved', `${id.replace('toggle-notif-', '').toUpperCase()} alerts updated.`);
+      });
+    }
   });
 }
 
@@ -92,9 +158,12 @@ function initNotificationSettings() {
   const resetNotifBtn = document.getElementById('btn-reset-notifications');
   if (resetNotifBtn) {
     resetNotifBtn.addEventListener('click', () => {
+      const notifList = document.getElementById('notif-list');
+      if (notifList) notifList.innerHTML = '';
       localStorage.removeItem('notif_welcome_read');
       localStorage.removeItem('has_visited_before');
-      alert('Notification history reset successfully!');
+      
+      pushNotification('History Reset', 'All local notifications have been cleared.');
     });
   }
 }
@@ -103,10 +172,11 @@ function initSystemReset() {
   const clearDataBtn = document.getElementById('btn-clear-all-data');
   if (clearDataBtn) {
     clearDataBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to reset all application settings?')) {
-        localStorage.clear();
+      localStorage.clear();
+      pushNotification('System Reset', 'All settings restored to default values.');
+      setTimeout(() => {
         window.location.reload();
-      }
+      }, 1000);
     });
   }
 }
