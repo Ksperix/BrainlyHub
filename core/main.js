@@ -1,199 +1,125 @@
 /* ==========================================
-   BRAINLYHUB - CORE APPLICATION LOGIC
+   BRAINLYHUB - CORE APP INITIALIZATION
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Inicjalizacja motywu, koloru akcentu i danych użytkownika
-  loadGlobalPreferences();
-
-  // 2. Inicjalizacja modułów interfejsu
-  initSidebar();
+  initThemeAndLayoutState();
+  initSidebarToggle();
   initHeaderDropdowns();
-  initFaviconSwitcher();
+  
+  // Włączenie płynnych animacji dopiero po wyrenderowaniu stanu początkowego (brak spływającej animacji przy Ctrl+Shift+R)
+  setTimeout(() => {
+    document.body.classList.remove('preload-no-transition');
+  }, 100);
 });
 
 /**
- * Wczytuje i nakłada motyw, kolor akcentu oraz dane profilu z localStorage na KAŻDEJ podstronie
+ * Wczytywanie ustawień z localStorage i natychmiastowe aplikowanie
  */
-function loadGlobalPreferences() {
-  const savedTheme = localStorage.getItem('app_theme') || 'light';
-  const savedAccent = localStorage.getItem('app_accent') || '#1e3a8a';
-  const savedName = localStorage.getItem('user_name') || 'Student Account';
+function initThemeAndLayoutState() {
+  const savedTheme = localStorage.getItem('app_theme');
+  const savedAccent = localStorage.getItem('app_accent');
+  const isCompact = localStorage.getItem('compact_ui') === 'true';
+  const isSidebarCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
 
-  // Nakładanie motywu Ciemny/Jasny
+  // Motyw
   if (savedTheme === 'dark') {
     document.body.classList.add('dark-theme');
   } else {
     document.body.classList.remove('dark-theme');
   }
 
-  // Nakładanie koloru akcentu
-  document.documentElement.style.setProperty('--primary', savedAccent);
+  // Kolor akcentu
+  if (savedAccent) {
+    document.documentElement.style.setProperty('--primary', savedAccent);
+  }
 
-  // Aktualizacja danych użytkownika w nagłówku
-  const nameElement = document.getElementById('header-user-name');
-  const avatarElement = document.getElementById('header-avatar');
-  if (nameElement) nameElement.textContent = savedName;
-  if (avatarElement) avatarElement.textContent = savedName.charAt(0).toUpperCase();
-}
+  // Kompaktowy układ
+  if (isCompact) {
+    document.body.classList.add('compact-density');
+  }
 
-/**
- * Obsługa zwijania/rozwijania paska bocznego (Sidebar)
- */
-function initSidebar() {
+  // Stan sidebara
   const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.getElementById('btn-toggle-sidebar');
-
-  if (!sidebar || !toggleBtn) return;
-
-  const isCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
-  if (isCollapsed) {
+  if (sidebar && isSidebarCollapsed) {
     sidebar.classList.add('collapsed');
   }
 
-  toggleBtn.addEventListener('click', () => {
-    sidebar.classList.add('is-animating');
-    sidebar.classList.toggle('collapsed');
-    
-    const collapsedState = sidebar.classList.contains('collapsed');
-    localStorage.setItem('sidebar_collapsed', collapsedState);
-
-    setTimeout(() => {
-      sidebar.classList.remove('is-animating');
-    }, 250);
-  });
+  // Nagłówek profilu
+  const savedName = localStorage.getItem('user_name');
+  const savedRole = localStorage.getItem('user_role');
+  if (savedName) {
+    const nameEl = document.getElementById('header-user-name');
+    const avatarEl = document.getElementById('header-avatar');
+    if (nameEl) nameEl.textContent = savedName;
+    if (avatarEl) avatarEl.textContent = savedName.charAt(0).toUpperCase();
+  }
+  if (savedRole) {
+    const roleEl = document.getElementById('header-user-role');
+    if (roleEl) roleEl.textContent = savedRole;
+  }
 }
 
 /**
- * Obsługa menu rozwijanych w nagłówku (Powiadomienia i Profil)
+ * Przełącznik zwijania sidebara
+ */
+function initSidebarToggle() {
+  const toggleBtn = document.getElementById('btn-toggle-sidebar');
+  const sidebar = document.getElementById('sidebar');
+
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      const isCollapsed = sidebar.classList.contains('collapsed');
+      localStorage.setItem('sidebar_collapsed', isCollapsed);
+    });
+  }
+}
+
+/**
+ * Obsługa menu rozwijanych (Profile, Powiadomienia)
  */
 function initHeaderDropdowns() {
-  const btnNotif = document.getElementById('btn-notifications');
-  const dropdownNotif = document.getElementById('dropdown-notifications');
-  const btnProfile = document.getElementById('btn-user-profile');
-  const dropdownProfile = document.getElementById('dropdown-profile');
-  const notifBadge = document.getElementById('notif-badge');
-  const btnClearNotifs = document.getElementById('btn-clear-notifs');
-  const notifList = document.getElementById('notif-list');
+  const notifBtn = document.getElementById('btn-notifications');
+  const notifDropdown = document.getElementById('dropdown-notifications');
+  
+  const profileBtn = document.getElementById('btn-user-profile');
+  const profileDropdown = document.getElementById('dropdown-profile');
 
-  const hasVisitedBefore = localStorage.getItem('has_visited_before');
-  const isWelcomeRead = localStorage.getItem('notif_welcome_read') === 'true';
-
-  if (!hasVisitedBefore) {
-    localStorage.setItem('has_visited_before', 'true');
-    renderWelcomeNotification(notifList, notifBadge);
-  } else if (!isWelcomeRead) {
-    renderWelcomeNotification(notifList, notifBadge);
-  } else {
-    hideWelcomeNotification(notifList, notifBadge);
-  }
-
-  if (btnNotif && dropdownNotif) {
-    btnNotif.addEventListener('click', (e) => {
+  if (notifBtn && notifDropdown) {
+    notifBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      dropdownProfile?.classList.remove('show');
-      dropdownNotif.classList.toggle('show');
-    });
+      if (profileDropdown) profileDropdown.classList.remove('show');
+      notifDropdown.classList.toggle('show');
 
-    dropdownNotif.addEventListener('click', (e) => {
+      const badge = document.getElementById('notif-badge');
+      if (badge) badge.style.display = 'none';
+    });
+  }
+
+  if (profileBtn && profileDropdown) {
+    profileBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      if (notifDropdown) notifDropdown.classList.remove('show');
+      profileDropdown.classList.toggle('show');
     });
   }
 
-  if (btnProfile && dropdownProfile) {
-    btnProfile.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdownNotif?.classList.remove('show');
-      dropdownProfile.classList.toggle('show');
-    });
-
-    dropdownProfile.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-  }
-
-  if (btnClearNotifs) {
-    btnClearNotifs.addEventListener('click', (e) => {
-      e.preventDefault();
-      localStorage.setItem('notif_welcome_read', 'true');
-      hideWelcomeNotification(notifList, notifBadge);
-    });
-  }
-
-  document.addEventListener('click', () => {
-    dropdownNotif?.classList.remove('show');
-    dropdownProfile?.classList.remove('show');
-  });
-}
-
-function renderWelcomeNotification(container, badge) {
-  if (badge) badge.style.display = 'block';
-  if (container) {
-    container.innerHTML = `
-      <div class="notification-card">
-        <div class="notif-icon-wrapper">
-          <img src="assets/Home star.png" style="width: 16px; height: 16px;" alt="Star" />
-        </div>
-        <div class="notif-content">
-          <span class="notif-title">Welcome to BrainlyHub!</span>
-          <span class="notif-desc">Your ultimate academic repository. Select a subject to explore tasks.</span>
-          <span class="notif-time">First visit</span>
-        </div>
-      </div>
-    `;
-  }
-}
-
-function hideWelcomeNotification(container, badge) {
-  if (badge) badge.style.display = 'none';
-  if (container) {
-    container.innerHTML = `
-      <div style="font-size: 0.8rem; color: var(--text-muted); padding: 12px; text-align: center;">
-        No new notifications.
-      </div>
-    `;
-  }
-}
-
-/**
- * Zmienia ikonę favicon na odcienie szarości przy zmianie aktywnej karty przeglądarki
- */
-function initFaviconSwitcher() {
-  const favicon = document.getElementById('favicon');
-  if (!favicon) return;
-
-  const originalSrc = favicon.href;
-  let grayscaleSrc = null;
-
-  const img = new Image();
-  img.crossOrigin = 'Anonymous';
-  img.src = originalSrc;
-  img.onload = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-    const ctx = canvas.getContext('2d');
-    
-    ctx.drawImage(img, 0, 0);
-    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imgData.data;
-
-    for (let i = 0; i < data.length; i += 4) {
-      const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-      data[i] = avg;     // Red
-      data[i + 1] = avg; // Green
-      data[i + 2] = avg; // Blue
+  // Zamknij przy kliknięciu poza obszar
+  document.addEventListener('click', (e) => {
+    if (notifDropdown && !notifDropdown.contains(e.target) && e.target !== notifBtn) {
+      notifDropdown.classList.remove('show');
     }
-
-    ctx.putImageData(imgData, 0, 0);
-    grayscaleSrc = canvas.toDataURL('image/png');
-  };
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      if (grayscaleSrc) favicon.href = grayscaleSrc;
-    } else {
-      favicon.href = originalSrc;
+    if (profileDropdown && !profileDropdown.contains(e.target) && e.target !== profileBtn) {
+      profileDropdown.classList.remove('show');
     }
   });
+
+  const clearNotifsBtn = document.getElementById('btn-clear-notifs');
+  if (clearNotifsBtn) {
+    clearNotifsBtn.addEventListener('click', () => {
+      const notifList = document.getElementById('notif-list');
+      if (notifList) notifList.innerHTML = '';
+    });
+  }
 }
