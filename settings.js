@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initProfileSettings();
   initThemeAndAppearance();
   initNotificationSettings();
-  initSystemReset();
   initToggles();
   initSoundSettings();
+  initResetConfirmationModal();
 });
 
 /**
- * Zdecydowanie wyraźne i różniące się dźwięki powiadomień (Web Audio API)
+ * Generator dźwięków powiadomień
  */
 function playAudioChime(overrideTone) {
   const soundEnabled = localStorage.getItem('sound_enabled') !== 'false';
@@ -26,7 +26,6 @@ function playAudioChime(overrideTone) {
     const selectedTone = overrideTone || localStorage.getItem('sound_tone') || 'chime';
 
     if (selectedTone === 'double') {
-      // DŹWIĘK 2: Dwa szybkie staccato piski cyfrowe (high pitched double beep)
       const now = ctx.currentTime;
       [880, 1200].forEach((freq, i) => {
         const osc = ctx.createOscillator();
@@ -41,7 +40,6 @@ function playAudioChime(overrideTone) {
         osc.stop(now + i * 0.08 + 0.06);
       });
     } else if (selectedTone === 'pop') {
-      // DŹWIĘK 3: Krótki basowy "pop" z falą trójkątną (low woody drop)
       const now = ctx.currentTime;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -55,7 +53,6 @@ function playAudioChime(overrideTone) {
       osc.start(now);
       osc.stop(now + 0.08);
     } else {
-      // DŹWIĘK 1: Jasny dwutonowy akord harmonijny (Bright Chime)
       const now = ctx.currentTime;
       [523.25, 659.25, 1046.50].forEach((freq) => {
         const osc = ctx.createOscillator();
@@ -75,16 +72,11 @@ function playAudioChime(overrideTone) {
   }
 }
 
-/**
- * Generuje powiadomienie do listy w nagłówku
- */
 function pushNotification(title, desc) {
   const notifList = document.getElementById('notif-list');
   const badge = document.getElementById('notif-badge');
 
-  if (badge) {
-    badge.style.display = 'block';
-  }
+  if (badge) badge.style.display = 'block';
 
   if (notifList) {
     const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -111,12 +103,8 @@ function initProfileSettings() {
   const roleSelect = document.getElementById('select-user-role');
   const saveBtn = document.getElementById('btn-save-profile');
 
-  if (nameInput) {
-    nameInput.value = localStorage.getItem('user_name') || 'Student Account';
-  }
-  if (roleSelect) {
-    roleSelect.value = localStorage.getItem('user_role') || 'High School Member';
-  }
+  if (nameInput) nameInput.value = localStorage.getItem('user_name') || 'Student Account';
+  if (roleSelect) roleSelect.value = localStorage.getItem('user_role') || 'High School Member';
 
   if (saveBtn) {
     saveBtn.addEventListener('click', () => {
@@ -145,11 +133,7 @@ function initThemeAndAppearance() {
 
   const themeBtns = document.querySelectorAll('.theme-option-btn');
   themeBtns.forEach(btn => {
-    if (btn.dataset.theme === savedTheme) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
+    if (btn.dataset.theme === savedTheme) btn.classList.add('active');
 
     btn.addEventListener('click', () => {
       themeBtns.forEach(b => b.classList.remove('active'));
@@ -170,11 +154,7 @@ function initThemeAndAppearance() {
 
   const accentCircles = document.querySelectorAll('.accent-circle');
   accentCircles.forEach(circle => {
-    if (circle.dataset.color === savedAccent) {
-      circle.classList.add('active');
-    } else {
-      circle.classList.remove('active');
-    }
+    if (circle.dataset.color === savedAccent) circle.classList.add('active');
 
     circle.addEventListener('click', () => {
       accentCircles.forEach(c => c.classList.remove('active'));
@@ -256,21 +236,55 @@ function initNotificationSettings() {
       if (notifList) notifList.innerHTML = '';
       localStorage.removeItem('notif_welcome_read');
       localStorage.removeItem('has_visited_before');
-      
       pushNotification('History Reset', 'All notification logs cleared.');
     });
   }
 }
 
-function initSystemReset() {
-  const clearDataBtn = document.getElementById('btn-clear-all-data');
-  if (clearDataBtn) {
-    clearDataBtn.addEventListener('click', () => {
-      localStorage.clear();
-      pushNotification('System Reset', 'Restored default settings.');
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+/**
+ * Modal potwierdzenia resetu danych z wymogiem wpisania tekstu
+ */
+function initResetConfirmationModal() {
+  const triggerBtn = document.getElementById('btn-clear-all-data');
+  const modal = document.getElementById('modal-reset-confirm');
+  const confirmInput = document.getElementById('input-confirm-delete');
+  const executeBtn = document.getElementById('btn-confirm-reset-execute');
+  const cancelBtn = document.getElementById('btn-cancel-reset');
+
+  if (!triggerBtn || !modal) return;
+
+  triggerBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.style.display = 'flex';
+    confirmInput.value = '';
+    executeBtn.disabled = true;
+    confirmInput.focus();
+  });
+
+  confirmInput.addEventListener('input', () => {
+    executeBtn.disabled = confirmInput.value.trim() !== 'DELETE ALL DATA';
+  });
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
     });
   }
+
+  if (executeBtn) {
+    executeBtn.addEventListener('click', () => {
+      if (confirmInput.value.trim() === 'DELETE ALL DATA') {
+        localStorage.clear();
+        modal.style.display = 'none';
+        pushNotification('System Reset', 'Restored default settings.');
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
+      }
+    });
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
 }
