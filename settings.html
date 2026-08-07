@@ -143,7 +143,7 @@
                 <div class="profile-avatar" id="header-avatar">S</div>
                 <div class="profile-info">
                   <span class="profile-name" id="header-user-name">Student Account</span>
-                  <span class="profile-role">High School Member</span>
+                  <span class="profile-role" id="header-user-role">High School Member</span>
                 </div>
               </div>
 
@@ -192,7 +192,7 @@
         <!-- Sekcja 1: Profile Settings -->
         <section class="liquid-card" id="profile">
           <div class="settings-card-header">
-            <h2>Profile Settings</h2>
+            <h2>Profile & Account Settings</h2>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -220,7 +220,7 @@
         <!-- Sekcja 2: Appearance & Theme -->
         <section class="liquid-card" id="appearance">
           <div class="settings-card-header">
-            <h2>Appearance & Themes</h2>
+            <h2>Appearance & Customization</h2>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 20px;">
@@ -243,9 +243,32 @@
               <div style="display: flex; gap: 10px;" id="accent-picker">
                 <span class="accent-circle" data-color="#1e3a8a" style="background: #1e3a8a;" title="Navy Blue"></span>
                 <span class="accent-circle" data-color="#2563eb" style="background: #2563eb;" title="Royal Blue"></span>
-                <span class="accent-circle" data-color="#0d9488" style="background: #0d9488;" title="Teal"></span>
+                <span class="accent-circle" data-color="#059669" style="background: #059669;" title="Emerald Green"></span>
                 <span class="accent-circle" data-color="#7c3aed" style="background: #7c3aed;" title="Purple"></span>
+                <span class="accent-circle" data-color="#d97706" style="background: #d97706;" title="Amber Gold"></span>
               </div>
+            </div>
+
+            <div class="settings-row">
+              <div>
+                <span class="settings-row-title">Compact UI Density</span>
+                <span class="settings-row-desc">Reduce padding and spacing across cards for denser views.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggle-compact-ui" />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-row">
+              <div>
+                <span class="settings-row-title">Smooth Animations</span>
+                <span class="settings-row-desc">Enable fluid transitions for sidebars, dropdowns, and buttons.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggle-animations" checked />
+                <span class="slider"></span>
+              </label>
             </div>
           </div>
         </section>
@@ -253,14 +276,14 @@
         <!-- Sekcja 3: Notifications Personalization -->
         <section class="liquid-card" id="notifications">
           <div class="settings-card-header">
-            <h2>Notifications Personalization</h2>
+            <h2>Notifications & Alerts</h2>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 16px;">
             <div class="settings-row">
               <div>
-                <span class="settings-row-title">Welcome Notifications</span>
-                <span class="settings-row-desc">Show welcome badge and orientation tip for first-time visits.</span>
+                <span class="settings-row-title">Welcome & Onboarding Tips</span>
+                <span class="settings-row-desc">Show welcome orientation notices for new features.</span>
               </div>
               <label class="switch">
                 <input type="checkbox" id="toggle-notif-welcome" checked />
@@ -271,10 +294,32 @@
             <div class="settings-row">
               <div>
                 <span class="settings-row-title">Exam & Task Alerts</span>
-                <span class="settings-row-desc">Display indicators when new past exam sheets or task categories are published.</span>
+                <span class="settings-row-desc">Get notified when new exam papers or worksheets are added.</span>
               </div>
               <label class="switch">
                 <input type="checkbox" id="toggle-notif-exams" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-row">
+              <div>
+                <span class="settings-row-title">Task Solution Activity</span>
+                <span class="settings-row-desc">Receive updates on community answers and verified steps.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggle-notif-solutions" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-row">
+              <div>
+                <span class="settings-row-title">System & Maintenance Notices</span>
+                <span class="settings-row-desc">Alerts regarding upcoming platform updates and server tweaks.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggle-notif-system" checked />
                 <span class="slider"></span>
               </label>
             </div>
@@ -294,7 +339,7 @@
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
             <div>
               <span class="settings-row-title">Clear Local Storage</span>
-              <span class="settings-row-desc">Resets sidebar state, custom names, theme preferences, and notifications.</span>
+              <span class="settings-row-desc">Resets layout states, user name, dark mode, and preferences.</span>
             </div>
             <button id="btn-clear-all-data" class="settings-btn-danger">
               Reset Application Data
@@ -307,7 +352,6 @@
   </div>
 
   <script src="core/main.js"></script>
-  <!-- ZMIENIONO ŚCIEŻKĘ: z core/settings.js na settings.js -->
   <script src="settings.js"></script>
 </body>
 </html>
