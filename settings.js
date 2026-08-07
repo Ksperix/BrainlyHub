@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Syntetyczny generator dźwięków powiadomień (Web Audio API)
+ * Zdecydowanie wyraźne i różniące się dźwięki powiadomień (Web Audio API)
  */
-function playAudioChime(toneType = 'chime') {
+function playAudioChime(overrideTone) {
   const soundEnabled = localStorage.getItem('sound_enabled') !== 'false';
   if (!soundEnabled) return;
 
@@ -23,54 +23,60 @@ function playAudioChime(toneType = 'chime') {
     if (!AudioContext) return;
     const ctx = new AudioContext();
 
-    const selectedTone = toneType || localStorage.getItem('sound_tone') || 'chime';
+    const selectedTone = overrideTone || localStorage.getItem('sound_tone') || 'chime';
 
     if (selectedTone === 'double') {
-      [520, 660].forEach((freq, idx) => {
+      // DŹWIĘK 2: Dwa szybkie staccato piski cyfrowe (high pitched double beep)
+      const now = ctx.currentTime;
+      [880, 1200].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(freq, now + i * 0.08);
+        gain.gain.setValueAtTime(0.08, now + i * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.08 + 0.06);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + i * 0.08);
+        osc.stop(now + i * 0.08 + 0.06);
+      });
+    } else if (selectedTone === 'pop') {
+      // DŹWIĘK 3: Krótki basowy "pop" z falą trójkątną (low woody drop)
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(280, now);
+      osc.frequency.exponentialRampToValueAtTime(70, now + 0.08);
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.08);
+    } else {
+      // DŹWIĘK 1: Jasny dwutonowy akord harmonijny (Bright Chime)
+      const now = ctx.currentTime;
+      [523.25, 659.25, 1046.50].forEach((freq) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.1);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.1);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.1 + 0.15);
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
         osc.connect(gain);
         gain.connect(ctx.destination);
-        osc.start(ctx.currentTime + idx * 0.1);
-        osc.stop(ctx.currentTime + idx * 0.1 + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.4);
       });
-    } else if (selectedTone === 'pop') {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(400, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.05);
-      gain.gain.setValueAtTime(0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.06);
-    } else {
-      // Domyślny 'chime'
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
-      osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1); // A5
-      gain.gain.setValueAtTime(0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.35);
     }
   } catch (e) {
-    console.warn('Web Audio API not supported or blocked:', e);
+    console.warn('Web Audio API unavailable:', e);
   }
 }
 
 /**
- * Generuje powiadomienie do wewnętrznej listy w nagłówku
+ * Generuje powiadomienie do listy w nagłówku
  */
 function pushNotification(title, desc) {
   const notifList = document.getElementById('notif-list');
@@ -207,7 +213,8 @@ function initSoundSettings() {
 
   if (testSoundBtn) {
     testSoundBtn.addEventListener('click', () => {
-      playAudioChime(toneSelect ? toneSelect.value : 'chime');
+      const currentTone = toneSelect ? toneSelect.value : 'chime';
+      playAudioChime(currentTone);
     });
   }
 }
