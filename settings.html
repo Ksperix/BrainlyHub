@@ -95,9 +95,9 @@
 
       <!-- Sidebar Footer -->
       <div class="sidebar-footer">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSene6zRah8jUBrBNIwbSdTEdr0Wa-9xSyEbInpBYptGAwmu3Q/viewform" target="_blank" rel="noopener" class="nav-item">
-          <img src="assets/Bug.png" alt="Report a bug" class="nav-icon" />
-          <span class="nav-label">Report a bug</span>
+        <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="nav-item">
+          <img src="assets/Bug.png" alt="Contact" class="nav-icon" />
+          <span class="nav-label">Contact with us</span>
         </a>
         <a href="settings.html" class="nav-item active">
           <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
@@ -111,6 +111,13 @@
       <!-- Clean Top Bar Header -->
       <header class="top-bar">
         <div class="top-bar-actions">
+          <!-- Favorite Tasks Button -->
+          <div class="dropdown-container">
+            <button class="action-icon-btn" title="Favorites (Coming Soon)" id="btn-favorites">
+              <img src="assets/Heart.png" alt="Favorites" class="nav-icon" />
+            </button>
+          </div>
+
           <!-- Notifications Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="Notifications" id="btn-notifications">
@@ -149,7 +156,7 @@
 
               <a href="settings.html" class="profile-btn-card primary-card">
                 <div class="profile-btn-icon">
-                  <img src="assets/Settings.png" alt="Settings" style="width: 22px; height: 22px;" />
+                  <img src="assets/Settings.png" alt="Settings" />
                 </div>
                 <div class="profile-btn-info">
                   <span class="profile-btn-title">Account Settings</span>
@@ -163,7 +170,7 @@
 
                 <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
                   <div class="profile-btn-icon">
-                    <img src="assets/Brainly.png" alt="Discord" style="width: 22px; height: 22px;" />
+                    <img src="assets/Brainly.png" alt="Discord" />
                   </div>
                   <div class="profile-btn-info">
                     <span class="profile-btn-title">Discord Server</span>
@@ -173,7 +180,7 @@
 
                 <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
                   <div class="profile-btn-icon">
-                    <img src="assets/Code.png" alt="Extension" style="width: 22px; height: 22px;" />
+                    <img src="assets/Code.png" alt="Extension" />
                   </div>
                   <div class="profile-btn-info">
                     <span class="profile-btn-title">Brainly Creatives</span>
@@ -259,27 +266,36 @@
                 <span class="slider"></span>
               </label>
             </div>
-
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Smooth Animations</span>
-                <span class="settings-row-desc">Enable fluid transitions for sidebars, dropdowns, and buttons.</span>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="toggle-animations" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
           </div>
         </section>
 
-        <!-- Sekcja 3: Notifications Personalization -->
+        <!-- Sekcja 3: Notification Sounds & Alerts -->
         <section class="liquid-card" id="notifications">
           <div class="settings-card-header">
-            <h2>Notifications & Alerts</h2>
+            <h2>Notifications & Sound Settings</h2>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="settings-row">
+              <div>
+                <span class="settings-row-title">Notification Sound</span>
+                <span class="settings-row-desc">Play an audible chime when new notifications are added.</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="toggle-notif-sound" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-form-group">
+              <label for="select-sound-tone" class="settings-label">Sound Tone Style</label>
+              <select id="select-sound-tone" class="settings-select">
+                <option value="chime">Soft Chime (Default)</option>
+                <option value="double">Double Beep</option>
+                <option value="pop">Subtle Pop</option>
+              </select>
+            </div>
+
             <div class="settings-row">
               <div>
                 <span class="settings-row-title">Welcome & Onboarding Tips</span>
@@ -304,19 +320,8 @@
 
             <div class="settings-row">
               <div>
-                <span class="settings-row-title">Task Solution Activity</span>
-                <span class="settings-row-desc">Receive updates on community answers and verified steps.</span>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="toggle-notif-solutions" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
-
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">System & Maintenance Notices</span>
-                <span class="settings-row-desc">Alerts regarding upcoming platform updates and server tweaks.</span>
+                <span class="settings-row-title">System Updates</span>
+                <span class="settings-row-desc">Alerts regarding upcoming updates and fixes.</span>
               </div>
               <label class="switch">
                 <input type="checkbox" id="toggle-notif-system" checked />
@@ -324,9 +329,14 @@
               </label>
             </div>
 
-            <button id="btn-reset-notifications" class="settings-btn-secondary" style="align-self: flex-start; margin-top: 8px;">
-              Reset Notification History
-            </button>
+            <div style="display: flex; gap: 10px; margin-top: 8px;">
+              <button id="btn-test-sound" class="settings-btn-secondary">
+                Test Sound
+              </button>
+              <button id="btn-reset-notifications" class="settings-btn-secondary">
+                Reset Notification History
+              </button>
+            </div>
           </div>
         </section>
 
@@ -339,7 +349,7 @@
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
             <div>
               <span class="settings-row-title">Clear Local Storage</span>
-              <span class="settings-row-desc">Resets layout states, user name, dark mode, and preferences.</span>
+              <span class="settings-row-desc">Resets layout states, user name, dark mode, and sound settings.</span>
             </div>
             <button id="btn-clear-all-data" class="settings-btn-danger">
               Reset Application Data
