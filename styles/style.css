@@ -30,6 +30,29 @@
   --blur-glass: blur(12px);
 }
 
+/* Wyłączenie przejazdu animacji podczas ponownego ładowania strony */
+html.preload-collapsed .sidebar {
+  width: var(--sidebar-width-collapsed) !important;
+  padding: 0 8px 16px 8px !important;
+}
+html.preload-collapsed .sidebar .brand-container,
+html.preload-collapsed .sidebar .nav-label {
+  display: none !important;
+}
+html.preload-collapsed .sidebar .sidebar-header {
+  justify-content: center !important;
+  padding: 0 !important;
+}
+html.preload-collapsed .sidebar .nav-item {
+  justify-content: center !important;
+  padding: 9px 0 !important;
+}
+
+body.preload-no-transition *,
+body.preload-no-transition .sidebar {
+  transition: none !important;
+}
+
 /* ==========================================
    CIEMNY MOTYW (DARK THEME OVERRIDES)
    ========================================== */
@@ -39,7 +62,6 @@ body.dark-theme {
   --bg-surface: #1e293b;
   --bg-glass: rgba(30, 41, 59, 0.85);
   --bg-sidebar: #0f172a;
-  /* Wszystkie teksty w trybie ciemnym na czysto biały kolor */
   --text-main: #ffffff !important;
   --text-muted: #ffffff !important;
   --border-color: #334155;
@@ -83,7 +105,6 @@ body {
   overflow: hidden;
 }
 
-/* Ikony pozostają bez inwersji kolorów */
 .nav-icon,
 .brand-logo,
 .action-icon-btn img {
@@ -113,7 +134,6 @@ body {
   padding: 0 8px 16px 8px;
 }
 
-/* Wyrównanie dolnej linii paska bocznego z pakiem górnym (64px) */
 .sidebar-header {
   height: 64px !important;
   min-height: 64px !important;
@@ -340,7 +360,6 @@ body {
   align-items: center;
 }
 
-/* Powiadomienia w rozwijanym menu */
 .notif-scroll-container {
   display: flex;
   flex-direction: column;
@@ -412,7 +431,6 @@ body {
   border-top: 1px solid var(--border-color);
 }
 
-/* Profile Dropdown Header & Equal Cards */
 .user-profile-header {
   display: flex;
   align-items: center;
@@ -464,7 +482,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Jednakowe wymiary i wyrównanie dla wszystkich kart w profilu */
 .profile-btn-card {
   display: flex;
   align-items: center;
@@ -616,7 +633,6 @@ body {
   margin-top: 2px;
 }
 
-/* Buttony */
 .settings-btn-primary {
   background-color: var(--primary);
   color: #ffffff;
@@ -655,7 +671,6 @@ body {
   cursor: pointer;
 }
 
-/* Switches (Toggles) */
 .switch {
   position: relative;
   display: inline-block;
@@ -699,7 +714,6 @@ input:checked + .slider:before {
   transform: translateX(20px);
 }
 
-/* Theme circles & buttons */
 .accent-circle {
   width: 26px;
   height: 26px;
