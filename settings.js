@@ -8,10 +8,69 @@ document.addEventListener('DOMContentLoaded', () => {
   initNotificationSettings();
   initSystemReset();
   initToggles();
+  initSoundSettings();
 });
 
 /**
-  Funkcja pomocnicza generująca wewnętrzne powiadomienie do listy
+ * Syntetyczny generator dźwięków powiadomień (Web Audio API)
+ */
+function playAudioChime(toneType = 'chime') {
+  const soundEnabled = localStorage.getItem('sound_enabled') !== 'false';
+  if (!soundEnabled) return;
+
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+
+    const selectedTone = toneType || localStorage.getItem('sound_tone') || 'chime';
+
+    if (selectedTone === 'double') {
+      [520, 660].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.1);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.1 + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + idx * 0.1);
+        osc.stop(ctx.currentTime + idx * 0.1 + 0.15);
+      });
+    } else if (selectedTone === 'pop') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(400, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.05);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.06);
+    } else {
+      // Domyślny 'chime'
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+      osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1); // A5
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.35);
+    }
+  } catch (e) {
+    console.warn('Web Audio API not supported or blocked:', e);
+  }
+}
+
+/**
+ * Generuje powiadomienie do wewnętrznej listy w nagłówku
  */
 function pushNotification(title, desc) {
   const notifList = document.getElementById('notif-list');
@@ -37,6 +96,8 @@ function pushNotification(title, desc) {
     `;
     notifList.prepend(card);
   }
+
+  playAudioChime();
 }
 
 function initProfileSettings() {
@@ -59,16 +120,15 @@ function initProfileSettings() {
       localStorage.setItem('user_name', newName);
       localStorage.setItem('user_role', newRole);
 
-      // Aktualizacja nagłówka
       const nameElement = document.getElementById('header-user-name');
       const roleElement = document.getElementById('header-user-role');
       const avatarElement = document.getElementById('header-avatar');
-      
+
       if (nameElement) nameElement.textContent = newName;
       if (roleElement) roleElement.textContent = newRole;
       if (avatarElement) avatarElement.textContent = newName.charAt(0).toUpperCase();
 
-      pushNotification('Profile Updated', `Name set to "${newName}" and role updated to "${newRole}".`);
+      pushNotification('Profile Updated', `Name set to "${newName}" and status updated to "${newRole}".`);
     });
   }
 }
@@ -77,7 +137,6 @@ function initThemeAndAppearance() {
   const savedTheme = localStorage.getItem('app_theme') || 'light';
   const savedAccent = localStorage.getItem('app_accent') || '#1e3a8a';
 
-  // --- Przełącznik Motywu ---
   const themeBtns = document.querySelectorAll('.theme-option-btn');
   themeBtns.forEach(btn => {
     if (btn.dataset.theme === savedTheme) {
@@ -99,11 +158,10 @@ function initThemeAndAppearance() {
         document.body.classList.remove('dark-theme');
       }
 
-      pushNotification('Theme Changed', `Applied ${chosenTheme.toUpperCase()} color mode across the interface.`);
+      pushNotification('Theme Changed', `Applied ${chosenTheme.toUpperCase()} mode.`);
     });
   });
 
-  // --- Wybór Akcentu ---
   const accentCircles = document.querySelectorAll('.accent-circle');
   accentCircles.forEach(circle => {
     if (circle.dataset.color === savedAccent) {
@@ -120,9 +178,38 @@ function initThemeAndAppearance() {
       localStorage.setItem('app_accent', chosenAccent);
 
       document.documentElement.style.setProperty('--primary', chosenAccent);
-      pushNotification('Accent Updated', `Primary highlight color adjusted.`);
+      pushNotification('Accent Updated', `Accent color changed.`);
     });
   });
+}
+
+function initSoundSettings() {
+  const soundToggle = document.getElementById('toggle-notif-sound');
+  const toneSelect = document.getElementById('select-sound-tone');
+  const testSoundBtn = document.getElementById('btn-test-sound');
+
+  if (soundToggle) {
+    soundToggle.checked = localStorage.getItem('sound_enabled') !== 'false';
+    soundToggle.addEventListener('change', (e) => {
+      localStorage.setItem('sound_enabled', e.target.checked);
+      pushNotification('Sound Setting', `Notification audio ${e.target.checked ? 'enabled' : 'disabled'}.`);
+    });
+  }
+
+  if (toneSelect) {
+    toneSelect.value = localStorage.getItem('sound_tone') || 'chime';
+    toneSelect.addEventListener('change', (e) => {
+      localStorage.setItem('sound_tone', e.target.value);
+      playAudioChime(e.target.value);
+      pushNotification('Tone Changed', `Notification tone set to ${e.target.value}.`);
+    });
+  }
+
+  if (testSoundBtn) {
+    testSoundBtn.addEventListener('click', () => {
+      playAudioChime(toneSelect ? toneSelect.value : 'chime');
+    });
+  }
 }
 
 function initToggles() {
@@ -136,11 +223,11 @@ function initToggles() {
       } else {
         document.body.classList.remove('compact-density');
       }
-      pushNotification('Layout Updated', `Compact density ${e.target.checked ? 'enabled' : 'disabled'}.`);
+      pushNotification('Layout Updated', `Compact view ${e.target.checked ? 'enabled' : 'disabled'}.`);
     });
   }
 
-  const notifToggles = ['toggle-notif-welcome', 'toggle-notif-exams', 'toggle-notif-solutions', 'toggle-notif-system'];
+  const notifToggles = ['toggle-notif-welcome', 'toggle-notif-exams', 'toggle-notif-system'];
   notifToggles.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
@@ -148,7 +235,7 @@ function initToggles() {
       if (saved !== null) el.checked = saved === 'true';
       el.addEventListener('change', (e) => {
         localStorage.setItem(id, e.target.checked);
-        pushNotification('Preference Saved', `${id.replace('toggle-notif-', '').toUpperCase()} alerts updated.`);
+        pushNotification('Preference Saved', `${id.replace('toggle-notif-', '').toUpperCase()} alert settings saved.`);
       });
     }
   });
@@ -163,7 +250,7 @@ function initNotificationSettings() {
       localStorage.removeItem('notif_welcome_read');
       localStorage.removeItem('has_visited_before');
       
-      pushNotification('History Reset', 'All local notifications have been cleared.');
+      pushNotification('History Reset', 'All notification logs cleared.');
     });
   }
 }
@@ -173,7 +260,7 @@ function initSystemReset() {
   if (clearDataBtn) {
     clearDataBtn.addEventListener('click', () => {
       localStorage.clear();
-      pushNotification('System Reset', 'All settings restored to default values.');
+      pushNotification('System Reset', 'Restored default settings.');
       setTimeout(() => {
         window.location.reload();
       }, 1000);
