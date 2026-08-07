@@ -6,11 +6,11 @@
   /* Paleta kolorów (Jasny Motyw) */
   --bg-primary: #f8fafc;
   --bg-surface: #ffffff;
-  --bg-glass: rgba(255, 255, 255, 0.75);
+  --bg-glass: rgba(255, 255, 255, 0.85);
   --bg-sidebar: #f1f5f9;
   
   /* Dynamiczny Akcent */
-  --primary: #1e3a8a;       /* Deep Navy Blue (zmienia się z JS) */
+  --primary: #1e3a8a;
   --primary-hover: #1e40af;
   --primary-light: rgba(30, 58, 138, 0.08);
   --text-main: #0f172a;
@@ -28,6 +28,7 @@
   --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
   --shadow-dropdown: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
   --blur-glass: blur(12px);
+  --icon-filter: none;
 }
 
 /* ==========================================
@@ -42,7 +43,17 @@ body.dark-theme {
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --border-color: #334155;
-  --primary-light: rgba(255, 255, 255, 0.08);
+  --primary-light: rgba(255, 255, 255, 0.1);
+  --icon-filter: brightness(0) invert(1);
+}
+
+/* Tryb kompaktowy (Density) */
+body.compact-density .content-body {
+  padding: 16px !important;
+  gap: 16px !important;
+}
+body.compact-density .liquid-card {
+  padding: 16px !important;
 }
 
 /* Reset i ogólne reguły */
@@ -69,8 +80,16 @@ body {
   overflow: hidden;
 }
 
+/* Inwersja kolorów dla ikonek i logo w Dark Mode */
+.nav-icon,
+.brand-logo,
+.action-icon-btn img {
+  filter: var(--icon-filter);
+  transition: filter 0.25s ease;
+}
+
 /* ==========================================
-   BOCZNY PASEK NAWIGACYJNY (GEMINI-STYLE)
+   BOCZNY PASEK NAWIGACYJNY
    ========================================== */
 
 .sidebar {
@@ -81,7 +100,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
-  transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1), padding var(--transition-speed) ease, background-color 0.25s ease;
+  transition: width var(--transition-speed) ease, padding var(--transition-speed) ease, background-color 0.25s ease;
   position: relative;
   z-index: 100;
   user-select: none;
@@ -140,7 +159,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color var(--transition-speed);
 }
 
 .btn-toggle-sidebar:hover {
@@ -154,18 +172,12 @@ body {
   gap: 4px;
   flex-grow: 1;
   overflow-y: auto;
-  overflow-x: visible;
   padding: 4px;
   scrollbar-width: none;
 }
 
 .nav-list::-webkit-scrollbar {
   display: none;
-}
-
-.sidebar.is-animating .nav-list,
-.sidebar.collapsed .nav-list {
-  overflow-y: hidden;
 }
 
 .nav-item {
@@ -180,8 +192,7 @@ body {
   font-size: 0.95rem;
   white-space: nowrap;
   cursor: pointer;
-  position: relative;
-  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sidebar.collapsed .nav-item {
@@ -250,16 +261,6 @@ body {
   box-sizing: border-box !important;
 }
 
-.top-bar h1,
-.top-bar h2,
-.top-bar h3,
-.top-bar-title,
-.top-bar-left {
-  display: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
 .top-bar-actions {
   display: flex !important;
   align-items: center !important;
@@ -281,8 +282,8 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
   position: relative;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .action-icon-btn:hover {
@@ -305,7 +306,7 @@ body {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 300px;
+  width: 320px;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -315,17 +316,10 @@ body {
   flex-direction: column;
   gap: 10px;
   z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
-  transform: translateY(-4px);
 }
 
 .header-dropdown.show {
   display: flex;
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
 }
 
 .dropdown-header {
@@ -339,10 +333,7 @@ body {
   align-items: center;
 }
 
-/* ==========================================
-   POWIADOMIENIA (NOTIFICATIONS)
-   ========================================== */
-
+/* Powiadomienia w rozwijanym menu */
 .notif-scroll-container {
   display: flex;
   flex-direction: column;
@@ -359,12 +350,11 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   background-color: var(--bg-primary);
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
 .notification-card:hover {
   border-color: var(--primary);
-  background-color: var(--primary-light);
 }
 
 .notif-icon-wrapper {
@@ -413,17 +403,9 @@ body {
   text-decoration: none;
   padding-top: 8px;
   border-top: 1px solid var(--border-color);
-  transition: opacity 0.2s ease;
 }
 
-.dropdown-footer-link:hover {
-  opacity: 0.8;
-}
-
-/* ==========================================
-   WIZYTÓWKA PROFILU I JEDNOLITE KAFELKI
-   ========================================== */
-
+/* Profile Dropdown Header */
 .user-profile-header {
   display: flex;
   align-items: center;
@@ -465,7 +447,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-top: 2px;
 }
 
 .profile-tools-title {
@@ -474,30 +455,20 @@ body {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 2px;
 }
 
 .profile-btn-card {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 14px;
-  border-radius: var(--radius-lg);
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
   text-decoration: none;
-  width: 100%;
-  box-sizing: border-box;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  transition: background-color 0.2s ease;
 }
 
 .profile-btn-card.primary-card {
   background-color: var(--primary-light);
-  border: 1px solid transparent;
-}
-
-.profile-btn-card.primary-card .profile-btn-title {
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 0.95rem;
 }
 
 .profile-btn-card.secondary-card {
@@ -506,44 +477,22 @@ body {
 }
 
 .profile-btn-card.secondary-card:hover {
-  background-color: var(--primary-light);
   border-color: var(--primary);
-  transform: translateY(-1px);
-}
-
-.profile-btn-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-md);
-  background: var(--primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.profile-btn-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .profile-btn-title {
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 600;
   color: var(--text-main);
-  line-height: 1.2;
 }
 
 .profile-btn-desc {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
-  line-height: 1.2;
-  margin-top: 2px;
 }
 
 /* ==========================================
-   SETTINGS PAGE LAYOUT & CARDS GAP
+   SETTINGS PAGE LAYOUT & CONTROLS
    ========================================== */
 
 .content-body {
@@ -633,7 +582,7 @@ body {
   margin-top: 2px;
 }
 
-/* Przyciski Akcji */
+/* Buttony */
 .settings-btn-primary {
   background-color: var(--primary);
   color: #ffffff;
@@ -672,7 +621,7 @@ body {
   cursor: pointer;
 }
 
-/* Przełączniki (Switch toggle) */
+/* Switches (Toggles) */
 .switch {
   position: relative;
   display: inline-block;
@@ -716,7 +665,7 @@ input:checked + .slider:before {
   transform: translateX(20px);
 }
 
-/* Color Accent circles */
+/* Theme circles & buttons */
 .accent-circle {
   width: 26px;
   height: 26px;
@@ -731,7 +680,6 @@ input:checked + .slider:before {
   border-color: var(--text-main);
 }
 
-/* Theme Option Buttons */
 .theme-toggle-group {
   display: flex;
   background-color: var(--bg-sidebar);
@@ -756,10 +704,6 @@ input:checked + .slider:before {
   color: var(--primary);
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
-
-/* ==========================================
-   LAYOUT & SCROLLBAR
-   ========================================== */
 
 ::-webkit-scrollbar {
   width: 6px;
