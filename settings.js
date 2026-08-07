@@ -11,9 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initResetConfirmationModal();
 });
 
-/**
- * Generator dźwięków powiadomień
- */
 function playAudioChime(overrideTone) {
   const soundEnabled = localStorage.getItem('sound_enabled') !== 'false';
   if (!soundEnabled) return;
@@ -79,6 +76,9 @@ function pushNotification(title, desc) {
   if (badge) badge.style.display = 'block';
 
   if (notifList) {
+    const emptyState = notifList.querySelector('.notif-empty-state');
+    if (emptyState) emptyState.remove();
+
     const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const card = document.createElement('div');
     card.className = 'notification-card';
@@ -233,17 +233,15 @@ function initNotificationSettings() {
   if (resetNotifBtn) {
     resetNotifBtn.addEventListener('click', () => {
       const notifList = document.getElementById('notif-list');
-      if (notifList) notifList.innerHTML = '';
+      if (notifList) {
+        notifList.innerHTML = `<div class="notif-empty-state">No recent notifications</div>`;
+      }
       localStorage.removeItem('notif_welcome_read');
       localStorage.removeItem('has_visited_before');
-      pushNotification('History Reset', 'All notification logs cleared.');
     });
   }
 }
 
-/**
- * Modal potwierdzenia resetu danych z wymogiem wpisania tekstu
- */
 function initResetConfirmationModal() {
   const triggerBtn = document.getElementById('btn-clear-all-data');
   const modal = document.getElementById('modal-reset-confirm');
