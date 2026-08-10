@@ -1,16 +1,20 @@
 /* ==========================================
-   BRAINLYHUB - CORE APP INITIALIZATION & ENGINE
+   BRAINLYHUB - CORE ENGINE & SUPABASE CONNECTOR
    ========================================== */
 
-// Demo dataset simulating mock bundles before Supabase hookup
-const mockBundlesDataset = [
-  { id: 1, title: 'Funkcja liniowa — Zadania maturalne', market: 'PL', difficulty: 'matura', subject: 'matematyka', tasksCount: 35, updated: '2026-08-01' },
-  { id: 2, title: 'Funkcja kwadratowa — Wzory i pochodne', market: 'PL', difficulty: 'srednia', subject: 'matematyka', tasksCount: 42, updated: '2026-08-05' },
-  { id: 3, title: 'Reakcje redoks i bilans elektronowy', market: 'PL', difficulty: 'srednia', subject: 'chemia', tasksCount: 18, updated: '2026-07-28' },
-  { id: 4, title: 'Linear Functions & Slopes', market: 'US', difficulty: 'srednia', subject: 'Mathematics', tasksCount: 50, updated: '2026-08-08' },
-  { id: 5, title: 'Egzamin Ósmoklasisty — Algebra', market: 'PL', difficulty: 'podstawowa', subject: 'matematyka', tasksCount: 65, updated: '2026-08-09' },
-  { id: 6, title: 'Ecuații de gradul II', market: 'RO', difficulty: 'srednia', subject: 'Matematică', tasksCount: 24, updated: '2026-08-02' }
-];
+// Supabase Configuration (Replace credentials with your live values)
+const SUPABASE_URL = 'https://your-project-id.supabase.co';
+const SUPABASE_ANON_KEY = 'your-anon-key';
+
+let supabaseClient = null;
+
+if (window.supabase) {
+  try {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (err) {
+    console.warn('Supabase initialization waiting for valid credentials.');
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   initThemeAndLayoutState();
@@ -19,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactRedirectModal();
   loadUserProfileFromStorage();
 
-  initInteractiveGridCanvas();
   initSearchEngine();
+  fetchLiveDatabaseStats();
 
   requestAnimationFrame(() => {
     document.documentElement.classList.remove('preload-collapsed');
@@ -201,177 +205,176 @@ function initContactRedirectModal() {
 }
 
 /* ==========================================
-   INTERACTIVE CANVAS DOT GRID BACKGROUND
+   SUPABASE LIVE DATABASE STATS & SEARCH
    ========================================== */
 
-function initInteractiveGridCanvas() {
-  const canvas = document.getElementById('hero-grid-canvas');
-  if (!canvas) return;
+async function fetchLiveDatabaseStats() {
+  const tasksEl = document.getElementById('stat-tasks');
+  const solutionsEl = document.getElementById('stat-solutions');
+  const marketsEl = document.getElementById('stat-markets');
+  const subjectsEl = document.getElementById('stat-subjects');
 
-  const ctx = canvas.getContext('2d');
-  let width, height;
-  let mouseX = -1000;
-  let mouseY = -1000;
-
-  const spacing = 28;
-  const baseRadius = 1.5;
-
-  function resizeCanvas() {
-    const parent = canvas.parentElement;
-    width = parent.clientWidth;
-    height = parent.clientHeight;
-    canvas.width = width;
-    canvas.height = height;
+  if (!supabaseClient) {
+    // Graceful fallback display if Supabase client is not configured yet
+    if (tasksEl) tasksEl.textContent = '0';
+    if (solutionsEl) solutionsEl.textContent = '0';
+    if (marketsEl) marketsEl.textContent = '5';
+    if (subjectsEl) subjectsEl.textContent = '8';
+    return;
   }
 
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
+  try {
+    const { count: tasksCount } = await supabaseClient.from('tasks').select('*', { count: 'exact', head: true });
+    const { count: solutionsCount } = await supabaseClient.from('solutions').select('*', { count: 'exact', head: true });
 
-  canvas.parentElement.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
-  });
-
-  canvas.parentElement.addEventListener('mouseleave', () => {
-    mouseX = -1000;
-    mouseY = -1000;
-  });
-
-  function renderGrid() {
-    ctx.clearRect(0, 0, width, height);
-
-    const isDark = document.body.classList.contains('dark-theme');
-    const defaultDotColor = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(15, 23, 42, 0.12)';
-    const activeDotColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#1e3a8a';
-
-    for (let x = spacing / 2; x < width; x += spacing) {
-      for (let y = spacing / 2; y < height; y += spacing) {
-        const dx = mouseX - x;
-        const dy = mouseY - y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const maxDist = 120;
-
-        let radius = baseRadius;
-        let color = defaultDotColor;
-
-        if (dist < maxDist) {
-          const factor = 1 - dist / maxDist;
-          radius = baseRadius + factor * 3.5;
-          color = activeDotColor;
-        }
-
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = color;
-        ctx.fill();
-      }
-    }
-
-    requestAnimationFrame(renderGrid);
+    if (tasksEl) tasksEl.textContent = tasksCount !== null ? tasksCount.toLocaleString() : '0';
+    if (solutionsEl) solutionsEl.textContent = solutionsCount !== null ? solutionsCount.toLocaleString() : '0';
+    if (marketsEl) marketsEl.textContent = '12';
+    if (subjectsEl) subjectsEl.textContent = '16';
+  } catch (err) {
+    console.error('Failed to query Supabase live stats:', err);
   }
-
-  renderGrid();
 }
-
-/* ==========================================
-   SEARCH ENGINE & FILTERING LOGIC
-   ========================================== */
 
 function initSearchEngine() {
   const searchInput = document.getElementById('main-search-input');
-  const marketSelect = document.getElementById('filter-market');
-  const difficultySelect = document.getElementById('filter-difficulty');
+  const searchBtn = document.getElementById('btn-execute-search');
+  const aiToggle = document.getElementById('toggle-ai-mode');
+  const hintBanner = document.getElementById('search-hint-banner');
   const subjectSelect = document.getElementById('filter-subject-select');
   const customSubjectWrapper = document.getElementById('custom-subject-wrapper');
-  const customSubjectInput = document.getElementById('custom-subject-input');
 
   if (!searchInput) return;
 
-  // Toggle custom subject input when "Inne" is selected
-  subjectSelect.addEventListener('change', () => {
-    if (subjectSelect.value === 'inne') {
-      customSubjectWrapper.style.display = 'block';
-    } else {
-      customSubjectWrapper.style.display = 'none';
-    }
-    executeSearch();
+  if (subjectSelect) {
+    subjectSelect.addEventListener('change', () => {
+      if (subjectSelect.value === 'custom') {
+        customSubjectWrapper.style.display = 'block';
+      } else {
+        customSubjectWrapper.style.display = 'none';
+      }
+      performSearch();
+    });
+  }
+
+  if (aiToggle) {
+    aiToggle.addEventListener('change', () => {
+      if (aiToggle.checked) {
+        hintBanner.classList.add('ai-active');
+        hintBanner.innerHTML = '<span><strong>AI Vector Mode Active</strong> — Natural language semantics enabled</span>';
+      } else {
+        hintBanner.classList.remove('ai-active');
+        hintBanner.innerHTML = '<span>Standard Query Search Active — Exact string and tag matching</span>';
+      }
+      performSearch();
+    });
+  }
+
+  if (searchBtn) searchBtn.addEventListener('click', performSearch);
+  searchInput.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') performSearch();
   });
 
-  [searchInput, customSubjectInput].forEach(el => {
-    if (el) el.addEventListener('input', executeSearch);
-  });
-
-  [marketSelect, difficultySelect].forEach(el => {
-    if (el) el.addEventListener('change', executeSearch);
-  });
-
-  executeSearch();
+  performSearch();
 }
 
-function executeSearch() {
-  const query = document.getElementById('main-search-input').value.toLowerCase().trim();
+async function performSearch() {
+  const query = document.getElementById('main-search-input').value.trim();
+  const isAiMode = document.getElementById('toggle-ai-mode')?.checked || false;
   const selectedMarket = document.getElementById('filter-market').value;
   const selectedDifficulty = document.getElementById('filter-difficulty').value;
   const selectedSubject = document.getElementById('filter-subject-select').value;
-  const customSubjectVal = document.getElementById('custom-subject-input').value.toLowerCase().trim();
+  const customSubject = document.getElementById('custom-subject-input')?.value.trim();
 
-  const filtered = mockBundlesDataset.filter(bundle => {
-    // Partial query matching on title
-    const matchesQuery = query === '' || bundle.title.toLowerCase().includes(query);
+  const container = document.getElementById('bundles-results-grid');
+  const countTitle = document.getElementById('results-count-title');
 
-    // Market filter
-    const matchesMarket = selectedMarket === 'all' || bundle.market === selectedMarket;
+  if (!container) return;
 
-    // Difficulty filter
-    const matchesDifficulty = selectedDifficulty === 'all' || bundle.difficulty === selectedDifficulty;
+  container.innerHTML = `
+    <div class="search-loading-card">
+      <div class="spinner"></div>
+      <p>Searching Supabase database ${isAiMode ? 'using AI Embeddings...' : '...'}</p>
+    </div>
+  `;
 
-    // Subject filter
-    let matchesSubject = true;
-    if (selectedSubject === 'inne') {
-      matchesSubject = customSubjectVal === '' || bundle.subject.toLowerCase().includes(customSubjectVal);
-    } else if (selectedSubject !== 'all') {
-      matchesSubject = bundle.subject.toLowerCase() === selectedSubject;
+  if (!supabaseClient) {
+    setTimeout(() => {
+      renderSearchResults([], query, isAiMode);
+    }, 400);
+    return;
+  }
+
+  try {
+    let dbQuery = supabaseClient.from('tasks').select('*');
+
+    if (query !== '') {
+      if (isAiMode) {
+        // Example Supabase Edge Function or RPC vector search call
+        const { data, error } = await supabaseClient.rpc('match_tasks_ai', { query_text: query, match_threshold: 0.7 });
+        if (!error && data) {
+          renderSearchResults(data, query, isAiMode);
+          return;
+        }
+      } else {
+        dbQuery = dbQuery.ilike('title', `%${query}%`);
+      }
     }
 
-    return matchesQuery && matchesMarket && matchesDifficulty && matchesSubject;
-  });
+    if (selectedMarket !== 'all') dbQuery = dbQuery.eq('market', selectedMarket);
+    if (selectedDifficulty !== 'all') dbQuery = dbQuery.eq('difficulty', selectedDifficulty);
+    
+    if (selectedSubject === 'custom' && customSubject !== '') {
+      dbQuery = dbQuery.ilike('subject', `%${customSubject}%`);
+    } else if (selectedSubject !== 'all') {
+      dbQuery = dbQuery.eq('subject', selectedSubject);
+    }
 
-  renderSearchResults(filtered);
+    const { data, error } = await dbQuery.limit(20);
+
+    if (error) throw error;
+    renderSearchResults(data || [], query, isAiMode);
+
+  } catch (err) {
+    console.error('Supabase query error:', err);
+    renderSearchResults([], query, isAiMode);
+  }
 }
 
-function renderSearchResults(results) {
+function renderSearchResults(results, query, isAiMode) {
   const container = document.getElementById('bundles-results-grid');
   const countTitle = document.getElementById('results-count-title');
   if (!container) return;
 
   if (countTitle) {
-    countTitle.textContent = `Wyniki Wyszukiwania (${results.length})`;
+    countTitle.textContent = `Search Results (${results.length})`;
   }
 
   if (results.length === 0) {
     container.innerHTML = `
       <div class="no-results-card">
-        <p>Brak paczek spełniających podane kryteria wyszukiwania.</p>
+        <h3>No database items found</h3>
+        <p>${query ? `No records matched your search "${query}".` : 'The database currently contains no items for these filter selections.'}</p>
+        <span class="no-results-hint">${isAiMode ? 'Try broadening your AI semantic prompt.' : 'Try adjusting your subject or market filters.'}</span>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = results.map(bundle => `
+  container.innerHTML = results.map(item => `
     <div class="bundle-card">
       <div class="bundle-card-header">
-        <span class="bundle-badge market-badge">${bundle.market}</span>
-        <span class="bundle-badge difficulty-badge">${bundle.difficulty}</span>
+        <span class="bundle-badge market-badge">${item.market || 'GLOBAL'}</span>
+        <span class="bundle-badge difficulty-badge">${item.difficulty || 'GENERAL'}</span>
       </div>
-      <h3 class="bundle-title">${bundle.title}</h3>
+      <h3 class="bundle-title">${item.title || 'Untitled Database Task'}</h3>
       <div class="bundle-details">
-        <span>Przedmiot: <strong>${bundle.subject}</strong></span>
-        <span>Liczba zadań: <strong>${bundle.tasksCount}</strong></span>
+        <span>Subject: <strong>${item.subject || 'Uncategorized'}</strong></span>
+        <span>ID: <strong>${item.id}</strong></span>
       </div>
       <div class="bundle-footer">
-        <button class="btn-proceed" style="padding: 6px 12px; font-size: 0.8rem;" onclick="alert('Otwieranie paczki ID: ${bundle.id}')">
-          Otwórz Paczkę
+        <button class="btn-proceed" style="padding: 6px 12px; font-size: 0.8rem;" onclick="alert('Viewing task details ID: ${item.id}')">
+          View Details
         </button>
       </div>
     </div>
