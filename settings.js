@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initToggles();
   initSoundSettings();
   initResetConfirmationModal();
+  initAppInstallPrompt();
 });
 
 function playAudioChime(overrideTone) {
@@ -81,12 +82,12 @@ function pushNotification(title, desc) {
 
     const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const card = document.createElement('div');
-    card.className = 'notification-card';
+    card.className = 'notif-item unread';
     card.innerHTML = `
-      <div class="notif-icon-wrapper">
-        <img src="assets/Settings.png" class="nav-icon" style="width: 16px; height: 16px;" alt="Settings" />
+      <div class="notif-icon-box">
+        <img src="assets/Settings.png" alt="Settings" />
       </div>
-      <div class="notif-content">
+      <div class="notif-details">
         <span class="notif-title">${title}</span>
         <span class="notif-desc">${desc}</span>
         <span class="notif-time">${timeStr}</span>
@@ -122,7 +123,7 @@ function initProfileSettings() {
       if (roleElement) roleElement.textContent = newRole;
       if (avatarElement) avatarElement.textContent = newName.charAt(0).toUpperCase();
 
-      pushNotification('Profile Updated', `Name set to "${newName}" and status updated to "${newRole}".`);
+      pushNotification('Profile Updated', `Name set to "${newName}" and role updated.`);
     });
   }
 }
@@ -214,7 +215,7 @@ function initToggles() {
     });
   }
 
-  const notifToggles = ['toggle-notif-welcome', 'toggle-notif-exams', 'toggle-notif-system'];
+  const notifToggles = ['toggle-notif-welcome', 'toggle-notif-system'];
   notifToggles.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
@@ -236,8 +237,8 @@ function initNotificationSettings() {
       if (notifList) {
         notifList.innerHTML = `<div class="notif-empty-state">No recent notifications</div>`;
       }
-      localStorage.removeItem('notif_welcome_read');
-      localStorage.removeItem('has_visited_before');
+      const badge = document.getElementById('notif-badge');
+      if (badge) badge.style.display = 'none';
     });
   }
 }
@@ -285,4 +286,30 @@ function initResetConfirmationModal() {
   modal.addEventListener('click', (e) => {
     if (e.target === modal) modal.style.display = 'none';
   });
+}
+
+function initAppInstallPrompt() {
+  let deferredPrompt = null;
+  const installHeaderBtn = document.getElementById('btn-install-app-header');
+  const installMainBtn = document.getElementById('btn-install-app-main');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  const triggerInstall = (e) => {
+    e.preventDefault();
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+      });
+    } else {
+      alert('BrainlyHub Application Client is ready. Bookmark this app or use your browser\'s "Install App" option.');
+    }
+  };
+
+  if (installHeaderBtn) installHeaderBtn.addEventListener('click', triggerInstall);
+  if (installMainBtn) installMainBtn.addEventListener('click', triggerInstall);
 }
