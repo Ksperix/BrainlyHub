@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrainlyHub — Settings & Account</title>
+  <title>BrainlyHub — Settings & Preferences</title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
@@ -25,7 +25,7 @@
 <body class="preload-no-transition">
 
   <div id="app">
-    <!-- Sidebar Navigation (3 Core Links Only) -->
+    <!-- Sidebar Navigation (3 Core Links) -->
     <aside class="sidebar collapsed" id="sidebar">
       <div class="sidebar-header">
         <div class="brand-container">
@@ -73,14 +73,33 @@
           <div class="dropdown-container">
             <button class="action-icon-btn" title="Notifications" id="btn-notifications">
               <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
-              <span class="notification-badge" id="notif-badge" style="display: none;"></span>
+              <span class="notification-badge" id="notif-badge"></span>
             </button>
+            
+            <!-- Classic Interactive Notifications Dropdown -->
             <div class="header-dropdown" id="dropdown-notifications">
               <div class="dropdown-header">
                 <span>Notifications</span>
-                <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear All</small>
+                <small id="btn-clear-notifs">Clear All</small>
               </div>
-              <div id="notif-list" class="notif-scroll-container"></div>
+              <div id="notif-list" class="notif-scroll-container">
+                <div class="notif-item unread">
+                  <div class="notif-icon-box"><img src="assets/Notifications.png" alt="Notif" /></div>
+                  <div class="notif-details">
+                    <span class="notif-title">Database Sync Successful</span>
+                    <span class="notif-desc">Supabase integration refreshed live records.</span>
+                    <span class="notif-time">2 mins ago</span>
+                  </div>
+                </div>
+                <div class="notif-item unread">
+                  <div class="notif-icon-box"><img src="assets/New badge.png" alt="Badge" /></div>
+                  <div class="notif-details">
+                    <span class="notif-title">New Feature Unlocked</span>
+                    <span class="notif-desc">AI Semantic Vector Search is now active.</span>
+                    <span class="notif-time">1 hour ago</span>
+                  </div>
+                </div>
+              </div>
               <a href="settings.html#notifications" class="dropdown-footer-link">
                 <img src="assets/Settings.png" style="width: 14px; height: 14px;" alt="Settings" />
                 Notification Settings
@@ -116,14 +135,14 @@
               </div>
 
               <div class="profile-tools-section">
-                <span class="profile-tools-title">Community & Extensions</span>
-                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card">
+                <span class="profile-tools-title">Apps & Extensions</span>
+                <a href="#" class="profile-btn-card" id="btn-install-app-header">
                   <div class="profile-btn-icon">
-                    <img src="assets/Brainly.png" alt="Discord" />
+                    <img src="assets/Download.png" alt="Install" />
                   </div>
                   <div class="profile-btn-info">
-                    <span class="profile-btn-title">Discord Server</span>
-                    <span class="profile-btn-desc">Join BrainlyHQ</span>
+                    <span class="profile-btn-title">Install App</span>
+                    <span class="profile-btn-desc">Get Desktop / PWA Client</span>
                   </div>
                 </a>
 
@@ -142,139 +161,162 @@
         </div>
       </header>
 
-      <!-- Settings Content Body -->
+      <!-- Settings Main Content Body -->
       <main class="content-body">
         <div class="settings-page-header">
-          <h1 class="hero-title">Platform Settings</h1>
-          <p class="hero-subtitle">Manage your personal profile, notification triggers, and theme interface preferences</p>
+          <div class="settings-title-group">
+            <h1 class="hero-title">Account & Preferences</h1>
+            <p class="hero-subtitle">Customize profile attributes, app layout, and desktop integration options</p>
+          </div>
+          <div class="system-status-chip">
+            <span class="status-dot green"></span>
+            <span>Cloud Sync Active</span>
+          </div>
         </div>
 
-        <!-- Section 1: User Profile Card -->
-        <section class="liquid-card">
-          <div class="settings-card-header">
-            <h2>User Profile</h2>
-          </div>
-          
-          <div class="profile-settings-grid">
-            <div class="profile-avatar-preview-wrapper">
-              <div class="settings-avatar-large" id="settings-avatar-preview">S</div>
-              <span class="profile-avatar-hint">Avatar preview based on name or URL</span>
-            </div>
-
-            <div class="profile-form-wrapper">
-              <div class="form-group">
-                <label class="filter-label" for="setting-display-name">Display Name</label>
-                <input type="text" id="setting-display-name" class="custom-subject-input" placeholder="e.g. Alex Morgan" />
+        <div class="settings-layout-grid">
+          <!-- Left Column: User Profile & App Installation -->
+          <div class="settings-column">
+            <!-- Profile Card -->
+            <section class="liquid-card">
+              <div class="settings-card-header">
+                <h2>User Profile</h2>
               </div>
+              
+              <div class="profile-card-content">
+                <div class="profile-avatar-block">
+                  <div class="settings-avatar-large" id="settings-avatar-preview">S</div>
+                  <div class="avatar-meta">
+                    <span class="avatar-title" id="avatar-preview-name">Student Account</span>
+                    <span class="avatar-sub" id="avatar-preview-role">High School Member</span>
+                  </div>
+                </div>
 
-              <div class="form-group">
-                <label class="filter-label" for="setting-user-role">Account Type / Academic Level</label>
-                <select id="setting-user-role" class="filter-select">
-                  <option value="Primary School Member">Primary School Member</option>
-                  <option value="High School Member">High School Member</option>
-                  <option value="University Student">University Student</option>
-                  <option value="Educator / Tutor">Educator / Tutor</option>
-                </select>
+                <div class="form-group">
+                  <label class="filter-label" for="setting-display-name">Display Name</label>
+                  <input type="text" id="setting-display-name" class="custom-subject-input" placeholder="e.g. Alex Morgan" />
+                </div>
+
+                <div class="form-group">
+                  <label class="filter-label" for="setting-user-role">Academic Level / Role</label>
+                  <select id="setting-user-role" class="filter-select">
+                    <option value="Primary School Member">Primary School Member</option>
+                    <option value="High School Member">High School Member</option>
+                    <option value="University Student">University Student</option>
+                    <option value="Educator / Tutor">Educator / Tutor</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="filter-label" for="setting-avatar-url">Avatar Image URL</label>
+                  <input type="url" id="setting-avatar-url" class="custom-subject-input" placeholder="https://example.com/avatar.png" />
+                </div>
               </div>
+            </section>
 
-              <div class="form-group">
-                <label class="filter-label" for="setting-avatar-url">Avatar Image URL (Optional)</label>
-                <input type="url" id="setting-avatar-url" class="custom-subject-input" placeholder="https://example.com/avatar.png" />
+            <!-- Desktop App Installation Card -->
+            <section class="liquid-card">
+              <div class="settings-card-header">
+                <h2>Desktop Application</h2>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 2: Notifications Preferences -->
-        <section class="liquid-card" id="notifications">
-          <div class="settings-card-header">
-            <h2>Notification Settings</h2>
-          </div>
-
-          <div class="settings-toggle-list">
-            <div class="setting-row">
-              <div class="setting-info">
-                <span class="setting-title">System & Search Updates</span>
-                <span class="setting-desc">Receive notifications when new task database items matching your filters are added.</span>
+              <div class="install-card-body">
+                <div class="install-info">
+                  <img src="assets/Download.png" alt="Download App" class="install-icon" />
+                  <div>
+                    <span class="install-title">Install BrainlyHub Client</span>
+                    <p class="install-desc">Access quick keyboard shortcuts and offline mode on desktop.</p>
+                  </div>
+                </div>
+                <button class="btn-proceed" id="btn-install-app-main">
+                  <span>Install / Download App</span>
+                </button>
               </div>
-              <label class="ai-switch">
-                <input type="checkbox" id="notif-toggle-updates" checked />
-                <span class="ai-slider"></span>
-              </label>
-            </div>
-
-            <div class="setting-row">
-              <div class="setting-info">
-                <span class="setting-title">Community Discord Activity</span>
-                <span class="setting-desc">Get notified about official BrainlyHQ events and extension announcements.</span>
-              </div>
-              <label class="ai-switch">
-                <input type="checkbox" id="notif-toggle-community" checked />
-                <span class="ai-slider"></span>
-              </label>
-            </div>
-
-            <div class="setting-row">
-              <div class="setting-info">
-                <span class="setting-title">AI Search Recommendations</span>
-                <span class="setting-desc">Allow smart vector search hints and prompts tailored to your search history.</span>
-              </div>
-              <label class="ai-switch">
-                <input type="checkbox" id="notif-toggle-ai" />
-                <span class="ai-slider"></span>
-              </label>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 3: Interface & Theme Customization -->
-        <section class="liquid-card">
-          <div class="settings-card-header">
-            <h2>Interface & Appearance</h2>
+            </section>
           </div>
 
-          <div class="settings-toggle-list">
-            <div class="setting-row">
-              <div class="setting-info">
-                <span class="setting-title">Dark Theme</span>
-                <span class="setting-desc">Switch between clean light mode and high-contrast dark mode.</span>
+          <!-- Right Column: Interface & Notifications -->
+          <div class="settings-column">
+            <!-- Appearance Card -->
+            <section class="liquid-card">
+              <div class="settings-card-header">
+                <h2>Interface & Theme</h2>
               </div>
-              <label class="ai-switch">
-                <input type="checkbox" id="setting-dark-theme" />
-                <span class="ai-slider"></span>
-              </label>
-            </div>
 
-            <div class="setting-row">
-              <div class="setting-info">
-                <span class="setting-title">Compact UI Density</span>
-                <span class="setting-desc">Reduce card margins and padding for high-density display monitors.</span>
-              </div>
-              <label class="ai-switch">
-                <input type="checkbox" id="setting-compact-density" />
-                <span class="ai-slider"></span>
-              </label>
-            </div>
+              <div class="settings-toggle-list">
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Dark Theme</span>
+                    <span class="setting-desc">Switch between clean light mode and high-contrast dark mode.</span>
+                  </div>
+                  <label class="ai-switch">
+                    <input type="checkbox" id="setting-dark-theme" />
+                    <span class="ai-slider"></span>
+                  </label>
+                </div>
 
-            <div class="setting-row">
-              <div class="setting-info">
-                <span class="setting-title">Primary Accent Color</span>
-                <span class="setting-desc">Choose the main accent color for buttons, active badges, and highlights.</span>
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Compact Density</span>
+                    <span class="setting-desc">Reduce card margins and padding for high-density monitors.</span>
+                  </div>
+                  <label class="ai-switch">
+                    <input type="checkbox" id="setting-compact-density" />
+                    <span class="ai-slider"></span>
+                  </label>
+                </div>
+
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Accent Theme Color</span>
+                    <span class="setting-desc">Choose primary highlight color.</span>
+                  </div>
+                  <div class="color-picker-group">
+                    <button class="color-dot active" data-color="#1e3a8a" style="background-color: #1e3a8a;" title="Navy Blue"></button>
+                    <button class="color-dot" data-color="#2563eb" style="background-color: #2563eb;" title="Royal Blue"></button>
+                    <button class="color-dot" data-color="#059669" style="background-color: #059669;" title="Emerald Green"></button>
+                    <button class="color-dot" data-color="#7c3aed" style="background-color: #7c3aed;" title="Purple"></button>
+                    <button class="color-dot" data-color="#dc2626" style="background-color: #dc2626;" title="Crimson"></button>
+                  </div>
+                </div>
               </div>
-              <div class="color-picker-group">
-                <button class="color-dot active" data-color="#1e3a8a" style="background-color: #1e3a8a;" title="Navy Blue"></button>
-                <button class="color-dot" data-color="#2563eb" style="background-color: #2563eb;" title="Royal Blue"></button>
-                <button class="color-dot" data-color="#059669" style="background-color: #059669;" title="Emerald Green"></button>
-                <button class="color-dot" data-color="#7c3aed" style="background-color: #7c3aed;" title="Purple"></button>
-                <button class="color-dot" data-color="#dc2626" style="background-color: #dc2626;" title="Crimson"></button>
+            </section>
+
+            <!-- Notifications Preferences -->
+            <section class="liquid-card" id="notifications">
+              <div class="settings-card-header">
+                <h2>Notifications</h2>
               </div>
-            </div>
+
+              <div class="settings-toggle-list">
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Database Updates</span>
+                    <span class="setting-desc">Notify when new tasks matching your filters are added.</span>
+                  </div>
+                  <label class="ai-switch">
+                    <input type="checkbox" id="notif-toggle-updates" checked />
+                    <span class="ai-slider"></span>
+                  </label>
+                </div>
+
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Community Announcements</span>
+                    <span class="setting-desc">Receive Discord news and Chrome extension updates.</span>
+                  </div>
+                  <label class="ai-switch">
+                    <input type="checkbox" id="notif-toggle-community" checked />
+                    <span class="ai-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </section>
           </div>
-        </section>
+        </div>
 
-        <!-- Actions Bar -->
+        <!-- Sticky Actions Footer -->
         <div class="settings-actions-footer">
-          <button class="btn-proceed" id="btn-save-settings">Save Changes</button>
+          <button class="btn-proceed" id="btn-save-settings">Save All Changes</button>
           <span class="save-status-toast" id="save-status-toast" style="display: none;">Preferences saved successfully!</span>
         </div>
       </main>
@@ -283,34 +325,24 @@
 
   <!-- Shared Core Scripts -->
   <script src="core/main.js"></script>
-  <!-- Settings Specific Script -->
+  <!-- Settings Controller Script -->
   <script src="settings.js"></script>
 
-  <!-- Modal: External Contact Redirect -->
+  <!-- External Contact Redirect Modal -->
   <div class="modal-overlay" id="modal-contact-redirect" style="display: none;">
     <div class="redirect-card modal-card">
       <div class="redirect-icon-wrapper">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
           <polyline points="15 3 21 3 21 9"></polyline>
           <line x1="10" y1="14" x2="21" y2="3"></line>
         </svg>
       </div>
-
       <h2 class="redirect-title">External Contact Form</h2>
-      <p class="redirect-desc">
-        You are being redirected to our official support form in <strong id="contact-countdown-timer">5</strong> seconds.
-      </p>
-
+      <p class="redirect-desc">You are being redirected in <strong id="contact-countdown-timer">5</strong> seconds.</p>
       <div class="actions-row">
-        <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="btn-proceed" id="contact-redirect-link">
-          <span>Go to Form Now</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-        <button id="btn-cancel-contact-redirect" class="btn-cancel">Cancel and Stay Here</button>
+        <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="btn-proceed" id="contact-redirect-link">Go to Form Now</a>
+        <button id="btn-cancel-contact-redirect" class="btn-cancel">Cancel</button>
       </div>
     </div>
   </div>
