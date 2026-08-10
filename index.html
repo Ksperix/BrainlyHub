@@ -7,9 +7,6 @@
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
-  
-  <!-- Google Identity Services SDK -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <!-- Pre-render layout script to prevent sidebar transition glitch on reload -->
   <script>
@@ -164,21 +161,6 @@
                   <span class="profile-name" id="header-user-name">Student Account</span>
                   <span class="profile-role" id="header-user-role">High School Member</span>
                 </div>
-              </div>
-
-              <!-- Sekcja Logowania Google / Statusu -->
-              <div class="profile-auth-box" id="google-auth-box">
-                <div id="g_id_onload"
-                     data-client_id="699391103498-8g5203cbae4ro2ms2fid94sv0i3lthvd.apps.googleusercontent.com"
-                     data-callback="handleGoogleLogin"
-                     data-auto_prompt="false">
-                </div>
-
-                <div id="google-signin-container"></div>
-
-                <button id="btn-google-logout" class="btn-logout-google" style="display: none;" onclick="handleGoogleLogout()">
-                  Sign Out
-                </button>
               </div>
 
               <div style="border-top: 1px solid var(--border-color); margin: 6px 0;"></div>
