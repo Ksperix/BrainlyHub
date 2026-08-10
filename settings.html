@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrainlyHub — Settings</title>
+  <title>BrainlyHub — Settings & Account</title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
-  
-  <!-- Pre-render layout script to prevent sidebar transition glitch on reload -->
+
+  <!-- Pre-render layout script to force collapsed sidebar by default -->
   <script>
     (function() {
-      if (localStorage.getItem('sidebar_collapsed') === 'true') {
+      const savedState = localStorage.getItem('sidebar_collapsed');
+      if (savedState === null || savedState === 'true') {
         document.documentElement.classList.add('preload-collapsed');
+        localStorage.setItem('sidebar_collapsed', 'true');
       }
     })();
   </script>
@@ -23,8 +25,8 @@
 <body class="preload-no-transition">
 
   <div id="app">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar" id="sidebar">
+    <!-- Sidebar Navigation (3 Core Links Only) -->
+    <aside class="sidebar collapsed" id="sidebar">
       <div class="sidebar-header">
         <div class="brand-container">
           <img src="assets/Brainly Hub.png" alt="BrainlyHub Logo" class="brand-logo" />
@@ -42,71 +44,13 @@
             <span class="nav-label">Home</span>
           </a>
         </li>
-        <li>
-          <a href="tasks.html" class="nav-item">
-            <img src="assets/Tasks.png" alt="Tasks" class="nav-icon" />
-            <span class="nav-label">Task Search</span>
-          </a>
-        </li>
-        <li>
-          <a href="past-exams.html" class="nav-item">
-            <img src="assets/Past exams.png" alt="Past Exams" class="nav-icon" />
-            <span class="nav-label">Past Exams</span>
-          </a>
-        </li>
-        <li>
-          <a href="topics.html" class="nav-item">
-            <img src="assets/Topic.png" alt="Categories" class="nav-icon" />
-            <span class="nav-label">Categories & Topics</span>
-          </a>
-        </li>
-
-        <li style="margin: 8px 0; border-top: 1px solid var(--border-color);"></li>
-
-        <!-- Subjects -->
-        <li>
-          <a href="math.html" class="nav-item">
-            <img src="assets/Mathematics.png" alt="Mathematics" class="nav-icon" />
-            <span class="nav-label">Mathematics</span>
-          </a>
-        </li>
-        <li>
-          <a href="chemistry.html" class="nav-item">
-            <img src="assets/Chemistry.png" alt="Chemistry" class="nav-icon" />
-            <span class="nav-label">Chemistry</span>
-          </a>
-        </li>
-        <li>
-          <a href="physics.html" class="nav-item">
-            <img src="assets/Physics.png" alt="Physics" class="nav-icon" />
-            <span class="nav-label">Physics</span>
-          </a>
-        </li>
-        <li>
-          <a href="informatics.html" class="nav-item">
-            <img src="assets/Computer science.png" alt="Computer Science" class="nav-icon" />
-            <span class="nav-label">Computer Science</span>
-          </a>
-        </li>
-        <li>
-          <a href="biology.html" class="nav-item">
-            <img src="assets/Biology.png" alt="Biology" class="nav-icon" />
-            <span class="nav-label">Biology</span>
-          </a>
-        </li>
-        <li>
-          <a href="history.html" class="nav-item">
-            <img src="assets/History.png" alt="History" class="nav-icon" />
-            <span class="nav-label">History</span>
-          </a>
-        </li>
       </ul>
 
       <!-- Sidebar Footer -->
       <div class="sidebar-footer">
         <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="nav-item">
           <img src="assets/Bug.png" alt="Contact" class="nav-icon" />
-          <span class="nav-label">Contact with us</span>
+          <span class="nav-label">Contact Form</span>
         </a>
         <a href="settings.html" class="nav-item active">
           <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
@@ -117,17 +61,15 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
-      <!-- Clean Top Bar Header -->
+      <!-- Top Bar Header -->
       <header class="top-bar">
         <div class="top-bar-actions">
-          <!-- Favorite Tasks Button -->
           <div class="dropdown-container">
-            <button class="action-icon-btn" title="Favorites (Coming Soon)" id="btn-favorites">
+            <button class="action-icon-btn" title="Favorites" id="btn-favorites">
               <img src="assets/Heart.png" alt="Favorites" class="nav-icon" />
             </button>
           </div>
 
-          <!-- Notifications Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="Notifications" id="btn-notifications">
               <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
@@ -138,9 +80,7 @@
                 <span>Notifications</span>
                 <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear All</small>
               </div>
-              
               <div id="notif-list" class="notif-scroll-container"></div>
-
               <a href="settings.html#notifications" class="dropdown-footer-link">
                 <img src="assets/Settings.png" style="width: 14px; height: 14px;" alt="Settings" />
                 Notification Settings
@@ -148,7 +88,6 @@
             </div>
           </div>
 
-          <!-- User Profile Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="User Profile" id="btn-user-profile">
               <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
@@ -163,21 +102,22 @@
                 </div>
               </div>
 
-              <a href="settings.html" class="profile-btn-card primary-card">
-                <div class="profile-btn-icon">
-                  <img src="assets/Settings.png" alt="Settings" />
-                </div>
-                <div class="profile-btn-info">
-                  <span class="profile-btn-title">Account Settings</span>
-                </div>
-              </a>
-
-              <div style="border-top: 1px solid var(--border-color); margin: 2px 0;"></div>
+              <div class="profile-tools-section">
+                <span class="profile-tools-title">Account & Preferences</span>
+                <a href="settings.html" class="profile-btn-card">
+                  <div class="profile-btn-icon">
+                    <img src="assets/Settings.png" alt="Settings" />
+                  </div>
+                  <div class="profile-btn-info">
+                    <span class="profile-btn-title">Account Settings</span>
+                    <span class="profile-btn-desc">Manage preferences</span>
+                  </div>
+                </a>
+              </div>
 
               <div class="profile-tools-section">
                 <span class="profile-tools-title">Community & Extensions</span>
-
-                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
+                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card">
                   <div class="profile-btn-icon">
                     <img src="assets/Brainly.png" alt="Discord" />
                   </div>
@@ -187,7 +127,7 @@
                   </div>
                 </a>
 
-                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
+                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic" target="_blank" rel="noopener" class="profile-btn-card">
                   <div class="profile-btn-icon">
                     <img src="assets/Code.png" alt="Extension" />
                   </div>
@@ -202,235 +142,178 @@
         </div>
       </header>
 
-      <!-- Content Body: Panel Ustawień -->
-      <main class="content-body settings-page-body">
-        
-        <!-- Sekcja 1: Profile Settings -->
-        <section class="liquid-card" id="profile">
+      <!-- Settings Content Body -->
+      <main class="content-body">
+        <div class="settings-page-header">
+          <h1 class="hero-title">Platform Settings</h1>
+          <p class="hero-subtitle">Manage your personal profile, notification triggers, and theme interface preferences</p>
+        </div>
+
+        <!-- Section 1: User Profile Card -->
+        <section class="liquid-card">
           <div class="settings-card-header">
-            <h2>Profile & Account Settings</h2>
+            <h2>User Profile</h2>
           </div>
-
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-            <div class="settings-form-group">
-              <label for="input-user-name" class="settings-label">Display Name</label>
-              <input type="text" id="input-user-name" class="settings-input" placeholder="Enter your display name" />
+          
+          <div class="profile-settings-grid">
+            <div class="profile-avatar-preview-wrapper">
+              <div class="settings-avatar-large" id="settings-avatar-preview">S</div>
+              <span class="profile-avatar-hint">Avatar preview based on name or URL</span>
             </div>
 
-            <div class="settings-form-group">
-              <label for="select-user-role" class="settings-label">Academic Status / Role</label>
-              <select id="select-user-role" class="settings-select">
-                <option value="High School Member">High School Member (Matura Prep)</option>
-                <option value="Primary School Student">Primary School Student</option>
-                <option value="University Student">University Student</option>
-                <option value="Educator / Tutor">Educator / Tutor</option>
-              </select>
-            </div>
-
-            <button id="btn-save-profile" class="settings-btn-primary" style="align-self: flex-start;">
-              Save Profile Changes
-            </button>
-          </div>
-        </section>
-
-        <!-- Sekcja 2: Appearance & Theme -->
-        <section class="liquid-card" id="appearance">
-          <div class="settings-card-header">
-            <h2>Appearance & Customization</h2>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Color Mode</span>
-                <span class="settings-row-desc">Switch between light mode and dark liquid UI.</span>
+            <div class="profile-form-wrapper">
+              <div class="form-group">
+                <label class="filter-label" for="setting-display-name">Display Name</label>
+                <input type="text" id="setting-display-name" class="custom-subject-input" placeholder="e.g. Alex Morgan" />
               </div>
-              <div class="theme-toggle-group">
-                <button class="theme-option-btn" data-theme="light">Light</button>
-                <button class="theme-option-btn" data-theme="dark">Dark</button>
-              </div>
-            </div>
 
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Accent Color</span>
-                <span class="settings-row-desc">Customize primary UI highlights and active states.</span>
+              <div class="form-group">
+                <label class="filter-label" for="setting-user-role">Account Type / Academic Level</label>
+                <select id="setting-user-role" class="filter-select">
+                  <option value="Primary School Member">Primary School Member</option>
+                  <option value="High School Member">High School Member</option>
+                  <option value="University Student">University Student</option>
+                  <option value="Educator / Tutor">Educator / Tutor</option>
+                </select>
               </div>
-              <div style="display: flex; gap: 10px;" id="accent-picker">
-                <span class="accent-circle" data-color="#1e3a8a" style="background: #1e3a8a;" title="Navy Blue"></span>
-                <span class="accent-circle" data-color="#2563eb" style="background: #2563eb;" title="Royal Blue"></span>
-                <span class="accent-circle" data-color="#059669" style="background: #059669;" title="Emerald Green"></span>
-                <span class="accent-circle" data-color="#7c3aed" style="background: #7c3aed;" title="Purple"></span>
-                <span class="accent-circle" data-color="#d97706" style="background: #d97706;" title="Amber Gold"></span>
-              </div>
-            </div>
 
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Compact UI Density</span>
-                <span class="settings-row-desc">Reduce padding and spacing across cards for denser views.</span>
+              <div class="form-group">
+                <label class="filter-label" for="setting-avatar-url">Avatar Image URL (Optional)</label>
+                <input type="url" id="setting-avatar-url" class="custom-subject-input" placeholder="https://example.com/avatar.png" />
               </div>
-              <label class="switch">
-                <input type="checkbox" id="toggle-compact-ui" />
-                <span class="slider"></span>
-              </label>
             </div>
           </div>
         </section>
 
-        <!-- Sekcja 3: Notification Sounds & Alerts -->
+        <!-- Section 2: Notifications Preferences -->
         <section class="liquid-card" id="notifications">
           <div class="settings-card-header">
-            <h2>Notifications & Sound Settings</h2>
+            <h2>Notification Settings</h2>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Notification Sound</span>
-                <span class="settings-row-desc">Play an audible chime when new notifications are added.</span>
+          <div class="settings-toggle-list">
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-title">System & Search Updates</span>
+                <span class="setting-desc">Receive notifications when new task database items matching your filters are added.</span>
               </div>
-              <label class="switch">
-                <input type="checkbox" id="toggle-notif-sound" checked />
-                <span class="slider"></span>
+              <label class="ai-switch">
+                <input type="checkbox" id="notif-toggle-updates" checked />
+                <span class="ai-slider"></span>
               </label>
             </div>
 
-            <div class="settings-form-group">
-              <label for="select-sound-tone" class="settings-label">Sound Tone Style</label>
-              <select id="select-sound-tone" class="settings-select">
-                <option value="chime">Bright Chime (Default)</option>
-                <option value="double">Digital Double Beep</option>
-                <option value="pop">Subtle Pop Sound</option>
-              </select>
-            </div>
-
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Welcome & Onboarding Tips</span>
-                <span class="settings-row-desc">Show welcome orientation notices for new features.</span>
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-title">Community Discord Activity</span>
+                <span class="setting-desc">Get notified about official BrainlyHQ events and extension announcements.</span>
               </div>
-              <label class="switch">
-                <input type="checkbox" id="toggle-notif-welcome" checked />
-                <span class="slider"></span>
+              <label class="ai-switch">
+                <input type="checkbox" id="notif-toggle-community" checked />
+                <span class="ai-slider"></span>
               </label>
             </div>
 
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">Exam & Task Alerts</span>
-                <span class="settings-row-desc">Get notified when new exam papers or worksheets are added.</span>
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-title">AI Search Recommendations</span>
+                <span class="setting-desc">Allow smart vector search hints and prompts tailored to your search history.</span>
               </div>
-              <label class="switch">
-                <input type="checkbox" id="toggle-notif-exams" checked />
-                <span class="slider"></span>
+              <label class="ai-switch">
+                <input type="checkbox" id="notif-toggle-ai" />
+                <span class="ai-slider"></span>
               </label>
-            </div>
-
-            <div class="settings-row">
-              <div>
-                <span class="settings-row-title">System Updates</span>
-                <span class="settings-row-desc">Alerts regarding upcoming updates and fixes.</span>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="toggle-notif-system" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
-
-            <div style="display: flex; gap: 10px; margin-top: 8px;">
-              <button id="btn-test-sound" class="settings-btn-secondary">
-                Test Sound
-              </button>
-              <button id="btn-reset-notifications" class="settings-btn-secondary">
-                Reset Notification History
-              </button>
             </div>
           </div>
         </section>
 
-        <!-- Sekcja 4: Data & Reset -->
-        <section class="liquid-card" id="preferences">
+        <!-- Section 3: Interface & Theme Customization -->
+        <section class="liquid-card">
           <div class="settings-card-header">
-            <h2>Data & System Reset</h2>
+            <h2>Interface & Appearance</h2>
           </div>
 
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-            <div>
-              <span class="settings-row-title">Clear Local Storage</span>
-              <span class="settings-row-desc">Resets layout states, user name, dark mode, and sound settings.</span>
+          <div class="settings-toggle-list">
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-title">Dark Theme</span>
+                <span class="setting-desc">Switch between clean light mode and high-contrast dark mode.</span>
+              </div>
+              <label class="ai-switch">
+                <input type="checkbox" id="setting-dark-theme" />
+                <span class="ai-slider"></span>
+              </label>
             </div>
-            <button id="btn-clear-all-data" class="settings-btn-danger">
-              Reset Application Data
-            </button>
+
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-title">Compact UI Density</span>
+                <span class="setting-desc">Reduce card margins and padding for high-density display monitors.</span>
+              </div>
+              <label class="ai-switch">
+                <input type="checkbox" id="setting-compact-density" />
+                <span class="ai-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-title">Primary Accent Color</span>
+                <span class="setting-desc">Choose the main accent color for buttons, active badges, and highlights.</span>
+              </div>
+              <div class="color-picker-group">
+                <button class="color-dot active" data-color="#1e3a8a" style="background-color: #1e3a8a;" title="Navy Blue"></button>
+                <button class="color-dot" data-color="#2563eb" style="background-color: #2563eb;" title="Royal Blue"></button>
+                <button class="color-dot" data-color="#059669" style="background-color: #059669;" title="Emerald Green"></button>
+                <button class="color-dot" data-color="#7c3aed" style="background-color: #7c3aed;" title="Purple"></button>
+                <button class="color-dot" data-color="#dc2626" style="background-color: #dc2626;" title="Crimson"></button>
+              </div>
+            </div>
           </div>
         </section>
 
+        <!-- Actions Bar -->
+        <div class="settings-actions-footer">
+          <button class="btn-proceed" id="btn-save-settings">Save Changes</button>
+          <span class="save-status-toast" id="save-status-toast" style="display: none;">Preferences saved successfully!</span>
+        </div>
       </main>
     </div>
   </div>
 
+  <!-- Shared Core Scripts -->
   <script src="core/main.js"></script>
+  <!-- Settings Specific Script -->
   <script src="settings.js"></script>
 
-  <!-- Modal 1: Reset Confirmation -->
-<div class="modal-overlay" id="modal-reset-confirm" style="display: none;">
-  <div class="redirect-card modal-card">
-    <div class="redirect-icon-wrapper danger-icon">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-        <line x1="12" y1="9" x2="12" y2="13"></line>
-        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-      </svg>
-    </div>
-
-    <h2 class="redirect-title">Confirm Reset</h2>
-    <p class="redirect-desc">
-      This action will purge all local preferences, notifications, and custom settings.
-      Type <strong style="color: #ef4444;">DELETE ALL DATA</strong> below to proceed.
-    </p>
-
-    <div style="margin-bottom: 20px;">
-      <input type="text" id="input-confirm-delete" class="settings-input" placeholder="DELETE ALL DATA" style="text-align: center; font-weight: 700; letter-spacing: 0.5px; width: 100%;" />
-    </div>
-
-    <div class="actions-row">
-      <button id="btn-confirm-reset-execute" class="btn-proceed danger-btn" disabled>
-        <span>Reset All Data</span>
-      </button>
-      <button id="btn-cancel-reset" class="btn-cancel">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 2: Contact Redirect Popup -->
-<div class="modal-overlay" id="modal-contact-redirect" style="display: none;">
-  <div class="redirect-card modal-card">
-    <div class="redirect-icon-wrapper">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-        <polyline points="15 3 21 3 21 9"></polyline>
-        <line x1="10" y1="14" x2="21" y2="3"></line>
-      </svg>
-    </div>
-
-    <h2 class="redirect-title">External Contact Form</h2>
-    <p class="redirect-desc">
-      You are being redirected to our official contact support form in <strong id="contact-countdown-timer">5</strong> seconds.
-    </p>
-
-    <div class="actions-row">
-      <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="btn-proceed" id="contact-redirect-link">
-        <span>Go to Form Now</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
+  <!-- Modal: External Contact Redirect -->
+  <div class="modal-overlay" id="modal-contact-redirect" style="display: none;">
+    <div class="redirect-card modal-card">
+      <div class="redirect-icon-wrapper">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
         </svg>
-      </a>
-      <button id="btn-cancel-contact-redirect" class="btn-cancel">Cancel and Stay Here</button>
+      </div>
+
+      <h2 class="redirect-title">External Contact Form</h2>
+      <p class="redirect-desc">
+        You are being redirected to our official support form in <strong id="contact-countdown-timer">5</strong> seconds.
+      </p>
+
+      <div class="actions-row">
+        <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="btn-proceed" id="contact-redirect-link">
+          <span>Go to Form Now</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <button id="btn-cancel-contact-redirect" class="btn-cancel">Cancel and Stay Here</button>
+      </div>
     </div>
   </div>
-</div>
-  
+
 </body>
 </html>
