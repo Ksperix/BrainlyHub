@@ -51,6 +51,27 @@ function initThemeAndLayoutState() {
    BRAINLYHUB - GOOGLE AUTHENTICATION SYSTEM
    ========================================== */
 
+let googleButtonRendered = false;
+
+function renderGoogleButton() {
+  if (googleButtonRendered) return;
+
+  if (window.google && google.accounts && google.accounts.id) {
+    const container = document.getElementById('google-signin-container');
+    if (container) {
+      google.accounts.id.renderButton(container, {
+        type: 'standard',
+        size: 'medium',
+        theme: 'outline',
+        text: 'signin_with',
+        shape: 'rectangular',
+        logo_alignment: 'left'
+      });
+      googleButtonRendered = true;
+    }
+  }
+}
+
 function handleGoogleLogin(response) {
   if (!response || !response.credential) return;
 
@@ -87,7 +108,7 @@ function applyUserProfileUI(name, email, picture) {
   const nameEl = document.getElementById('header-user-name');
   const roleEl = document.getElementById('header-user-role');
   const avatarEl = document.getElementById('header-avatar');
-  const signinBtn = document.querySelector('.g_id_signin');
+  const signinContainer = document.getElementById('google-signin-container');
   const logoutBtn = document.getElementById('btn-google-logout');
 
   if (nameEl) nameEl.textContent = name;
@@ -101,7 +122,7 @@ function applyUserProfileUI(name, email, picture) {
     }
   }
 
-  if (signinBtn) signinBtn.style.display = 'none';
+  if (signinContainer) signinContainer.style.display = 'none';
   if (logoutBtn) logoutBtn.style.display = 'block';
 }
 
@@ -114,14 +135,14 @@ function handleGoogleLogout() {
   const nameEl = document.getElementById('header-user-name');
   const roleEl = document.getElementById('header-user-role');
   const avatarEl = document.getElementById('header-avatar');
-  const signinBtn = document.querySelector('.g_id_signin');
+  const signinContainer = document.getElementById('google-signin-container');
   const logoutBtn = document.getElementById('btn-google-logout');
 
   if (nameEl) nameEl.textContent = 'Student Account';
   if (roleEl) roleEl.textContent = 'High School Member';
   if (avatarEl) avatarEl.textContent = 'S';
 
-  if (signinBtn) signinBtn.style.display = 'block';
+  if (signinContainer) signinContainer.style.display = 'block';
   if (logoutBtn) logoutBtn.style.display = 'none';
 }
 
@@ -195,7 +216,12 @@ function initHeaderDropdowns() {
     profileBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (notifDropdown) notifDropdown.classList.remove('show');
-      profileDropdown.classList.toggle('show');
+
+      const isShowing = profileDropdown.classList.toggle('show');
+
+      if (isShowing && localStorage.getItem('is_logged_in') !== 'true') {
+        setTimeout(renderGoogleButton, 50);
+      }
     });
   }
 
