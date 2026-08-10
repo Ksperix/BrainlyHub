@@ -501,6 +501,7 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* Wszytkie karciane przyciski w profilu mają teraz spójne obramowanie i tło */
 .profile-btn-card {
   display: flex;
   align-items: center;
@@ -511,7 +512,14 @@ body {
   box-sizing: border-box;
   width: 100%;
   height: 52px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
   transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.profile-btn-card:hover {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
 }
 
 .profile-btn-icon {
@@ -533,19 +541,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.profile-btn-card.primary-card {
-  background-color: var(--primary-light);
-}
-
-.profile-btn-card.secondary-card {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-}
-
-.profile-btn-card.secondary-card:hover {
-  border-color: var(--primary);
 }
 
 .profile-btn-title {
