@@ -155,6 +155,7 @@
             </button>
 
             <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
+              <!-- Header z danymi użytkownika -->
               <div class="user-profile-header">
                 <div class="profile-avatar" id="header-avatar">S</div>
                 <div class="profile-info">
@@ -163,21 +164,26 @@
                 </div>
               </div>
 
-              <div style="border-top: 1px solid var(--border-color); margin: 6px 0;"></div>
+              <!-- Sekcja Konto i Ustawienia -->
+              <div class="profile-tools-section">
+                <span class="profile-tools-title">Account & Preferences</span>
 
-              <a href="settings.html" class="profile-btn-card primary-card">
-                <div class="profile-btn-icon">
-                  <img src="assets/Settings.png" alt="Settings" />
-                </div>
-                <div class="profile-btn-info">
-                  <span class="profile-btn-title">Account Settings</span>
-                </div>
-              </a>
+                <a href="settings.html" class="profile-btn-card">
+                  <div class="profile-btn-icon">
+                    <img src="assets/Settings.png" alt="Settings" />
+                  </div>
+                  <div class="profile-btn-info">
+                    <span class="profile-btn-title">Account Settings</span>
+                    <span class="profile-btn-desc">Manage preferences</span>
+                  </div>
+                </a>
+              </div>
 
+              <!-- Sekcja Społeczność i Aplikacje -->
               <div class="profile-tools-section">
                 <span class="profile-tools-title">Community & Extensions</span>
 
-                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
+                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card">
                   <div class="profile-btn-icon">
                     <img src="assets/Brainly.png" alt="Discord" />
                   </div>
@@ -187,13 +193,23 @@
                   </div>
                 </a>
 
-                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card secondary-card">
+                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card">
                   <div class="profile-btn-icon">
                     <img src="assets/Code.png" alt="Extension" />
                   </div>
                   <div class="profile-btn-info">
                     <span class="profile-btn-title">Brainly Creatives</span>
                     <span class="profile-btn-desc">Chrome Extension</span>
+                  </div>
+                </a>
+
+                <a href="#" class="profile-btn-card" id="btn-download-app">
+                  <div class="profile-btn-icon">
+                    <img src="assets/Download.png" alt="Download" />
+                  </div>
+                  <div class="profile-btn-info">
+                    <span class="profile-btn-title">Download App</span>
+                    <span class="profile-btn-desc">Get Desktop Version</span>
                   </div>
                 </a>
               </div>
