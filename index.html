@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrainlyHub — Home</title>
+  <title>BrainlyHub — Global Education Search</title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
 
-  <!-- Pre-render layout script to prevent sidebar transition glitch on reload -->
+  <!-- Pre-render layout script to force collapsed sidebar by default -->
   <script>
     (function() {
-      if (localStorage.getItem('sidebar_collapsed') === 'true') {
+      const savedState = localStorage.getItem('sidebar_collapsed');
+      if (savedState === null || savedState === 'true') {
         document.documentElement.classList.add('preload-collapsed');
+        localStorage.setItem('sidebar_collapsed', 'true');
       }
     })();
   </script>
@@ -23,8 +25,8 @@
 <body class="preload-no-transition">
 
   <div id="app">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar" id="sidebar">
+    <!-- Sidebar Navigation (Simplified & Collapsed by Default) -->
+    <aside class="sidebar collapsed" id="sidebar">
       <div class="sidebar-header">
         <div class="brand-container">
           <img src="assets/Brainly Hub.png" alt="BrainlyHub Logo" class="brand-logo" />
@@ -57,47 +59,7 @@
         <li>
           <a href="topics.html" class="nav-item">
             <img src="assets/Topic.png" alt="Categories" class="nav-icon" />
-            <span class="nav-label">Categories & Topics</span>
-          </a>
-        </li>
-
-        <li style="margin: 8px 0; border-top: 1px solid var(--border-color);"></li>
-
-        <!-- Subjects -->
-        <li>
-          <a href="math.html" class="nav-item">
-            <img src="assets/Mathematics.png" alt="Mathematics" class="nav-icon" />
-            <span class="nav-label">Mathematics</span>
-          </a>
-        </li>
-        <li>
-          <a href="chemistry.html" class="nav-item">
-            <img src="assets/Chemistry.png" alt="Chemistry" class="nav-icon" />
-            <span class="nav-label">Chemistry</span>
-          </a>
-        </li>
-        <li>
-          <a href="physics.html" class="nav-item">
-            <img src="assets/Physics.png" alt="Physics" class="nav-icon" />
-            <span class="nav-label">Physics</span>
-          </a>
-        </li>
-        <li>
-          <a href="informatics.html" class="nav-item">
-            <img src="assets/Computer science.png" alt="Computer Science" class="nav-icon" />
-            <span class="nav-label">Computer Science</span>
-          </a>
-        </li>
-        <li>
-          <a href="biology.html" class="nav-item">
-            <img src="assets/Biology.png" alt="Biology" class="nav-icon" />
-            <span class="nav-label">Biology</span>
-          </a>
-        </li>
-        <li>
-          <a href="history.html" class="nav-item">
-            <img src="assets/History.png" alt="History" class="nav-icon" />
-            <span class="nav-label">History</span>
+            <span class="nav-label">Categories</span>
           </a>
         </li>
       </ul>
@@ -117,17 +79,15 @@
 
     <!-- Main Content Area -->
     <div class="main-wrapper">
-      <!-- Clean Top Bar Header -->
+      <!-- Top Bar Header -->
       <header class="top-bar">
         <div class="top-bar-actions">
-          <!-- Favorite Tasks Button -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="Favorites (Coming Soon)" id="btn-favorites">
               <img src="assets/Heart.png" alt="Favorites" class="nav-icon" />
             </button>
           </div>
 
-          <!-- Notifications Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="Notifications" id="btn-notifications">
               <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
@@ -138,9 +98,7 @@
                 <span>Notifications</span>
                 <small style="color: var(--text-muted); cursor: pointer;" id="btn-clear-notifs">Clear All</small>
               </div>
-              
               <div id="notif-list" class="notif-scroll-container"></div>
-
               <a href="settings.html#notifications" class="dropdown-footer-link">
                 <img src="assets/Settings.png" style="width: 14px; height: 14px;" alt="Settings" />
                 Notification Settings
@@ -148,14 +106,12 @@
             </div>
           </div>
 
-          <!-- User Profile Dropdown -->
           <div class="dropdown-container">
             <button class="action-icon-btn" title="User Profile" id="btn-user-profile">
               <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
             </button>
 
             <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
-              <!-- Header z danymi użytkownika -->
               <div class="user-profile-header">
                 <div class="profile-avatar" id="header-avatar">S</div>
                 <div class="profile-info">
@@ -164,10 +120,8 @@
                 </div>
               </div>
 
-              <!-- Sekcja Konto i Ustawienia -->
               <div class="profile-tools-section">
                 <span class="profile-tools-title">Account & Preferences</span>
-
                 <a href="settings.html" class="profile-btn-card">
                   <div class="profile-btn-icon">
                     <img src="assets/Settings.png" alt="Settings" />
@@ -179,10 +133,8 @@
                 </a>
               </div>
 
-              <!-- Sekcja Społeczność i Aplikacje -->
               <div class="profile-tools-section">
                 <span class="profile-tools-title">Community & Extensions</span>
-
                 <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card">
                   <div class="profile-btn-icon">
                     <img src="assets/Brainly.png" alt="Discord" />
@@ -220,13 +172,104 @@
 
       <!-- Main Home Content -->
       <main class="content-body">
+        <!-- Hero Search Banner with Interactive Canvas Grid -->
+        <section class="hero-search-card">
+          <canvas id="hero-grid-canvas"></canvas>
+          
+          <div class="hero-search-content">
+            <h1 class="hero-title">Wyszukiwarka Paczek Zadań</h1>
+            <p class="hero-subtitle">Przeszukuj materiały edukacyjne ze wszystkich rynków międzynarodowych</p>
+
+            <!-- Main Search Field -->
+            <div class="search-input-wrapper">
+              <img src="assets/Search.png" alt="Search" class="search-field-icon" />
+              <input type="text" id="main-search-input" placeholder="Wpisz nazwę paczki (np. liniowa, funkcja)..." autocomplete="off" />
+            </div>
+
+            <!-- Filters Grid -->
+            <div class="search-filters-grid">
+              <!-- Filter: Market / Region -->
+              <div class="filter-group">
+                <label class="filter-label" for="filter-market">Rynek (Kraj)</label>
+                <select id="filter-market" class="filter-select">
+                  <option value="all">Wszystkie rynki</option>
+                  <option value="PL">PL — Polska</option>
+                  <option value="US">US — United States</option>
+                  <option value="RO">RO — România</option>
+                  <option value="ES">ES — España</option>
+                  <option value="BR">BR — Brasil</option>
+                </select>
+              </div>
+
+              <!-- Filter: Difficulty -->
+              <div class="filter-group">
+                <label class="filter-label" for="filter-difficulty">Poziom trudności</label>
+                <select id="filter-difficulty" class="filter-select">
+                  <option value="all">Wszystkie poziomy</option>
+                  <option value="podstawowa">Szkoła Podstawowa</option>
+                  <option value="srednia">Szkoła Średnia / Liceum</option>
+                  <option value="matura">Matura / Egzamin</option>
+                  <option value="studia">Studia / Zaawansowany</option>
+                </select>
+              </div>
+
+              <!-- Filter: Dynamic Subject Selection -->
+              <div class="filter-group">
+                <label class="filter-label" for="filter-subject-select">Przedmiot szkolny</label>
+                <select id="filter-subject-select" class="filter-select">
+                  <option value="all">Wszystkie przedmioty</option>
+                  <option value="matematyka">Matematyka</option>
+                  <option value="fizyka">Fizyka</option>
+
+                  <option value="chemia">Chemia</option>
+                  <option value="biologia">Biologia</option>
+                  <option value="informatyka">Informatyka</option>
+                  <option value="historia">Historia</option>
+                  <option value="geografia">Geografia</option>
+                  <option value="inne">Inne (Wpisz własny)...</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Custom Subject Input Box (Appears when 'Inne' is selected) -->
+            <div class="custom-subject-wrapper" id="custom-subject-wrapper" style="display: none;">
+              <input type="text" id="custom-subject-input" class="custom-subject-input" placeholder="Wpisz pełną nazwę przedmiotu na danym rynku..." />
+            </div>
+          </div>
+        </section>
+
+        <!-- Stats Counter Dashboard -->
+        <section class="stats-dashboard-grid">
+          <div class="stat-card">
+            <span class="stat-value" id="stat-tasks">12,450</span>
+            <span class="stat-label">Baza Zadań</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-bundles">840</span>
+            <span class="stat-label">Paczek Zadań</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-markets">12</span>
+            <span class="stat-label">Rynków Globalnych</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-subjects">45</span>
+            <span class="stat-label">Przedmiotów</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-exams">150+</span>
+            <span class="stat-label">Egzaminów</span>
+          </div>
+        </section>
+
+        <!-- Dynamic Results Section -->
         <section class="liquid-card">
           <div class="settings-card-header">
-            <h2>Welcome to BrainlyHub</h2>
+            <h2 id="results-count-title">Wyniki Wyszukiwania</h2>
           </div>
-          <p style="color: var(--text-muted); line-height: 1.6;">
-            Select a category from the sidebar or search for past examination tasks to begin learning.
-          </p>
+          <div id="bundles-results-grid" class="bundles-results-grid">
+            <!-- Results cards dynamically injected via JavaScript -->
+          </div>
         </section>
       </main>
     </div>
