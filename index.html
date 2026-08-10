@@ -8,6 +8,9 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
 
+  <!-- Supabase JS Client (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <!-- Pre-render layout script to force collapsed sidebar by default -->
   <script>
     (function() {
@@ -25,7 +28,7 @@
 <body class="preload-no-transition">
 
   <div id="app">
-    <!-- Sidebar Navigation (Simplified & Collapsed by Default) -->
+    <!-- Sidebar Navigation (3 Core Links Only) -->
     <aside class="sidebar collapsed" id="sidebar">
       <div class="sidebar-header">
         <div class="brand-container">
@@ -44,31 +47,13 @@
             <span class="nav-label">Home</span>
           </a>
         </li>
-        <li>
-          <a href="tasks.html" class="nav-item">
-            <img src="assets/Tasks.png" alt="Tasks" class="nav-icon" />
-            <span class="nav-label">Task Search</span>
-          </a>
-        </li>
-        <li>
-          <a href="past-exams.html" class="nav-item">
-            <img src="assets/Past exams.png" alt="Past Exams" class="nav-icon" />
-            <span class="nav-label">Past Exams</span>
-          </a>
-        </li>
-        <li>
-          <a href="topics.html" class="nav-item">
-            <img src="assets/Topic.png" alt="Categories" class="nav-icon" />
-            <span class="nav-label">Categories</span>
-          </a>
-        </li>
       </ul>
 
       <!-- Sidebar Footer -->
       <div class="sidebar-footer">
         <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="nav-item">
           <img src="assets/Bug.png" alt="Contact" class="nav-icon" />
-          <span class="nav-label">Contact with us</span>
+          <span class="nav-label">Contact Form</span>
         </a>
         <a href="settings.html" class="nav-item">
           <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
@@ -83,7 +68,7 @@
       <header class="top-bar">
         <div class="top-bar-actions">
           <div class="dropdown-container">
-            <button class="action-icon-btn" title="Favorites (Coming Soon)" id="btn-favorites">
+            <button class="action-icon-btn" title="Favorites" id="btn-favorites">
               <img src="assets/Heart.png" alt="Favorites" class="nav-icon" />
             </button>
           </div>
@@ -145,7 +130,7 @@
                   </div>
                 </a>
 
-                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card">
+                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic" target="_blank" rel="noopener" class="profile-btn-card">
                   <div class="profile-btn-icon">
                     <img src="assets/Code.png" alt="Extension" />
                   </div>
@@ -154,121 +139,124 @@
                     <span class="profile-btn-desc">Chrome Extension</span>
                   </div>
                 </a>
-
-                <a href="#" class="profile-btn-card" id="btn-download-app">
-                  <div class="profile-btn-icon">
-                    <img src="assets/Download.png" alt="Download" />
-                  </div>
-                  <div class="profile-btn-info">
-                    <span class="profile-btn-title">Download App</span>
-                    <span class="profile-btn-desc">Get Desktop Version</span>
-                  </div>
-                </a>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <!-- Main Home Content -->
+      <!-- Main Content -->
       <main class="content-body">
-        <!-- Hero Search Banner with Interactive Canvas Grid -->
+        <!-- Subtle Search Hero Section -->
         <section class="hero-search-card">
-          <canvas id="hero-grid-canvas"></canvas>
+          <div class="subtle-bg-overlay"></div>
           
           <div class="hero-search-content">
-            <h1 class="hero-title">Wyszukiwarka Paczek Zadań</h1>
-            <p class="hero-subtitle">Przeszukuj materiały edukacyjne ze wszystkich rynków międzynarodowych</p>
+            <div class="hero-header-row">
+              <div>
+                <h1 class="hero-title">Database Knowledge Hub</h1>
+                <p class="hero-subtitle">Search questions, exercise solutions, and educational materials globally</p>
+              </div>
 
-            <!-- Main Search Field -->
+              <!-- AI Mode Toggle -->
+              <div class="ai-toggle-wrapper">
+                <label class="ai-switch">
+                  <input type="checkbox" id="toggle-ai-mode" />
+                  <span class="ai-slider"></span>
+                </label>
+                <div class="ai-toggle-label">
+                  <span class="ai-badge">AI Powered</span>
+                  <span class="ai-desc">Semantic Search</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Search Input Bar -->
             <div class="search-input-wrapper">
               <img src="assets/Search.png" alt="Search" class="search-field-icon" />
-              <input type="text" id="main-search-input" placeholder="Wpisz nazwę paczki (np. liniowa, funkcja)..." autocomplete="off" />
+              <input type="text" id="main-search-input" placeholder="Type topic, equation, or prompt..." autocomplete="off" />
+              <button class="btn-search-action" id="btn-execute-search">Search</button>
+            </div>
+
+            <!-- Search Mode Hint Banner -->
+            <div class="search-hint-banner" id="search-hint-banner">
+              <span>Standard Query Search Active — Exact string and tag matching</span>
             </div>
 
             <!-- Filters Grid -->
             <div class="search-filters-grid">
-              <!-- Filter: Market / Region -->
               <div class="filter-group">
-                <label class="filter-label" for="filter-market">Rynek (Kraj)</label>
+                <label class="filter-label" for="filter-market">Market / Region</label>
                 <select id="filter-market" class="filter-select">
-                  <option value="all">Wszystkie rynki</option>
-                  <option value="PL">PL — Polska</option>
+                  <option value="all">All Markets</option>
+                  <option value="PL">PL — Poland</option>
                   <option value="US">US — United States</option>
-                  <option value="RO">RO — România</option>
-                  <option value="ES">ES — España</option>
-                  <option value="BR">BR — Brasil</option>
+                  <option value="RO">RO — Romania</option>
+                  <option value="ES">ES — Spain</option>
+                  <option value="BR">BR — Brazil</option>
                 </select>
               </div>
 
-              <!-- Filter: Difficulty -->
               <div class="filter-group">
-                <label class="filter-label" for="filter-difficulty">Poziom trudności</label>
+                <label class="filter-label" for="filter-difficulty">Education Level</label>
                 <select id="filter-difficulty" class="filter-select">
-                  <option value="all">Wszystkie poziomy</option>
-                  <option value="podstawowa">Szkoła Podstawowa</option>
-                  <option value="srednia">Szkoła Średnia / Liceum</option>
-                  <option value="matura">Matura / Egzamin</option>
-                  <option value="studia">Studia / Zaawansowany</option>
+                  <option value="all">All Levels</option>
+                  <option value="primary">Primary School</option>
+                  <option value="secondary">High School</option>
+                  <option value="exam">Exam Prep / SAT</option>
+                  <option value="higher">University / Advanced</option>
                 </select>
               </div>
 
-              <!-- Filter: Dynamic Subject Selection -->
               <div class="filter-group">
-                <label class="filter-label" for="filter-subject-select">Przedmiot szkolny</label>
+                <label class="filter-label" for="filter-subject-select">Subject Category</label>
                 <select id="filter-subject-select" class="filter-select">
-                  <option value="all">Wszystkie przedmioty</option>
-                  <option value="matematyka">Matematyka</option>
-                  <option value="fizyka">Fizyka</option>
-
-                  <option value="chemia">Chemia</option>
-                  <option value="biologia">Biologia</option>
-                  <option value="informatyka">Informatyka</option>
-                  <option value="historia">Historia</option>
-                  <option value="geografia">Geografia</option>
-                  <option value="inne">Inne (Wpisz własny)...</option>
+                  <option value="all">All Subjects</option>
+                  <option value="mathematics">Mathematics</option>
+                  <option value="physics">Physics</option>
+                  <option value="chemistry">Chemistry</option>
+                  <option value="biology">Biology</option>
+                  <option value="computer_science">Computer Science</option>
+                  <option value="history">History</option>
+                  <option value="geography">Geography</option>
+                  <option value="custom">Custom Subject...</option>
                 </select>
               </div>
             </div>
 
-            <!-- Custom Subject Input Box (Appears when 'Inne' is selected) -->
             <div class="custom-subject-wrapper" id="custom-subject-wrapper" style="display: none;">
-              <input type="text" id="custom-subject-input" class="custom-subject-input" placeholder="Wpisz pełną nazwę przedmiotu na danym rynku..." />
+              <input type="text" id="custom-subject-input" class="custom-subject-input" placeholder="Enter target subject name..." />
             </div>
           </div>
         </section>
 
-        <!-- Stats Counter Dashboard -->
+        <!-- Stats Counter Dashboard (Live Supabase Row Counts) -->
         <section class="stats-dashboard-grid">
           <div class="stat-card">
-            <span class="stat-value" id="stat-tasks">12,450</span>
-            <span class="stat-label">Baza Zadań</span>
+            <span class="stat-value" id="stat-tasks">--</span>
+            <span class="stat-label">Database Items</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value" id="stat-bundles">840</span>
-            <span class="stat-label">Paczek Zadań</span>
+            <span class="stat-value" id="stat-solutions">--</span>
+            <span class="stat-label">Verified Answers</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value" id="stat-markets">12</span>
-            <span class="stat-label">Rynków Globalnych</span>
+            <span class="stat-value" id="stat-markets">--</span>
+            <span class="stat-label">Active Markets</span>
           </div>
           <div class="stat-card">
-            <span class="stat-value" id="stat-subjects">45</span>
-            <span class="stat-label">Przedmiotów</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-value" id="stat-exams">150+</span>
-            <span class="stat-label">Egzaminów</span>
+            <span class="stat-value" id="stat-subjects">--</span>
+            <span class="stat-label">Subjects</span>
           </div>
         </section>
 
-        <!-- Dynamic Results Section -->
+        <!-- Live Results Section -->
         <section class="liquid-card">
           <div class="settings-card-header">
-            <h2 id="results-count-title">Wyniki Wyszukiwania</h2>
+            <h2 id="results-count-title">Database Search Results</h2>
           </div>
           <div id="bundles-results-grid" class="bundles-results-grid">
-            <!-- Results cards dynamically injected via JavaScript -->
+            <!-- Dynamic items rendered via JavaScript -->
           </div>
         </section>
       </main>
@@ -278,7 +266,7 @@
   <!-- Shared Core Scripts -->
   <script src="core/main.js"></script>
 
-  <!-- Modal: Contact Redirect Popup -->
+  <!-- Modal: External Support Redirect -->
   <div class="modal-overlay" id="modal-contact-redirect" style="display: none;">
     <div class="redirect-card modal-card">
       <div class="redirect-icon-wrapper">
@@ -291,7 +279,7 @@
 
       <h2 class="redirect-title">External Contact Form</h2>
       <p class="redirect-desc">
-        You are being redirected to our official contact support form in <strong id="contact-countdown-timer">5</strong> seconds.
+        You are being redirected to our official support form in <strong id="contact-countdown-timer">5</strong> seconds.
       </p>
 
       <div class="actions-row">
