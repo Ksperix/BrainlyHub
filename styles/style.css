@@ -365,6 +365,7 @@ body {
   color: var(--text-muted);
 }
 
+/* powiadomienia: usunięty boczny pasek, zastosowano pełną obramówkę */
 .notif-item {
   display: flex;
   gap: 10px;
@@ -375,7 +376,7 @@ body {
 }
 
 .notif-item.unread {
-  border-left: 3px solid var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .notif-icon-box {
