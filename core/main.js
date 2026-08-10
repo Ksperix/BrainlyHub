@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSidebarToggle();
   initHeaderDropdowns();
   initContactRedirectModal();
+  checkAuthSession();
 
   requestAnimationFrame(() => {
     document.documentElement.classList.remove('preload-collapsed');
@@ -43,21 +44,112 @@ function initThemeAndLayoutState() {
     }
   }
 
-  const savedName = localStorage.getItem('user_name');
-  const savedRole = localStorage.getItem('user_role');
-  if (savedName) {
-    const nameEl = document.getElementById('header-user-name');
-    const avatarEl = document.getElementById('header-avatar');
-    if (nameEl) nameEl.textContent = savedName;
-    if (avatarEl) avatarEl.textContent = savedName.charAt(0).toUpperCase();
-  }
-  if (savedRole) {
-    const roleEl = document.getElementById('header-user-role');
-    if (roleEl) roleEl.textContent = savedRole;
-  }
-  
   renderNotificationsUI();
 }
+
+/* ==========================================
+   BRAINLYHUB - GOOGLE AUTHENTICATION SYSTEM
+   ========================================== */
+
+function handleGoogleLogin(response) {
+  if (!response || !response.credential) return;
+
+  try {
+    const payload = parseJwt(response.credential);
+    const name = payload.name || payload.given_name || 'Google User';
+    const email = payload.email || '';
+    const picture = payload.picture || '';
+
+    localStorage.setItem('user_name', name);
+    localStorage.setItem('user_email', email);
+    localStorage.setItem('user_avatar', picture);
+    localStorage.setItem('is_logged_in', 'true');
+
+    applyUserProfileUI(name, email, picture);
+  } catch (err) {
+    console.error('Failed to process Google login:', err);
+  }
+}
+
+function parseJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split('')
+      .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+      .join('')
+  );
+  return JSON.parse(jsonPayload);
+}
+
+function applyUserProfileUI(name, email, picture) {
+  const nameEl = document.getElementById('header-user-name');
+  const roleEl = document.getElementById('header-user-role');
+  const avatarEl = document.getElementById('header-avatar');
+  const signinBtn = document.querySelector('.g_id_signin');
+  const logoutBtn = document.getElementById('btn-google-logout');
+
+  if (nameEl) nameEl.textContent = name;
+  if (roleEl) roleEl.textContent = email || 'Google Account';
+
+  if (avatarEl) {
+    if (picture) {
+      avatarEl.innerHTML = `<img src="${picture}" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />`;
+    } else {
+      avatarEl.textContent = name.charAt(0).toUpperCase();
+    }
+  }
+
+  if (signinBtn) signinBtn.style.display = 'none';
+  if (logoutBtn) logoutBtn.style.display = 'block';
+}
+
+function handleGoogleLogout() {
+  localStorage.removeItem('user_name');
+  localStorage.removeItem('user_email');
+  localStorage.removeItem('user_avatar');
+  localStorage.removeItem('is_logged_in');
+
+  const nameEl = document.getElementById('header-user-name');
+  const roleEl = document.getElementById('header-user-role');
+  const avatarEl = document.getElementById('header-avatar');
+  const signinBtn = document.querySelector('.g_id_signin');
+  const logoutBtn = document.getElementById('btn-google-logout');
+
+  if (nameEl) nameEl.textContent = 'Student Account';
+  if (roleEl) roleEl.textContent = 'High School Member';
+  if (avatarEl) avatarEl.textContent = 'S';
+
+  if (signinBtn) signinBtn.style.display = 'block';
+  if (logoutBtn) logoutBtn.style.display = 'none';
+}
+
+function checkAuthSession() {
+  if (localStorage.getItem('is_logged_in') === 'true') {
+    const name = localStorage.getItem('user_name') || 'Student Account';
+    const email = localStorage.getItem('user_email') || '';
+    const picture = localStorage.getItem('user_avatar') || '';
+    applyUserProfileUI(name, email, picture);
+  } else {
+    const savedName = localStorage.getItem('user_name');
+    const savedRole = localStorage.getItem('user_role');
+    if (savedName) {
+      const nameEl = document.getElementById('header-user-name');
+      const avatarEl = document.getElementById('header-avatar');
+      if (nameEl) nameEl.textContent = savedName;
+      if (avatarEl) avatarEl.textContent = savedName.charAt(0).toUpperCase();
+    }
+    if (savedRole) {
+      const roleEl = document.getElementById('header-user-role');
+      if (roleEl) roleEl.textContent = savedRole;
+    }
+  }
+}
+
+/* ==========================================
+   LAYOUT & INTERACTION CONTROLLERS
+   ========================================== */
 
 function initSidebarToggle() {
   const toggleBtn = document.getElementById('btn-toggle-sidebar');
