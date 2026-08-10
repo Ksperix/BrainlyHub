@@ -932,7 +932,7 @@ input:checked + .slider:before {
   justify-content: center;
 }
 
-.g_id_signin {
+#google-signin-container {
   width: 100%;
   display: flex;
   justify-content: center;
