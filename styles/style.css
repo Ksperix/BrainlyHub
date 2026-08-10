@@ -344,10 +344,10 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-dropdown);
-  padding: 12px;
+  padding: 16px;
   display: none;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   z-index: 200;
 }
 
@@ -450,12 +450,12 @@ body {
   border-top: 1px solid var(--border-color);
 }
 
+/* Nagłówek profilu bez dolnego obramowania dla usunięcia podwójnych kresek */
 .user-profile-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 4px;
 }
 
 .profile-avatar {
@@ -494,14 +494,13 @@ body {
 }
 
 .profile-tools-title {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-/* Wszytkie karciane przyciski w profilu mają teraz spójne obramowanie i tło */
 .profile-btn-card {
   display: flex;
   align-items: center;
