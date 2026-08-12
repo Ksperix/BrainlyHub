@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrainlyHub — Global Education Search</title>
   
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
+
+  <!-- CSS Styles -->
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
@@ -17,6 +20,7 @@
 
       <!-- Main Content -->
       <main class="content-body">
+        <!-- Hero Search Section -->
         <section class="hero-search-card">
           <div class="subtle-bg-overlay"></div>
           
@@ -77,7 +81,7 @@
           </div>
         </section>
 
-        <!-- Stats Counter Dashboard -->
+        <!-- Stats Dashboard -->
         <section class="stats-dashboard-grid">
           <div class="stat-card">
             <span class="stat-value" id="stat-tasks">--</span>
@@ -97,22 +101,25 @@
           </div>
         </section>
 
-        <!-- Live Results Section -->
+        <!-- Search Results Grid -->
         <section class="liquid-card">
           <div class="settings-card-header">
             <h2 id="results-count-title">Database Search Results</h2>
           </div>
           <div id="bundles-results-grid" class="bundles-results-grid">
-            <!-- Items loaded dynamically -->
+            <!-- Rendered dynamically -->
           </div>
         </section>
       </main>
     </div>
   </div>
 
-  <!-- Modular Scripts Order -->
+  <!-- Synchronized Component & Core Scripts -->
   <script src="components/header.js"></script>
   <script src="components/notifications.js"></script>
+  <script src="components/profile.js"></script>
+  <script src="components/favorites.js"></script>
+  
   <script src="core/app.js"></script>
   <script src="core/sheets-db.js"></script>
 </body>
