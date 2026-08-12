@@ -63,3 +63,30 @@ function initThemeControls() {
     });
   });
 }
+
+// Inicjalizacja Compact Mode po załadowaniu DOM
+document.addEventListener('DOMContentLoaded', () => {
+  initCompactMode();
+});
+
+function initCompactMode() {
+  const compactToggle = document.getElementById('toggle-compact-ui');
+  const savedCompactState = localStorage.getItem('app_compact_mode') === 'true';
+
+  if (savedCompactState) {
+    document.body.classList.add('compact-mode');
+    if (compactToggle) compactToggle.checked = true;
+  }
+
+  if (compactToggle) {
+    compactToggle.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        document.body.classList.add('compact-mode');
+        localStorage.setItem('app_compact_mode', 'true');
+      } else {
+        document.body.classList.remove('compact-mode');
+        localStorage.setItem('app_compact_mode', 'false');
+      }
+    });
+  }
+}
