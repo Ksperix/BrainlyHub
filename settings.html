@@ -18,8 +18,8 @@
       <!-- Dynamic Global Header Component -->
       <header id="global-header"></header>
 
-      <!-- Settings Main Body -->
-      <main class="content-body">
+      <!-- Settings Main Body Container -->
+      <main class="content-body settings-page">
         
         <!-- Header Page Title -->
         <div class="settings-page-header">
@@ -27,25 +27,25 @@
           <p class="hero-subtitle">Manage preferences, appearance, notifications, and application data</p>
         </div>
 
-        <div class="settings-layout-grid">
+        <div class="settings-grid">
           
           <!-- LEFT COLUMN -->
-          <div class="settings-column">
+          <div class="settings-col">
             
             <!-- 1. User Profile Card -->
-            <section class="liquid-card">
+            <section class="settings-card">
               <div class="settings-card-header">
                 <h2>User Profile</h2>
               </div>
               <div class="card-form-body">
                 <div class="form-group-row">
                   <label class="filter-label" for="input-user-name">Display Name</label>
-                  <input type="text" id="input-user-name" class="settings-input" placeholder="e.g. Alex Morgan" />
+                  <input type="text" id="input-user-name" class="settings-field" placeholder="e.g. Alex Morgan" />
                 </div>
 
                 <div class="form-group-row">
                   <label class="filter-label" for="select-user-role">Academic Level</label>
-                  <select id="select-user-role" class="settings-select">
+                  <select id="select-user-role" class="settings-field settings-select-field">
                     <option value="Primary School Member">Primary School Member</option>
                     <option value="High School Member">High School Member</option>
                     <option value="University Student">University Student</option>
@@ -60,7 +60,7 @@
             </section>
 
             <!-- 2. Notifications & Sound Card -->
-            <section class="liquid-card" id="notifications-section">
+            <section class="settings-card" id="notifications-section">
               <div class="settings-card-header">
                 <h2>Notifications & Sound</h2>
               </div>
@@ -90,13 +90,13 @@
             </section>
 
             <!-- 3. Desktop Application Card -->
-            <section class="liquid-card">
+            <section class="settings-card">
               <div class="settings-card-header">
                 <h2>Desktop Application</h2>
               </div>
               <div class="install-card-body">
                 <div class="install-info">
-                  <img src="assets/Download.png" alt="Download App" class="install-icon-fixed" />
+                  <img src="assets/Download.png" alt="Download App" class="desktop-app-icon" />
                   <div>
                     <span class="install-title">BrainlyHub Desktop</span>
                     <p class="install-desc">Launch platform directly as a Web App.</p>
@@ -109,10 +109,10 @@
           </div>
 
           <!-- RIGHT COLUMN -->
-          <div class="settings-column">
+          <div class="settings-col">
             
             <!-- 4. Appearance & Theme Card -->
-            <section class="liquid-card">
+            <section class="settings-card">
               <div class="settings-card-header">
                 <h2>Appearance & Theme</h2>
               </div>
@@ -156,7 +156,7 @@
             </section>
 
             <!-- 5. Data & Storage Card -->
-            <section class="liquid-card">
+            <section class="settings-card">
               <div class="settings-card-header">
                 <h2>Data & Cache Management</h2>
               </div>
