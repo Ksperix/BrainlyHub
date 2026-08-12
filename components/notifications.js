@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function renderNotificationsList() {
   const notifListEl = document.getElementById('notif-list');
   const notifBadgeEl = document.getElementById('notif-badge');
-  const btnClear = document.getElementById('btn-clear-notifs');
 
   if (!notifListEl) return;
 
@@ -21,7 +20,11 @@ function renderNotificationsList() {
     return;
   }
 
-  if (notifBadgeEl) notifBadgeEl.style.display = 'block';
+  // Pokaż czerwoną kropkę statusu powiadomienia
+  const hasUnread = notifs.some(n => n.unread);
+  if (notifBadgeEl) {
+    notifBadgeEl.style.display = hasUnread ? 'block' : 'none';
+  }
 
   notifListEl.innerHTML = notifs.map(n => `
     <div class="notif-item ${n.unread ? 'unread' : ''}">
@@ -31,15 +34,31 @@ function renderNotificationsList() {
       <div class="notif-details">
         <span class="notif-title">${n.title}</span>
         <span class="notif-desc">${n.desc}</span>
-        <span class="notif-time">${n.time}</span>
+        <span class="notif-time">${n.time || 'Just now'}</span>
       </div>
     </div>
   `).join('');
-
-  if (btnClear) {
-    btnClear.addEventListener('click', () => {
-      localStorage.setItem('app_notifications', JSON.stringify([]));
-      renderNotificationsList();
-    });
-  }
 }
+
+// Funkcja globalna udostępniona dla app.js do natychmiastowej aktualizacji
+window.pushCustomNotification = function(title, desc, icon) {
+  const currentNotifs = JSON.parse(localStorage.getItem('app_notifications') || '[]');
+  
+  const newNotif = {
+    id: Date.now(),
+    title: title || 'System Update',
+    desc: desc || 'Preferences saved successfully.',
+    icon: icon || 'Notifications.png',
+    unread: true,
+    time: 'Just now'
+  };
+
+  currentNotifs.unshift(newNotif);
+  localStorage.setItem('app_notifications', JSON.stringify(currentNotifs));
+  renderNotificationsList();
+};
+
+window.clearAllNotifications = function() {
+  localStorage.setItem('app_notifications', JSON.stringify([]));
+  renderNotificationsList();
+};
