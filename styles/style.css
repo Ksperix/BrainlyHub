@@ -1,35 +1,44 @@
 /* ==========================================
-   BRAINLYHUB - LIQUID MODERN STYLES
+   BRAINLYHUB - UNIFIED SYSTEM DESIGN SYSTEM
    ========================================== */
 
 :root {
+  /* Color Palette */
   --bg-primary: #f8fafc;
   --bg-surface: #ffffff;
-  --bg-glass: rgba(255, 255, 255, 0.85);
+  --bg-glass: rgba(255, 255, 255, 0.92);
   
-  --primary: #2563eb;
+  --primary: #1e3a8a;
   --primary-hover: #1d4ed8;
-  --primary-light: rgba(37, 99, 235, 0.08);
+  --primary-light: rgba(30, 58, 138, 0.08);
   --text-main: #0f172a;
   --text-muted: #64748b;
   --border-color: #e2e8f0;
   
+  /* Strict Geometry Scale (Multiples of 8px) */
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 20px;
-  --shadow-subtle: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
-  --shadow-dropdown: 0 20px 35px -10px rgba(15, 23, 42, 0.15);
-  --blur-glass: blur(16px);
+  --radius-lg: 16px;
+  
+  --shadow-subtle: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  --shadow-dropdown: 0 12px 30px -5px rgba(15, 23, 42, 0.12);
+  --blur-glass: blur(12px);
 }
 
 body.dark-theme {
   --bg-primary: #0b0f19;
   --bg-surface: #151c2c;
-  --bg-glass: rgba(21, 28, 44, 0.85);
+  --bg-glass: rgba(21, 28, 44, 0.92);
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --border-color: #26334d;
-  --primary-light: rgba(37, 99, 235, 0.15);
+  --primary-light: rgba(30, 58, 138, 0.2);
 }
 
 *, *::before, *::after {
@@ -44,6 +53,7 @@ body {
   color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 #app {
@@ -60,10 +70,13 @@ body {
   width: 100%;
 }
 
-/* TOP BAR HEADER */
+/* ==========================================
+   1. FIXED TOP BAR HEADER
+   ========================================== */
+
 .top-bar {
-  height: 70px;
-  padding: 0 40px;
+  height: 64px;
+  padding: 0 var(--space-xl);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -79,27 +92,27 @@ body {
 .top-bar-brand .brand-link {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-sm);
   text-decoration: none;
 }
 
 .brand-logo {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
 }
 
 .brand-title {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--primary);
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
 .top-bar-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--space-sm);
 }
 
 .dropdown-container {
@@ -109,8 +122,8 @@ body {
 .action-icon-btn {
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -122,7 +135,6 @@ body {
 .action-icon-btn:hover {
   border-color: var(--primary);
   background-color: var(--primary-light);
-  transform: translateY(-1px);
 }
 
 .action-icon-btn img {
@@ -133,8 +145,10 @@ body {
 
 .notification-badge {
   position: absolute;
-  top: 3px; right: 3px;
-  width: 9px; height: 9px;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
   background-color: #ef4444;
   border-radius: 50%;
 }
@@ -144,15 +158,15 @@ body {
   position: absolute;
   top: calc(100% + 12px);
   right: 0;
-  width: 340px;
+  width: 320px;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-dropdown);
-  padding: 20px;
+  padding: var(--space-lg);
   display: none;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-md);
   z-index: 200;
 }
 
@@ -162,8 +176,8 @@ body {
 
 .dropdown-header {
   font-weight: 700;
-  font-size: 0.95rem;
-  padding-bottom: 10px;
+  font-size: 0.9rem;
+  padding-bottom: var(--space-xs);
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -172,15 +186,15 @@ body {
 .notif-scroll-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-height: 240px;
+  gap: var(--space-xs);
+  max-height: 220px;
   overflow-y: auto;
 }
 
 .notif-item {
   display: flex;
-  gap: 12px;
-  padding: 12px;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
   border-radius: var(--radius-md);
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
@@ -190,35 +204,36 @@ body {
   border: 1px solid var(--primary) !important;
 }
 
-.notif-title { font-size: 0.85rem; font-weight: 700; }
-.notif-desc { font-size: 0.78rem; color: var(--text-muted); }
+.notif-title { font-size: 0.82rem; font-weight: 700; }
+.notif-desc { font-size: 0.75rem; color: var(--text-muted); }
 
 .user-profile-header {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--space-md);
 }
 
 .profile-avatar {
-  width: 48px; height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--primary);
-  color: #fff;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .profile-tools-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 
 .profile-tools-title {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 800;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -228,8 +243,8 @@ body {
 .profile-btn-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
+  gap: var(--space-sm);
+  padding: 10px var(--space-md);
   border-radius: var(--radius-md);
   text-decoration: none;
   background-color: var(--bg-surface);
@@ -242,278 +257,219 @@ body {
   background-color: var(--primary-light);
 }
 
-.profile-btn-icon img { width: 22px; height: 22px; }
-.profile-btn-title { font-size: 0.88rem; font-weight: 700; color: var(--text-main); }
-.profile-btn-desc { font-size: 0.75rem; color: var(--text-muted); }
+.profile-btn-icon img { width: 20px; height: 20px; }
+.profile-btn-title { font-size: 0.85rem; font-weight: 700; color: var(--text-main); }
+.profile-btn-desc { font-size: 0.72rem; color: var(--text-muted); }
 
-/* CONTENT BODY */
+/* ==========================================
+   2. CONTENT LAYOUT & ALIGNMENT
+   ========================================== */
+
 .content-body {
-  padding: 40px;
-  max-width: 1200px;
+  padding: var(--space-xl) var(--space-xl) 64px var(--space-xl);
+  max-width: 1140px;
   width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: var(--space-xl);
 }
 
-/* HERO SEARCH CARD - ODŚWIEŻONY DESIGN */
-.hero-search-card {
-  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-primary) 100%);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 48px;
-  box-shadow: var(--shadow-subtle);
-  position: relative;
-  overflow: hidden;
+/* Page Header Spacing */
+.settings-page-header {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .hero-title {
-  font-size: 2.2rem;
-  font-weight: 900;
-  letter-spacing: -0.8px;
-  background: linear-gradient(90deg, var(--text-main), var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  line-height: 1.2;
 }
 
 .hero-subtitle {
-  font-size: 1.05rem;
-  color: var(--text-muted);
-  margin-top: 6px;
-}
-
-.search-input-wrapper {
-  display: flex;
-  gap: 12px;
-  position: relative;
-  margin-top: 28px;
-}
-
-.search-field-icon {
-  position: absolute;
-  left: 18px; top: 16px;
-  width: 22px; height: 22px;
-}
-
-#main-search-input {
-  flex-grow: 1;
-  padding: 16px 20px 16px 52px;
-  border: 2px solid var(--border-color);
-  border-radius: var(--radius-md);
-  background: var(--bg-surface);
-  color: var(--text-main);
-  font-size: 1.05rem;
-  outline: none;
-  transition: all 0.25s ease;
-}
-
-#main-search-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px var(--primary-light);
-}
-
-.btn-search-action, .btn-proceed {
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  padding: 16px 28px;
-  border-radius: var(--radius-md);
-  font-weight: 800;
-  font-size: 0.98rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-search-action:hover, .btn-proceed:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
-}
-
-.search-filters-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  margin-top: 24px;
-}
-
-.filter-group { display: flex; flex-direction: column; gap: 8px; }
-.filter-label { font-size: 0.78rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-
-.filter-select, .custom-subject-input {
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  background: var(--bg-surface);
-  color: var(--text-main);
   font-size: 0.95rem;
-  outline: none;
+  color: var(--text-muted);
+  line-height: 1.4;
 }
 
-.filter-select:focus, .custom-subject-input:focus { border-color: var(--primary); }
+/* ==========================================
+   3. PERFECT GRID & CARDS SYSTEM
+   ========================================== */
 
-/* DASHBOARD STATS */
-.stats-dashboard-grid {
+.settings-layout-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
 }
 
-.stat-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 24px;
-  text-align: center;
-  box-shadow: var(--shadow-subtle);
+@media (max-width: 868px) {
+  .settings-layout-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.stat-value { font-size: 1.8rem; font-weight: 900; color: var(--primary); }
-.stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 4px; }
+.settings-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
 
-/* RESULTS GRID */
+/* Standardized Card Container */
 .liquid-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 32px;
+  padding: var(--space-lg);
   box-shadow: var(--shadow-subtle);
-}
-
-.bundles-results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.bundle-card {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 20px;
-  transition: all 0.2s ease;
-}
-
-.bundle-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-2px);
-}
-
-.no-results-card {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 48px;
-  color: var(--text-muted);
-  font-size: 1rem;
-}
-
-/* SETTINGS LAYOUT */
-.settings-layout-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 32px;
-}
-
-.settings-column { display: flex; flex-direction: column; gap: 32px; }
-.setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.setting-title { font-size: 0.95rem; font-weight: 700; }
-.setting-desc { font-size: 0.8rem; color: var(--text-muted); }
-
-/* ==========================================
-   SETTINGS PAGE REPAIR STYLES
-   ========================================== */
-
-/* 1. Naprawa zasłaniania nagłówka przez Sticky Header */
-.settings-page-container {
-  padding-top: 24px !important;
-}
-
-.settings-page-header {
-  margin-bottom: 24px;
-}
-
-/* 2. Naprawa układowa formularza profilu */
-.profile-card-content {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: var(--space-lg);
+}
+
+.settings-card-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-md);
+}
+
+.settings-card-header h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+}
+
+/* Form Controls Inside Cards */
+.card-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
 .form-group-row {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-xs);
   width: 100%;
+}
+
+.filter-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .settings-input, .settings-select {
   width: 100%;
-  padding: 10px 14px;
+  height: 42px;
+  padding: 0 var(--space-md);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   background: var(--bg-surface);
   color: var(--text-main);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  font-weight: 500;
   outline: none;
-  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .settings-input:focus, .settings-select:focus {
   border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .card-action-row {
   display: flex;
   justify-content: flex-end;
-  margin-top: 8px;
+  padding-top: var(--space-xs);
 }
 
-/* 3. Naprawa gigantycznej ikony w karcie Desktop Application */
-.install-card-body {
+/* Standardized Buttons */
+.btn-proceed {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  height: 40px;
+  padding: 0 var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-proceed:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary-action {
+  background: var(--bg-primary);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  height: 38px;
+  padding: 0 var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary-action:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-danger-action {
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  height: 38px;
+  padding: 0 var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger-action:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+/* ==========================================
+   4. SETTING ROWS & TOGGLES ALIGNMENT
+   ========================================== */
+
+.settings-toggle-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
-.install-info {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.install-icon-fixed {
-  width: 42px !important;
-  height: 42px !important;
-  max-width: 42px !important;
-  max-height: 42px !important;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.install-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.install-desc {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* 4. Naprawa przełączników motywu i wyboru kolorów */
 .setting-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 12px 0;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
   border-bottom: 1px solid var(--border-color);
 }
 
+.setting-row:first-child {
+  padding-top: 0;
+}
+
 .setting-row:last-child {
+  padding-bottom: 0;
   border-bottom: none;
 }
 
@@ -521,46 +477,66 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  max-width: 60%;
+  max-width: 65%;
 }
 
+.setting-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.setting-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* Theme Option Switcherer */
 .theme-options-wrapper {
   display: flex;
-  gap: 6px;
-  flex-shrink: 0;
+  background: var(--bg-primary);
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
 }
 
 .theme-option-btn {
-  padding: 8px 16px;
-  font-size: 0.85rem;
+  border: none;
+  background: transparent;
+  padding: 6px 14px;
+  font-size: 0.8rem;
   font-weight: 700;
-  background: var(--bg-primary);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
+  color: var(--text-muted);
   border-radius: var(--radius-sm);
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .theme-option-btn.active {
   background: var(--primary);
   color: #ffffff;
-  border-color: var(--primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Accent Palette */
 .color-picker-group {
   display: flex;
   gap: 8px;
-  flex-shrink: 0;
   align-items: center;
 }
 
 .accent-circle {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
-  box-sizing: border-box;
+  transition: transform 0.15s ease;
+}
+
+.accent-circle:hover {
+  transform: scale(1.15);
 }
 
 .accent-circle.active {
@@ -568,7 +544,7 @@ body {
   transform: scale(1.1);
 }
 
-/* 5. Stylizacja przełączników (Switches) */
+/* Toggle Switcher Controls */
 .ai-switch {
   position: relative;
   display: inline-block;
@@ -612,23 +588,35 @@ input:checked + .ai-slider:before {
   transform: translateX(20px);
 }
 
-/* Przycisk akcji usuwania/resetu */
-.btn-secondary-action {
-  background: var(--bg-primary);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-  padding: 8px 14px;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  cursor: pointer;
+/* Desktop App Container */
+.install-card-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
 }
 
-.btn-danger-action {
-  background: rgba(220, 38, 38, 0.1);
-  color: #dc2626;
-  border: 1px solid rgba(220, 38, 38, 0.2);
-  padding: 8px 14px;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  cursor: pointer;
+.install-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.install-icon-fixed {
+  width: 36px !important;
+  height: 36px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.install-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.install-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
