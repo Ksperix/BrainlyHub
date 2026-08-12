@@ -5,159 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrainlyHub — Settings & Preferences</title>
   
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
-
-  <!-- Pre-render layout script to force collapsed sidebar by default -->
-  <script>
-    (function() {
-      const savedState = localStorage.getItem('sidebar_collapsed');
-      if (savedState === null || savedState === 'true') {
-        document.documentElement.classList.add('preload-collapsed');
-        localStorage.setItem('sidebar_collapsed', 'true');
-      }
-    })();
-  </script>
-
-  <!-- CSS Styles -->
   <link rel="stylesheet" href="styles/style.css" />
 </head>
-<body class="preload-no-transition">
+<body>
 
   <div id="app">
-    <!-- Sidebar Navigation (3 Core Links) -->
-    <aside class="sidebar collapsed" id="sidebar">
-      <div class="sidebar-header">
-        <div class="brand-container">
-          <img src="assets/Brainly Hub.png" alt="BrainlyHub Logo" class="brand-logo" />
-          <span class="brand-title">BrainlyHub</span>
-        </div>
-        <button class="btn-toggle-sidebar" id="btn-toggle-sidebar" title="Collapse / Expand Navigation">
-          <img src="assets/Folder.png" alt="Toggle" class="nav-icon" />
-        </button>
-      </div>
-
-      <ul class="nav-list">
-        <li>
-          <a href="index.html" class="nav-item">
-            <img src="assets/Home star.png" alt="Home" class="nav-icon" />
-            <span class="nav-label">Home</span>
-          </a>
-        </li>
-      </ul>
-
-      <!-- Sidebar Footer -->
-      <div class="sidebar-footer">
-        <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="nav-item">
-          <img src="assets/Bug.png" alt="Contact" class="nav-icon" />
-          <span class="nav-label">Contact Form</span>
-        </a>
-        <a href="settings.html" class="nav-item active">
-          <img src="assets/Settings.png" alt="Settings" class="nav-icon" />
-          <span class="nav-label">Settings</span>
-        </a>
-      </div>
-    </aside>
-
-    <!-- Main Content Area -->
     <div class="main-wrapper">
-      <!-- Top Bar Header -->
-      <header class="top-bar">
-        <div class="top-bar-actions">
-          <div class="dropdown-container">
-            <button class="action-icon-btn" title="Favorites" id="btn-favorites">
-              <img src="assets/Heart.png" alt="Favorites" class="nav-icon" />
-            </button>
-          </div>
-
-          <div class="dropdown-container">
-            <button class="action-icon-btn" title="Notifications" id="btn-notifications">
-              <img src="assets/Notifications.png" alt="Notifications" class="nav-icon" />
-              <span class="notification-badge" id="notif-badge" style="display: none;"></span>
-            </button>
-            
-            <!-- Interactive Notifications Dropdown -->
-            <div class="header-dropdown" id="dropdown-notifications">
-              <div class="dropdown-header">
-                <span>Notifications</span>
-                <small id="btn-clear-notifs">Clear All</small>
-              </div>
-              <div id="notif-list" class="notif-scroll-container">
-                <div class="notif-empty-state">No recent notifications</div>
-              </div>
-              <a href="settings.html#notifications" class="dropdown-footer-link">
-                <img src="assets/Settings.png" style="width: 14px; height: 14px;" alt="Settings" />
-                Notification Settings
-              </a>
-            </div>
-          </div>
-
-          <div class="dropdown-container">
-            <button class="action-icon-btn" title="User Profile" id="btn-user-profile">
-              <img src="assets/User profile.png" alt="Profile" class="nav-icon" />
-            </button>
-
-            <div class="header-dropdown profile-dropdown-panel" id="dropdown-profile">
-              <div class="user-profile-header">
-                <div class="profile-avatar" id="header-avatar">S</div>
-                <div class="profile-info">
-                  <span class="profile-name" id="header-user-name">Student Account</span>
-                  <span class="profile-role" id="header-user-role">High School Member</span>
-                </div>
-              </div>
-
-              <!-- Account & Preferences Section -->
-              <div class="profile-tools-section">
-                <span class="profile-tools-title">Account & Preferences</span>
-                <a href="settings.html" class="profile-btn-card">
-                  <div class="profile-btn-icon">
-                    <img src="assets/Settings.png" alt="Settings" />
-                  </div>
-                  <div class="profile-btn-info">
-                    <span class="profile-btn-title">Account Settings</span>
-                    <span class="profile-btn-desc">Manage preferences</span>
-                  </div>
-                </a>
-              </div>
-
-              <!-- Community & Extensions Section (Including Install App) -->
-              <div class="profile-tools-section">
-                <span class="profile-tools-title">Community & Extensions</span>
-
-                <a href="#" class="profile-btn-card" id="btn-install-app-header">
-                  <div class="profile-btn-icon">
-                    <img src="assets/Download.png" alt="Install" />
-                  </div>
-                  <div class="profile-btn-info">
-                    <span class="profile-btn-title">Install App</span>
-                    <span class="profile-btn-desc">Get Desktop Client</span>
-                  </div>
-                </a>
-
-                <a href="https://dsc.gg/brainlyhq" target="_blank" rel="noopener" class="profile-btn-card">
-                  <div class="profile-btn-icon">
-                    <img src="assets/Brainly.png" alt="Discord" />
-                  </div>
-                  <div class="profile-btn-info">
-                    <span class="profile-btn-title">Discord Server</span>
-                    <span class="profile-btn-desc">Join BrainlyHQ</span>
-                  </div>
-                </a>
-
-                <a href="https://chromewebstore.google.com/detail/brainly-creatives/pgfbplkcnljoadikklfopgpdmehjhbic?hl=pl&utm_source=ext_sidebar" target="_blank" rel="noopener" class="profile-btn-card">
-                  <div class="profile-btn-icon">
-                    <img src="assets/Code.png" alt="Extension" />
-                  </div>
-                  <div class="profile-btn-info">
-                    <span class="profile-btn-title">Brainly Creatives</span>
-                    <span class="profile-btn-desc">Chrome Extension</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <!-- Dynamic Global Header Component -->
+      <header id="global-header"></header>
 
       <!-- Settings Main Content Body -->
       <main class="content-body">
@@ -171,7 +27,6 @@
         <div class="settings-layout-grid">
           <!-- Left Column -->
           <div class="settings-column">
-            <!-- Profile Settings -->
             <section class="liquid-card">
               <div class="settings-card-header">
                 <h2>User Profile</h2>
@@ -196,7 +51,6 @@
               </div>
             </section>
 
-            <!-- Desktop App Card -->
             <section class="liquid-card">
               <div class="settings-card-header">
                 <h2>Desktop Application</h2>
@@ -216,7 +70,6 @@
 
           <!-- Right Column -->
           <div class="settings-column">
-            <!-- Appearance Settings -->
             <section class="liquid-card">
               <div class="settings-card-header">
                 <h2>Appearance & Theme</h2>
@@ -246,76 +99,6 @@
                     <button class="accent-circle" data-color="#dc2626" style="background-color: #dc2626;" title="Crimson"></button>
                   </div>
                 </div>
-
-                <div class="setting-row">
-                  <div class="setting-info">
-                    <span class="setting-title">Compact View</span>
-                    <span class="setting-desc">Reduce layout margins for high resolution displays.</span>
-                  </div>
-                  <label class="ai-switch">
-                    <input type="checkbox" id="toggle-compact-ui" />
-                    <span class="ai-slider"></span>
-                  </label>
-                </div>
-              </div>
-            </section>
-
-            <!-- Notifications & Audio -->
-            <section class="liquid-card" id="notifications">
-              <div class="settings-card-header">
-                <h2>Notifications & Audio</h2>
-              </div>
-              <div class="settings-toggle-list">
-                <div class="setting-row">
-                  <div class="setting-info">
-                    <span class="setting-title">Audio Chime</span>
-                    <span class="setting-desc">Play a tone on incoming notifications.</span>
-                  </div>
-                  <label class="ai-switch">
-                    <input type="checkbox" id="toggle-notif-sound" checked />
-                    <span class="ai-slider"></span>
-                  </label>
-                </div>
-
-                <div class="setting-row">
-                  <div class="setting-info">
-                    <span class="setting-title">Notification Tone</span>
-                    <span class="setting-desc">Select tone sound synthesizer profile.</span>
-                  </div>
-                  <div style="display: flex; gap: 8px; align-items: center;">
-                    <select id="select-sound-tone" class="filter-select">
-                      <option value="chime">Triple Chime</option>
-                      <option value="double">Square Double</option>
-                      <option value="pop">Triangle Pop</option>
-                    </select>
-                    <button class="btn-search-action" id="btn-test-sound" style="padding: 10px 14px;">Test</button>
-                  </div>
-                </div>
-
-                <div class="setting-row">
-                  <div class="setting-info">
-                    <span class="setting-title">Welcome & Feature Alerts</span>
-                  </div>
-                  <label class="ai-switch">
-                    <input type="checkbox" id="toggle-notif-welcome" checked />
-                    <span class="ai-slider"></span>
-                  </label>
-                </div>
-
-                <div class="setting-row">
-                  <div class="setting-info">
-                    <span class="setting-title">System & Search Updates</span>
-                  </div>
-                  <label class="ai-switch">
-                    <input type="checkbox" id="toggle-notif-system" checked />
-                    <span class="ai-slider"></span>
-                  </label>
-                </div>
-
-                <div class="setting-row" style="padding-top: 8px; border-top: 1px solid var(--border-color);">
-                  <button class="btn-cancel" id="btn-reset-notifications" style="padding: 0; color: #ef4444;">Clear Notifications List</button>
-                  <button class="btn-cancel" id="btn-clear-all-data" style="padding: 0; color: var(--text-muted);">Reset All App Data</button>
-                </div>
               </div>
             </section>
           </div>
@@ -324,46 +107,10 @@
     </div>
   </div>
 
-  <!-- Shared Core Scripts -->
-  <script src="core/main.js"></script>
-  <!-- Settings Controller Script -->
+  <!-- Modular Scripts Order -->
+  <script src="components/header.js"></script>
+  <script src="components/notifications.js"></script>
+  <script src="core/app.js"></script>
   <script src="settings.js"></script>
-
-  <!-- Modal: Reset Confirmation -->
-  <div class="modal-overlay" id="modal-reset-confirm" style="display: none;">
-    <div class="redirect-card modal-card">
-      <h2 class="redirect-title">Reset Application Data</h2>
-      <p class="redirect-desc">This action will clear all local settings, saved cache, and custom themes. Type <strong>DELETE ALL DATA</strong> to confirm.</p>
-      
-      <div class="form-group" style="margin-bottom: 20px;">
-        <input type="text" id="input-confirm-delete" class="custom-subject-input" placeholder="DELETE ALL DATA" />
-      </div>
-
-      <div class="actions-row">
-        <button id="btn-confirm-reset-execute" class="btn-proceed" style="background-color: #dc2626;" disabled>Delete All Data</button>
-        <button id="btn-cancel-reset" class="btn-cancel">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: External Support Redirect -->
-  <div class="modal-overlay" id="modal-contact-redirect" style="display: none;">
-    <div class="redirect-card modal-card">
-      <div class="redirect-icon-wrapper">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-          <polyline points="15 3 21 3 21 9"></polyline>
-          <line x1="10" y1="14" x2="21" y2="3"></line>
-        </svg>
-      </div>
-      <h2 class="redirect-title">External Contact Form</h2>
-      <p class="redirect-desc">You are being redirected in <strong id="contact-countdown-timer">5</strong> seconds.</p>
-      <div class="actions-row">
-        <a href="https://forms.gle/o1daXvtw4zim5kDd7" target="_blank" rel="noopener" class="btn-proceed" id="contact-redirect-link">Go to Form Now</a>
-        <button id="btn-cancel-contact-redirect" class="btn-cancel">Cancel</button>
-      </div>
-    </div>
-  </div>
-
 </body>
 </html>
