@@ -18,31 +18,34 @@
       <!-- Dynamic Global Header Component -->
       <header id="global-header"></header>
 
-      <!-- Settings Body -->
-      <main class="content-body">
+      <!-- Settings Main Body -->
+      <main class="content-body settings-page-container">
+        
+        <!-- Header Page Title -->
         <div class="settings-page-header">
-          <div class="settings-title-group">
-            <h1 class="hero-title">Account & Settings</h1>
-            <p class="hero-subtitle">Manage preferences, appearance, notifications, and application settings</p>
-          </div>
+          <h1 class="hero-title">Account & Settings</h1>
+          <p class="hero-subtitle">Manage preferences, appearance, notifications, and application data</p>
         </div>
 
         <div class="settings-layout-grid">
-          <!-- Profile Settings -->
+          
+          <!-- LEFT COLUMN -->
           <div class="settings-column">
+            
+            <!-- 1. User Profile Card -->
             <section class="liquid-card">
               <div class="settings-card-header">
                 <h2>User Profile</h2>
               </div>
               <div class="profile-card-content">
-                <div class="form-group">
+                <div class="form-group-row">
                   <label class="filter-label" for="input-user-name">Display Name</label>
-                  <input type="text" id="input-user-name" class="custom-subject-input" placeholder="e.g. Alex Morgan" />
+                  <input type="text" id="input-user-name" class="settings-input" placeholder="e.g. Alex Morgan" />
                 </div>
 
-                <div class="form-group">
-                  <label class="filter-label" for="select-user-role">Academic Level / Role</label>
-                  <select id="select-user-role" class="filter-select">
+                <div class="form-group-row">
+                  <label class="filter-label" for="select-user-role">Academic Level</label>
+                  <select id="select-user-role" class="settings-select">
                     <option value="Primary School Member">Primary School Member</option>
                     <option value="High School Member">High School Member</option>
                     <option value="University Student">University Student</option>
@@ -50,30 +53,65 @@
                   </select>
                 </div>
 
-                <button class="btn-proceed" id="btn-save-profile" style="margin-top: 8px;">Save Profile</button>
+                <div class="card-action-row">
+                  <button class="btn-proceed" id="btn-save-profile">Save Profile</button>
+                </div>
               </div>
             </section>
 
-            <!-- Desktop Client Card -->
+            <!-- 2. Notifications & Sounds Card -->
+            <section class="liquid-card" id="notifications-section">
+              <div class="settings-card-header">
+                <h2>Notifications & Sound</h2>
+              </div>
+              <div class="settings-toggle-list">
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Sound Effects</span>
+                    <span class="setting-desc">Play chime sound when notifications arrive.</span>
+                  </div>
+                  <label class="ai-switch">
+                    <input type="checkbox" id="toggle-notif-sound" checked />
+                    <span class="ai-slider"></span>
+                  </label>
+                </div>
+
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">System Alerts</span>
+                    <span class="setting-desc">Receive updates about database expansions.</span>
+                  </div>
+                  <label class="ai-switch">
+                    <input type="checkbox" id="toggle-notif-system" checked />
+                    <span class="ai-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <!-- 3. Desktop Application Card -->
             <section class="liquid-card">
               <div class="settings-card-header">
                 <h2>Desktop Application</h2>
               </div>
               <div class="install-card-body">
                 <div class="install-info">
-                  <img src="assets/Download.png" alt="Download App" class="install-icon" />
+                  <img src="assets/Download.png" alt="Download App" class="install-icon-fixed" />
                   <div>
-                    <span class="install-title">Install Desktop Client</span>
-                    <p class="install-desc">Launch BrainlyHub directly from your desktop interface.</p>
+                    <span class="install-title">BrainlyHub Desktop</span>
+                    <p class="install-desc">Launch platform directly as a Progressive Web App.</p>
                   </div>
                 </div>
                 <button class="btn-proceed" id="btn-install-app-main">Install App</button>
               </div>
             </section>
+
           </div>
 
-          <!-- Appearance Settings -->
+          <!-- RIGHT COLUMN -->
           <div class="settings-column">
+            
+            <!-- 4. Appearance & Theme Card -->
             <section class="liquid-card">
               <div class="settings-card-header">
                 <h2>Appearance & Theme</h2>
@@ -82,30 +120,67 @@
                 <div class="setting-row">
                   <div class="setting-info">
                     <span class="setting-title">Theme Mode</span>
-                    <span class="setting-desc">Choose your preferred background theme.</span>
+                    <span class="setting-desc">Choose your light or dark background interface.</span>
                   </div>
                   <div class="theme-options-wrapper">
-                    <button class="btn-search-action theme-option-btn" data-theme="light">Light</button>
-                    <button class="btn-search-action theme-option-btn" data-theme="dark">Dark</button>
+                    <button class="theme-option-btn active" data-theme="light">Light</button>
+                    <button class="theme-option-btn" data-theme="dark">Dark</button>
                   </div>
                 </div>
 
                 <div class="setting-row">
                   <div class="setting-info">
-                    <span class="setting-title">Primary Accent Color</span>
-                    <span class="setting-desc">Highlight color used across badges and active buttons.</span>
+                    <span class="setting-title">Primary Accent</span>
+                    <span class="setting-desc">Color used across buttons, badges, and active highlights.</span>
                   </div>
                   <div class="color-picker-group">
+                    <button class="accent-circle active" data-color="#2563eb" style="background-color: #2563eb;" title="Royal Blue"></button>
                     <button class="accent-circle" data-color="#1e3a8a" style="background-color: #1e3a8a;" title="Navy Blue"></button>
-                    <button class="accent-circle" data-color="#2563eb" style="background-color: #2563eb;" title="Royal Blue"></button>
                     <button class="accent-circle" data-color="#059669" style="background-color: #059669;" title="Emerald Green"></button>
                     <button class="accent-circle" data-color="#7c3aed" style="background-color: #7c3aed;" title="Purple"></button>
                     <button class="accent-circle" data-color="#dc2626" style="background-color: #dc2626;" title="Crimson"></button>
                   </div>
                 </div>
+
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Compact View</span>
+                    <span class="setting-desc">Reduce layout margins for high resolution displays.</span>
+                  </div>
+                  <label class="ai-switch">
+                    <input type="checkbox" id="toggle-compact-ui" />
+                    <span class="ai-slider"></span>
+                  </label>
+                </div>
               </div>
             </section>
+
+            <!-- 5. Data & Storage Card -->
+            <section class="liquid-card">
+              <div class="settings-card-header">
+                <h2>Data & Cache Management</h2>
+              </div>
+              <div class="settings-toggle-list">
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Clear App Cache</span>
+                    <span class="setting-desc">Reset saved local searches and notification history.</span>
+                  </div>
+                  <button class="btn-secondary-action" id="btn-clear-cache">Clear Cache</button>
+                </div>
+
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <span class="setting-title">Reset All Settings</span>
+                    <span class="setting-desc">Restore theme and user preferences to defaults.</span>
+                  </div>
+                  <button class="btn-danger-action" id="btn-reset-all">Reset All</button>
+                </div>
+              </div>
+            </section>
+
           </div>
+
         </div>
       </main>
     </div>
