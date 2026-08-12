@@ -419,3 +419,216 @@ body {
 .setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .setting-title { font-size: 0.95rem; font-weight: 700; }
 .setting-desc { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ==========================================
+   SETTINGS PAGE REPAIR STYLES
+   ========================================== */
+
+/* 1. Naprawa zasłaniania nagłówka przez Sticky Header */
+.settings-page-container {
+  padding-top: 24px !important;
+}
+
+.settings-page-header {
+  margin-bottom: 24px;
+}
+
+/* 2. Naprawa układowa formularza profilu */
+.profile-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.settings-input, .settings-select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.settings-input:focus, .settings-select:focus {
+  border-color: var(--primary);
+}
+
+.card-action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* 3. Naprawa gigantycznej ikony w karcie Desktop Application */
+.install-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.install-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.install-icon-fixed {
+  width: 42px !important;
+  height: 42px !important;
+  max-width: 42px !important;
+  max-height: 42px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.install-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.install-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* 4. Naprawa przełączników motywu i wyboru kolorów */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.setting-row:last-child {
+  border-bottom: none;
+}
+
+.setting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 60%;
+}
+
+.theme-options-wrapper {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.theme-option-btn {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: var(--bg-primary);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.theme-option-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.color-picker-group {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.accent-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.accent-circle.active {
+  border-color: var(--text-main);
+  transform: scale(1.1);
+}
+
+/* 5. Stylizacja przełączników (Switches) */
+.ai-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.ai-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.ai-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--border-color);
+  transition: .25s;
+  border-radius: 24px;
+}
+
+.ai-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .25s;
+  border-radius: 50%;
+}
+
+input:checked + .ai-slider {
+  background-color: var(--primary);
+}
+
+input:checked + .ai-slider:before {
+  transform: translateX(20px);
+}
+
+/* Przycisk akcji usuwania/resetu */
+.btn-secondary-action {
+  background: var(--bg-primary);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-danger-action {
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
