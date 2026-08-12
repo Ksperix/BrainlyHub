@@ -21,7 +21,7 @@
       <!-- Settings Main Body Container -->
       <main class="content-body settings-page">
         
-        <!-- Header Page Title -->
+        <!-- Header Page Title (Symetryczne marginesy góra/dół) -->
         <div class="settings-page-header">
           <h1 class="hero-title">Account & Settings</h1>
           <p class="hero-subtitle">Manage preferences, appearance, notifications, and application data</p>
@@ -62,13 +62,13 @@
             <!-- 2. Notifications & Sound Card -->
             <section class="settings-card" id="notifications-section">
               <div class="settings-card-header">
-                <h2>Notifications & Sound</h2>
+                <h2>Notifications & Sound Settings</h2>
               </div>
               <div class="settings-toggle-list">
                 <div class="setting-row">
                   <div class="setting-info">
                     <span class="setting-title">Sound Effects</span>
-                    <span class="setting-desc">Play chime sound when notifications arrive.</span>
+                    <span class="setting-desc">Play chime sound when changing options or receiving notifications.</span>
                   </div>
                   <label class="ai-switch">
                     <input type="checkbox" id="toggle-notif-sound" checked />
@@ -89,20 +89,35 @@
               </div>
             </section>
 
-            <!-- 3. Desktop Application Card -->
+            <!-- 3. Notification Customization Tool -->
             <section class="settings-card">
               <div class="settings-card-header">
-                <h2>Desktop Application</h2>
+                <h2>Notification Customizer</h2>
               </div>
-              <div class="install-card-body">
-                <div class="install-info">
-                  <img src="assets/Download.png" alt="Download App" class="desktop-app-icon" />
-                  <div>
-                    <span class="install-title">BrainlyHub Desktop</span>
-                    <p class="install-desc">Launch platform directly as a Web App.</p>
-                  </div>
+              <div class="card-form-body">
+                <div class="form-group-row">
+                  <label class="filter-label" for="custom-notif-title">Alert Title</label>
+                  <input type="text" id="custom-notif-title" class="settings-field" placeholder="e.g. New Assignment Posted" />
                 </div>
-                <button class="btn-secondary-action" id="btn-install-app-main">Install App</button>
+
+                <div class="form-group-row">
+                  <label class="filter-label" for="custom-notif-desc">Alert Description</label>
+                  <input type="text" id="custom-notif-desc" class="settings-field" placeholder="e.g. Mathematics Chapter 4 is available" />
+                </div>
+
+                <div class="form-group-row">
+                  <label class="filter-label" for="custom-notif-icon">Notification Icon</label>
+                  <select id="custom-notif-icon" class="settings-field settings-select-field">
+                    <option value="Notifications.png">Bell (Default)</option>
+                    <option value="Tasks.png">Task / Assignment</option>
+                    <option value="New badge.png">Achievement / Badge</option>
+                    <option value="Bug.png">System Bug Alert</option>
+                  </select>
+                </div>
+
+                <div class="card-action-row">
+                  <button class="btn-proceed" id="btn-create-notif">Push Notification</button>
+                </div>
               </div>
             </section>
 
@@ -155,7 +170,24 @@
               </div>
             </section>
 
-            <!-- 5. Data & Storage Card -->
+            <!-- 5. Desktop Application Card -->
+            <section class="settings-card">
+              <div class="settings-card-header">
+                <h2>Desktop Application</h2>
+              </div>
+              <div class="install-card-body">
+                <div class="install-info">
+                  <img src="assets/Download.png" alt="Download App" class="desktop-app-icon" />
+                  <div>
+                    <span class="install-title">BrainlyHub Desktop</span>
+                    <p class="install-desc">Launch platform directly as a Web App.</p>
+                  </div>
+                </div>
+                <button class="btn-secondary-action" id="btn-install-app-main">Install App</button>
+              </div>
+            </section>
+
+            <!-- 6. Data & Storage Card -->
             <section class="settings-card">
               <div class="settings-card-header">
                 <h2>Data & Cache Management</h2>
