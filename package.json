@@ -1,5 +1,16 @@
 {
-  "name": "brainlyhub",
-  "version": "1.0.0",
-  "private": true
+  "name": "brainlyhub-platform",
+  "version": "2.0.0",
+  "description": "BrainlyHub Platform - Global Education Knowledge Search",
+  "main": "core/app.js",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "education",
+    "search",
+    "brainlyhub"
+  ],
+  "author": "BrainlyHQ",
+  "license": "MIT"
 }
