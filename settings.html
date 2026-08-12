@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrainlyHub — Settings & Preferences</title>
   
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/Brainly Hub.png" id="favicon" />
+
+  <!-- CSS Styles -->
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
@@ -15,7 +18,7 @@
       <!-- Dynamic Global Header Component -->
       <header id="global-header"></header>
 
-      <!-- Settings Main Content Body -->
+      <!-- Settings Body -->
       <main class="content-body">
         <div class="settings-page-header">
           <div class="settings-title-group">
@@ -25,7 +28,7 @@
         </div>
 
         <div class="settings-layout-grid">
-          <!-- Left Column -->
+          <!-- Profile Settings -->
           <div class="settings-column">
             <section class="liquid-card">
               <div class="settings-card-header">
@@ -51,6 +54,7 @@
               </div>
             </section>
 
+            <!-- Desktop Client Card -->
             <section class="liquid-card">
               <div class="settings-card-header">
                 <h2>Desktop Application</h2>
@@ -68,7 +72,7 @@
             </section>
           </div>
 
-          <!-- Right Column -->
+          <!-- Appearance Settings -->
           <div class="settings-column">
             <section class="liquid-card">
               <div class="settings-card-header">
@@ -107,10 +111,12 @@
     </div>
   </div>
 
-  <!-- Modular Scripts Order -->
+  <!-- Synchronized Component & Core Scripts -->
   <script src="components/header.js"></script>
   <script src="components/notifications.js"></script>
+  <script src="components/profile.js"></script>
+  <script src="components/favorites.js"></script>
+  
   <script src="core/app.js"></script>
-  <script src="settings.js"></script>
 </body>
 </html>
