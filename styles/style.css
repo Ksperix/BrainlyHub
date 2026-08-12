@@ -56,14 +56,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-}
-
-.main-wrapper {
+#app, .main-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -275,9 +268,13 @@ body {
   gap: var(--space-xl);
 }
 
-/* Page Header Spacing */
+.settings-page {
+  padding-top: 24px !important;
+}
+
 .settings-page-header {
   margin-top: var(--space-md);
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -301,60 +298,62 @@ body {
    3. PERFECT GRID & CARDS SYSTEM
    ========================================== */
 
-.settings-layout-grid {
+.settings-grid, .settings-layout-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-xl);
+  gap: 20px;
   align-items: start;
 }
 
 @media (max-width: 868px) {
-  .settings-layout-grid {
+  .settings-grid, .settings-layout-grid {
     grid-template-columns: 1fr;
   }
 }
 
-.settings-column {
+.settings-col, .settings-column {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: 20px;
 }
 
-/* Standardized Card Container */
-.liquid-card {
+.settings-card, .liquid-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  box-shadow: var(--shadow-subtle);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: 16px;
 }
 
 .settings-card-header {
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: var(--space-md);
+  padding-bottom: 12px;
 }
 
 .settings-card-header h2 {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--text-main);
   letter-spacing: -0.2px;
 }
 
-/* Form Controls Inside Cards */
+/* ==========================================
+   4. FORM CONTROLS & BUTTONS
+   ========================================== */
+
 .card-form-body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: 14px;
 }
 
 .form-group-row {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: 6px;
   width: 100%;
 }
 
@@ -366,21 +365,33 @@ body {
   letter-spacing: 0.5px;
 }
 
-.settings-input, .settings-select {
+.settings-field, .settings-input, .settings-select {
   width: 100%;
-  height: 42px;
-  padding: 0 var(--space-md);
+  height: 40px;
+  padding: 0 12px;
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  background: var(--bg-surface);
+  border-radius: 8px;
+  background-color: var(--bg-surface);
   color: var(--text-main);
+  font-family: inherit !important;
   font-size: 0.9rem;
   font-weight: 500;
   outline: none;
+  box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.settings-input:focus, .settings-select:focus {
+.settings-select-field, select.settings-select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.settings-field:focus, .settings-input:focus, .settings-select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-light);
 }
@@ -391,7 +402,6 @@ body {
   padding-top: var(--space-xs);
 }
 
-/* Standardized Buttons */
 .btn-proceed {
   background: var(--primary);
   color: #ffffff;
@@ -447,7 +457,7 @@ body {
 }
 
 /* ==========================================
-   4. SETTING ROWS & TOGGLES ALIGNMENT
+   5. SETTING ROWS & TOGGLES ALIGNMENT
    ========================================== */
 
 .settings-toggle-list {
@@ -459,40 +469,33 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-md);
-  padding: var(--space-md) 0;
+  gap: 12px;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border-color);
 }
 
-.setting-row:first-child {
-  padding-top: 0;
-}
-
-.setting-row:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
-}
+.setting-row:first-child { padding-top: 0; }
+.setting-row:last-child { padding-bottom: 0; border-bottom: none; }
 
 .setting-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   max-width: 65%;
 }
 
 .setting-title {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--text-main);
 }
 
 .setting-desc {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--text-muted);
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
-/* Theme Option Switcherer */
 .theme-options-wrapper {
   display: flex;
   background: var(--bg-primary);
@@ -519,7 +522,6 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Accent Palette */
 .color-picker-group {
   display: flex;
   gap: 8px;
@@ -535,16 +537,9 @@ body {
   transition: transform 0.15s ease;
 }
 
-.accent-circle:hover {
-  transform: scale(1.15);
-}
+.accent-circle:hover { transform: scale(1.15); }
+.accent-circle.active { border-color: var(--text-main); transform: scale(1.1); }
 
-.accent-circle.active {
-  border-color: var(--text-main);
-  transform: scale(1.1);
-}
-
-/* Toggle Switcher Controls */
 .ai-switch {
   position: relative;
   display: inline-block;
@@ -553,11 +548,7 @@ body {
   flex-shrink: 0;
 }
 
-.ai-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+.ai-switch input { opacity: 0; width: 0; height: 0; }
 
 .ai-slider {
   position: absolute;
@@ -580,31 +571,27 @@ body {
   border-radius: 50%;
 }
 
-input:checked + .ai-slider {
-  background-color: var(--primary);
-}
+input:checked + .ai-slider { background-color: var(--primary); }
+input:checked + .ai-slider:before { transform: translateX(20px); }
 
-input:checked + .ai-slider:before {
-  transform: translateX(20px);
-}
-
-/* Desktop App Container */
 .install-card-body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-md);
+  gap: 12px;
 }
 
 .install-info {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: 12px;
 }
 
-.install-icon-fixed {
-  width: 36px !important;
-  height: 36px !important;
+.desktop-app-icon, .install-icon-fixed {
+  width: 32px !important;
+  height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -619,4 +606,18 @@ input:checked + .ai-slider:before {
   font-size: 0.78rem;
   color: var(--text-muted);
   margin-top: 2px;
+}
+
+/* ==========================================
+   6. COMPACT VIEW LOGIC
+   ========================================== */
+
+body.compact-mode .settings-page { padding-top: 12px !important; }
+body.compact-mode .settings-grid, body.compact-mode .settings-layout-grid { gap: 12px; }
+body.compact-mode .settings-col, body.compact-mode .settings-column { gap: 12px; }
+body.compact-mode .settings-card, body.compact-mode .liquid-card { padding: 14px; gap: 10px; }
+body.compact-mode .setting-row { padding: 6px 0; }
+body.compact-mode .settings-field, body.compact-mode .settings-input, body.compact-mode .settings-select {
+  height: 34px;
+  font-size: 0.85rem;
 }
